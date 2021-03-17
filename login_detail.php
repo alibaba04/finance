@@ -41,14 +41,14 @@ if (isset($_POST[txtUserID])) {
                 if (isset($_GET['eventCode'])){
                     switch ($_GET['eventCode']) {
                         case 10:
-                        echo('User ID atau Password tidak valid!');
+                        echo('Username or Password not valid!');
                         break;
                         case 20:
                         echo('Log out berhasil!');
                         unset($_SESSION['my']);
                         break;
                         case 30:
-                        echo('Sedang ada yang log In menggunakan Akun ini!');
+                        echo('Username or Password not valid!');
                         break;
                         case 90:
                         echo('Log In ...');
@@ -59,7 +59,7 @@ if (isset($_POST[txtUserID])) {
                         break;
                     }
                 }else{
-                    echo('Harap Log In!');
+                    echo('Log In!');
                 }
                 ?>
             </font>
