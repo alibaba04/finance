@@ -4,11 +4,11 @@ require_once('function/mysql.php');
 
 /*********** Database Settings ***********/
 $dbHost = 'localhost';
-$dbName = 'u5514609_dbaki'; 
+$dbName = 'u8364183_finance'; 
 
 
-$dbUser = 'u5514609_can';
-$dbPass = ',S1s6h8+Mrc)';
+$dbUser = 'u8364183_marketing';
+$dbPass = 'PVMMA0Akp4;(';
 
 $passSalt = 'UFqPNrZENKSQc5yc';
 
