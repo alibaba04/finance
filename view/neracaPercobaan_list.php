@@ -273,7 +273,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 }
                                 echo "</tr>";
                                 echo "<tfoot><tr>";
-                                echo "<td colspan='2'></td>";
+                                echo "<td ></td>";
                                 echo "<td align='right'>" . number_format($totADebet, 2) ."</td>";
                                 echo "<td align='right'>" . number_format($totAKredit, 2) . "</td>";
                                 echo "<td align='right'>" . number_format($totMutDebet, 2) ."</td>";
@@ -289,7 +289,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 echo "<td align='right'>" . number_format($totNeDebet, 2) . "</td>";
                                 echo "<td align='right'>" . number_format($totNeKredit, 2) . "</td></tr>";
                                 echo "<tr>";
-                                echo "<td colspan='11'></td>";
+                                echo "<td colspan='10'></td>";
 
                                 $totDneraca = $totKneraca = 0;
 
@@ -310,7 +310,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 echo "<td align='right'>" . number_format($totDneraca, 2) . "</td>";
                                 echo "<td align='right'>" . number_format($totKneraca, 2) . "</td></tr>";
                                 echo "<tr>";
-                                echo "<td colspan='14'></td>";
+                                echo "<td colspan='13'></td>";
                                 echo "<td align='right'>" . number_format($totNeDebet+$totDneraca, 2) . "</td>";
                                 echo "<td align='right'>" . number_format($totNeKredit+$totKneraca, 2) . "</td></tr></tfoot>";
 
