@@ -92,7 +92,7 @@ if (isset($_POST[txtUserID])) {
     <footer class="login-footer" style="padding-right: 20px;">
         
         <div class="pull-right hidden-xs" style="color: white;">
-            <b>Akuntansi App</b> v 1.0.1 &nbsp;&nbsp;<strong>Created by : <a href="http://instagram.com/baihaqial" style="color: white;">alibaba</a>.
+            <b>Accounting App</b> v 1.0.1 &nbsp;&nbsp;<strong>Created by : <a href="http://instagram.com/baihaqial" style="color: white;">alibaba</a>.
             </div>
     </footer>
     <!-- /.login-box -->
