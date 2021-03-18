@@ -66,6 +66,18 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         }
     }
   
+    function omodal() {
+        $("#myModal").modal({backdrop: 'static'});
+        $("#txtDelete1").val();
+        $('#btnDelete').click(function(){
+            if($("#txtDelete1").val()== ''){
+                alert('Description Cannot Empty!');
+                $("#txtDelete1").focus();
+                return false;
+            }
+            $("#txtDelete").val($("#txtDelete1").val());
+        });
+    }
     function hitdk(tcounter){
         var idebit = parseInt($('#idebit').val());
         var tdebebit = parseInt($('#txtDebet_'+tcounter).val());
@@ -180,13 +192,12 @@ return true;
 
 <section class="content-header">
     <h1>
-        JURNAL PENYESUAIAN
-        <small>Detail Jurnal Penyesuaian</small>
+        ADJUSTMENT ENTRIES
     </h1>
     <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Input</li>
-        <li class="active">Jurnal Penyesuaian</li>
+        <li class="active">Adjustment Entries</li>
     </ol>
 </section>
 
@@ -232,14 +243,14 @@ return true;
                     </div>
                     <div class="box-body">
                         <div class="form-group ">
-                            <label class="control-label" for="txtKodeTransaksi">Kode Transaksi</label>
+                            <label class="control-label" for="txtKodeTransaksi">Transaction Code</label>
                             <input name="txtKodeTransaksi" id="txtKodeTransaksi" maxlength="30" class="form-control" 
-                            readonly value="<?php if($_GET["mode"]=='edit'){ echo $dataJurnal["kode_transaksi"]; }?>" placeholder="Kode otomatis dibuat" onKeyPress="return handleEnter(this, event)">
+                            readonly value="<?php if($_GET["mode"]=='edit'){ echo $dataJurnal["kode_transaksi"]; }?>" placeholder="Generating Code . . . . " onKeyPress="return handleEnter(this, event)">
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="txtTglTransaksi">Tanggal Transaksi</label>
+                            <label class="control-label" for="txtTglTransaksi">Transaction Date</label>
                             <input name="txtTglTransaksi" id="txtTglTransaksi" maxlength="30" class="form-control" 
-                            value="<?php if ($_GET["mode"]=='edit'){ echo tgl_ind($dataJurnal["tanggal_transaksi"]); } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            value="<?php if ($_GET["mode"]=='edit'){ echo tgl_ind($dataJurnal["tanggal_transaksi"]); } ?>" placeholder="Empty" onKeyPress="return handleEnter(this, event)">
                         </div>
                     </div>
                 </div>    
@@ -248,7 +259,7 @@ return true;
                 <div class="box box-primary">
                     <div class="box-header">
                         <i class="ion ion-clipboard"></i>
-                        <h3 class="box-title">DETAIL TRANSAKSI JURNAL PENYESUAIAN </h3>
+                        <h3 class="box-title">DETAILS</h3>
                         <span id="msgbox"> </span>
                     </div>
                     <div class="box-body">
@@ -257,10 +268,10 @@ return true;
                             <thead>
                                 <tr>
                                     <th style="width: 2%"><i class='fa fa-edit'></i></th>
-                                    <th style="width: ">Akun</th>
-                                    <th style="width: 30%">Keterangan</th>
-                                    <th style="width: 15%">Debet</th>
-                                    <th style="width: 15%">Kredit</th>
+                                    <th style="width: ">Account</th>
+                                    <th style="width: 30%">Description</th>
+                                    <th style="width: 15%">Debt</th>
+                                    <th style="width: 15%">Credit</th>
                                     <?php
                                     if ($_GET['mode']=='edit'){
                                         echo '<th colspan="2" width="2%"><i class="fa fa-trash"></i></th>';
@@ -302,13 +313,38 @@ return true;
                         <input type="hidden" value="<?php if ($_GET['mode']=='edit'){echo $iJurnal;}else{echo 0;} ?>" id="jumAddJurnal" name="jumAddJurnal"/>
                         <input type="hidden" value="0" id="idebit" name="idebit"/>
                         <input type="hidden" value="0" id="ikredit" name="ikredit"/>
-                        <center><button type="button" class="btn btn-success" onclick="javascript:addJurnal()">Tambah Jurnal Penyesuaian</button></center>
+                        <center><button type="button" class="btn btn-success" onclick="javascript:addJurnal()">Add General Entries</button></center>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Upadate Description</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <textarea class="form-control" id="txtDelete1"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-primary" value="Save"  id="btnDelete">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="box-footer">
-                        <input type="submit" class="btn btn-primary" value="Simpan">
+                        <?php 
+                        if ($_GET['mode']=='edit'){
+                            echo '<input type="button" class="btn btn-primary" onclick="omodal()" value="Save">';
+                        }else{
+                            echo '<input type="submit" class="btn btn-primary" value="Save">';
+                        }
+                        ?>
+
 
                         <a href="index.php?page=html/jurnalpenyesuaian_list">
-                            <button type="button" class="btn btn-default pull-right">&nbsp;&nbsp;Batal&nbsp;&nbsp;</button>    
+                            <button type="button" class="btn btn-default pull-right">&nbsp;&nbsp;Cancel&nbsp;&nbsp;</button>    
                         </a>
                     </div>
                 </div>

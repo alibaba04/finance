@@ -144,7 +144,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <i class="fa fa-warning"></i>
-                        <h3 class="box-title">Pesan</h3>
+                        <h3 class="box-title">Message</h3>
                     </div>
                     <div class="box-body">
                         <?php
@@ -219,7 +219,6 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 <th style="width: 10%">Credit</th>
                                 <th style="width: 5%">Post Date</th>
                                 <th colspan="2" width="3%">Action</th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -255,7 +254,6 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                             echo("<td><span class='label label-default' ><i class='fa fa-edit'></i>&nbsp;Update</span></td>");
                                             echo("<td><span class='label label-default' ><i class='fa fa-trash'></i>&nbsp;Delete</span></td>");
                                         }
-                                        
                                     }
 
                                 } else {

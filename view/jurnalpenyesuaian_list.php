@@ -66,13 +66,12 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 <!-- End of Script Tanggal -->
 <section class="content-header">
     <h1>
-        JURNAL PENYESUAIAN
-        <small>List Jurnal Penyesuaian</small>
+        ADJUSTMENT ENTRIES
     </h1>
     <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Input</li>
-        <li class="active">Jurnal Penyesuaian</li>
+        <li class="active">Adjustment Entries</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -85,14 +84,14 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>
-                    <h3 class="box-title">Pencarian Data Jurnal Penyesuaian </h3>
+                    <h3 class="box-title">Search</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <form name="frmCariSiswa" method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>" autocomplete="off">
                         <input type="hidden" name="page" value="<?php echo $curPage; ?>">
                         <div class="form-group">
-                            <label>Range Tanggal Transaksi </label>
+                            <label>Range Transaction Date</label>
                             
                         </div>
                         <div class="input-group input-group-sm">
@@ -116,7 +115,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <?php
                     if ($hakUser==90){
                         ?>
-                        <a href="<?php echo $_SERVER['PHP_SELF']."?page=html/jurnalpenyesuaian_detail&mode=add";?>"><button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Tambah Data</button></a>
+                        <a href="<?php echo $_SERVER['PHP_SELF']."?page=html/jurnalpenyesuaian_detail&mode=add";?>"><button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add Data</button></a>
                         <?php
                     }
                     ?>
@@ -132,7 +131,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <i class="fa fa-warning"></i>
-                        <h3 class="box-title">Pesan</h3>
+                        <h3 class="box-title">Message</h3>
                     </div>
                     <div class="box-body">
                         <?php
@@ -198,16 +197,15 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <thead>
                             <tr>
                                 <th style="width: 3%">#</th>
-                                <th style="width: 10%">Kode Transaksi</th>
+                                <th style="width: 10%">Transaction Code</th>
                                 <th style="width: 5%">Reff</th>
-                                <th style="width: 15%">Kode Akun</th>
-                                <th style="width: 5%">Tanggal Transaksi</th>
-                                <th style="width: 15%">Keterangan</th>
-                                <th style="width: 10%">Debit</th>
-                                <th style="width: 10%">Kredit</th>
-                                <th style="width: 5%">Tanggal Posting</th>
-                                <th colspan="2" width="3%">Aksi</th>
-
+                                <th style="width: 15%">Account</th>
+                                <th style="width: 5%">Transaction Date</th>
+                                <th style="width: 15%">Description</th>
+                                <th style="width: 10%">Debt</th>
+                                <th style="width: 10%">Credit</th>
+                                <th style="width: 5%">Post Date</th>
+                                <th colspan="2" width="3%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -231,12 +229,18 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 
                                 if ($hakUser == 90) {
                                     if(empty($query_data["keterangan_posting"])){
-                                        echo "<td><span class='label label-success' style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/jurnalpenyesuaian_detail&mode=edit&kode=" . md5($query_data["kode_transaksi"]) . "'><i class='fa fa-edit'></i>&nbsp;Ubah</span></td>";
+                                        echo "<td><a class='label label-success' style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/jurnalumum_detail&mode=edit&kode=" . md5($query_data["no_transaksi"]) . "'><i class='fa fa-edit'></i>&nbsp;Update</span></td>";
 
-                                        echo("<td><span class='label label-danger' onclick=\"if(confirm('Apakah anda yakin akan menghapus data Transaksi Jurnal penyesuaian " . $query_data["keterangan_transaksi"] . " ?')){location.href='index2.php?page=" . $curPage . "&txtMode=Delete&kode=" . md5($query_data["no_transaksi"]) . "'}\" style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Hapus</span></td>");
+                                        echo("<td><span class='label label-danger' onclick=\"if(confirm('Apakah anda yakin akan menghapus data Transaksi Jurnal Umum " . $query_data["kode_transaksi"] . " ?')){location.href='index2.php?page=" . $curPage . "&txtMode=Delete&kode=" . md5($query_data["no_transaksi"]) . "'}\" style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</span></td>");
                                     }else{
-                                        echo("<td><span class='label label-default' ><i class='fa fa-edit'></i>&nbsp;Ubah</span></td>");
-                                        echo("<td><span class='label label-default' ><i class='fa fa-trash'></i>&nbsp;Hapus</span></td>");
+                                        if ($_SESSION["my"]->privilege == 'GODMODE') {
+                                            echo "<td><span class='label label-success' style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/jurnalumum_detail&mode=edit&kode=" . md5($query_data["no_transaksi"]) . "'><i class='fa fa-edit'></i>&nbsp;Update</span></td>";
+
+                                            echo("<td><span class='label label-danger' onclick=omodal('" . md5($query_data['no_transaksi']) . "') value='" . md5($query_data["no_transaksi"]) . "' id='btnModal'style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</span></td>");
+                                        }else{
+                                            echo("<td><span class='label label-default' ><i class='fa fa-edit'></i>&nbsp;Update</span></td>");
+                                            echo("<td><span class='label label-default' ><i class='fa fa-trash'></i>&nbsp;Delete</span></td>");
+                                        }
                                     }
 
                                 } else {
