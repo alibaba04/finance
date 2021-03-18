@@ -269,7 +269,7 @@ return true;
 
                             $q = "SELECT j.nomor_jurnal, j.kode_transaksi, j.tanggal_selesai, t.tanggal_transaksi ";
                             $q.= "FROM aki_jurnal_umum j INNER JOIN aki_tabel_transaksi t ON j.kode_transaksi=t.kode_transaksi ";
-                            $q.= "WHERE md5(j.kode_transaksi)='".$kode."'";
+                            $q.= "WHERE md5(t.no_transaksi)='".$kode."'";
 
                             $rsTemp = mysql_query($q, $dbLink);
 
@@ -341,14 +341,14 @@ return true;
 
                                 <?php
                                 if ($_GET['mode']=='edit'){
-                                    $q = "SELECT t.id_transaksi, t.kode_transaksi, t.kode_rekening, t.tanggal_transaksi, t.keterangan_transaksi, t.debet, t.kredit, m.nama_rekening FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening WHERE MD5(kode_transaksi)='" . $kode . "' ORDER BY id_transaksi ";
+                                    $q = "SELECT t.id_transaksi, t.kode_transaksi, t.kode_rekening, t.tanggal_transaksi, t.keterangan_transaksi, t.debet, t.kredit, m.nama_rekening FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening WHERE MD5(no_transaksi)='" . $kode . "' ORDER BY id_transaksi ";
                                     $rsDetilJurnal = mysql_query($q, $dbLink);
                                     $iJurnal = 0;
                                     while ($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
 
                                         echo '<tr>';
                                         echo '<td align="center" valign="top"><div class="form-group">
-                                        <input type="checkbox" class="minimal"  name="chkEdit_' . $iJurnal . '" id="chkEdit_' . $iJurnal . '" value="' . $DetilJurnal["id_transaksi"] . '" /></div></td>';
+                                        <input type="checkbox" checked class="minimal"  name="chkEdit_' . $iJurnal . '" id="chkEdit_' . $iJurnal . '" value="' . $DetilJurnal["id_transaksi"] . '" /></div></td>';
 
                                         $q = "SELECT kode_rekening, nama_rekening FROM aki_tabel_master order by kode_rekening";
                                         $lakun = mysql_query($q, $dbLink);
@@ -404,8 +404,13 @@ return true;
                         </div>
                     </div>
                     <div class="box-footer">
-                        <input type="button" class="btn btn-primary" onclick="omodal()" value="Save">
-                        <!-- <input type="submit" class="btn btn-primary" value="Save"> -->
+                        <?php 
+                        if ($_GET['mode']=='edit'){
+                            echo '<input type="button" class="btn btn-primary" onclick="omodal()" value="Save">';
+                        }else{
+                            echo '<input type="submit" class="btn btn-primary" value="Save">';
+                        }
+                        ?>
 
                         <a href="index.php?page=html/jurnalumum_list">
                             <button type="button" class="btn btn-default pull-right">&nbsp;&nbsp;Cancel&nbsp;&nbsp;</button>    
