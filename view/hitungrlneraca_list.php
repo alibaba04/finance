@@ -16,7 +16,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     require_once("./class/c_hitungrlneraca.php");
     $tmpRLNeraca = new c_hitungrlneraca;
 //Jika Mode Tambah/Add
-    if ($_POST["sbmHitungRL"] == "Proses Hitung") {
+    if ($_POST["sbmHitungRL"] == "SUBMIT") {
         $tglPosting1 = $_POST['starts'];
         $tglPosting2 = $_POST['ends'];
         $pesan = $tmpRLNeraca->hitungRL($tglPosting1,$tglPosting2);

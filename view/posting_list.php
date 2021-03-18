@@ -24,7 +24,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     $tmpPosting = new c_posting;
 
 //Jika Mode Tambah/Add
-    if ($_POST["sbmPosting"] == "Posting Jurnal") {
+    if ($_POST["sbmPosting"] == "Posting") {
         $tglPosting1 = $_POST['starts'];
         $tglPosting2 = $_POST['ends'];
         $pesan = $tmpPosting->posting($tglPosting1,$tglPosting2);
@@ -81,7 +81,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <form name="frmCariJurnalMasuk" method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <form name="frmCariJurnalMasuk" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                         <input type="hidden" name="page" value="<?php echo $curPage; ?>">
 
                         <div class="form-group">
