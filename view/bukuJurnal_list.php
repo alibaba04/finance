@@ -134,12 +134,14 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <table class="table table-bordered table-striped table-hover" >
                         <thead>
                             <tr>
-                                <th style="width: 10%">Tanggal Transaksi</th>
-                                <th style="width: 10%">Nomor Bukti</th>
-                                <th style="width: 30%">Keterangan</th>
-                                <th style="width: 20%">Kode Akun</th>
-                                <th style="width: 12%">Debet</th>
-                                <th style="width: 12%">Kredit</th>
+                                <th style="width: 5%">Date</th>
+                                <th style="width: 5%">Transaction Number</th>
+                                <th style="width: 15%">Description</th>
+                                <th style="width: 10%">Account</th>
+                                <th style="width: 10%">Debt</th>
+                                <th style="width: 10%">Credit</th>
+
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -159,13 +161,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                     $totKredit += $query_data["kredit"]; 
                                 }
                                 echo "<tr>";
-                                echo "<td colspan='4' align='right'>TOTAL TRANSAKSI</td>";
+                                echo "<td colspan='4' align='right'>Amount</td>";
                                 echo "<td align='right'>". number_format($totDebet, 2) ."</td>";
                                 echo "<td align='right'>". number_format($totKredit, 2) ."</td>";
                                 echo "</tr>";
                             } else {
                                 echo("<tr class='even'>");
-                                echo ("<td colspan='6' align='center'>Maaf, data tidak ditemukan</td>");
+                                echo ("<td colspan='6' align='center'>No data found!</td>");
                                 echo("</tr>");
                             }
                             ?>

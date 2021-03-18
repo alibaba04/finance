@@ -12,7 +12,7 @@ $hakUser = getUserPrivilege($curPage);
 if ($hakUser < 10) {
     session_unregister("my");
     echo "<p class='error'>";
-    die('User anda tidak terdaftar untuk mengakses halaman ini!');
+    die('User cannot access this page!');
     echo "</p>";
 }
 $tglPosting1 = "";
@@ -33,7 +33,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 //Jika masih ada masalah, berarti ada exception/masalah yang belum teridentifikasi dan harus segera diperbaiki!
     if (strtoupper(substr($pesan, 0, 5)) == "GAGAL") {
         global $mailSupport;
-        $pesan.="Gagal simpan data, mohon hubungi " . $mailSupport . " untuk keterangan lebih lanjut terkait masalah ini.";
+        $pesan.="Warning!!, please text to " . $mailSupport . " for support this error!.";
     }
     header("Location:index.php?page=$curPage&pesan=" . $pesan);
     exit;
@@ -59,13 +59,12 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 <!-- End of Script Tanggal -->
 <section class="content-header">
     <h1>
-        POSTING JURNAL
-        <small>List Posting Jurnal</small>
+        POSTING 
     </h1>
     <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Proses</li>
-        <li class="active">Posting Jurnal </li>
+        <li class="active">Process</li>
+        <li class="active">Posting </li>
     </ol>
 </section>
 <!-- Main content -->
@@ -78,7 +77,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>
-                    <h3 class="box-title">Kriteria Pencarian Data Jurnal </h3>
+                    <h3 class="box-title"></h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -86,7 +85,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <input type="hidden" name="page" value="<?php echo $curPage; ?>">
 
                         <div class="form-group">
-                            <label>Range Tanggal Transaksi Yang Akan Diposting</label>
+                            <label>Range Transaction Date</label>
                             <input type="text" class="form-control" name="tglTransaksi" id="tglTransaksi" 
                             <?php
                             if (isset($_GET["tglTransaksi"])) {
@@ -101,7 +100,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <input type="hidden" id="starts" name="starts">
                         <input type="hidden" id="ends" name="ends" >
 
-                        <input  type="submit" onclick="return confirm('Dengan menekan tombol OK, Anda akan memposting semua transaksi yang belum terposting, Transaksi yang sudah terposting TIDAK DAPAT Diubah Lagi. Bila Anda Yakin Data Sudah BENAR Semua, tekan Ok, bila masih ragu tekan Cancel dan cek semua transaksi yang belum terposting apakah sudah benar?');" name="sbmPosting" class="btn btn-primary" value="Posting Jurnal">
+                        <input  type="submit" onclick="return confirm('Continue to posting transaction?');" name="sbmPosting" class="btn btn-primary" value="Posting">
                     </form>
                 </div>
             </div>
@@ -117,7 +116,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <i class="fa fa-warning"></i>
-                        <h3 class="box-title">Pesan</h3>
+                        <h3 class="box-title">Message</h3>
                     </div>
                     <div class="box-body">
                         <?php
@@ -174,7 +173,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 ?>
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>
-                    Tanda&nbsp; <i class='fa fa-check-square-o' aria-hidden='true'></i>pada kolom posting, berarti transaksi sudah terposting!
+                    &nbsp; <i class='fa fa-check-square-o' aria-hidden='true'></i>in the "Post" column, means the transaction has been posted!
                     <!-- <ul class="pagination pagination-sm inline"></ul> --><!--Tanpa Paging supaya data muncul semua -->
                 </div>
                 <div class="box-body">
@@ -182,13 +181,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <thead>
                             <tr>
                                 <th style="width: 3%">#</th>
-                                <th style="width: 6%">Tanggal Transaksi</th>
-                                <th style="width: 10%">Kode Transaksi</th>
-                                <th style="width: 20%">Kode Akun</th>
-                                <th style="width: 30%">Keterangan</th>
-                                <th style="width: 10%">Debet</th>
-                                <th style="width: 10%">Kredit</th>
-                                <th style="width: 5%">Posting?</th>
+                                <th style="width: 6%">Transaction Date</th>
+                                <th style="width: 10%">Transaction Code</th>
+                                <th style="width: 20%">Account</th>
+                                <th style="width: 30%">Description</th>
+                                <th style="width: 10%">Debt</th>
+                                <th style="width: 10%">Credit</th>
+                                <th style="width: 5%">Posted?</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -217,14 +216,14 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 }
                             } else {
                                 echo("<tr class='even'>");
-                                echo ("<td colspan='8' align='center'>Maaf, data belum ada/tidak ditemukan</td>");
+                                echo ("<td colspan='8' align='center'>No data found!</td>");
                                 echo("</tr>");
                             }
                             ?>
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="5" align="center"><b>JUMLAH</td>
+                                <td colspan="5" align="center"><b>Count</td>
                                 <td align="right"><b><?php echo number_format($totDebet,2); ?></td>
                                 <td align="right"><b><?php echo number_format($totKredit,2); ?></td>
                             </tr>
@@ -253,7 +252,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             function validate(form){
                 if(form.starts.value=='' )
                 {
-                    alert("Range Tanggal Transaksi Yang Akan Dihitung Harus Diisi! ");
+                    alert("Range Transaction Date cannot be Empty! ");
                     $('#tglTransaksi').focus();
                     return false;
                 }

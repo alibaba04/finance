@@ -12,7 +12,7 @@ $hakUser = getUserPrivilege($curPage);
 if ($hakUser < 10) {
     session_unregister("my");
     echo "<p class='error'>";
-    die('User anda tidak terdaftar untuk mengakses halaman ini!');
+    die('User cannot access this page!');
     echo "</p>";
 }
 //Periksa apakah merupakan proses headerless (tambah, edit atau hapus) dan apakah hak user cukup
@@ -21,7 +21,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 //Jika masih ada masalah, berarti ada exception/masalah yang belum teridentifikasi dan harus segera diperbaiki!
     if (strtoupper(substr($pesan, 0, 5)) == "GAGAL") {
         global $mailSupport;
-        $pesan.="Gagal simpan data, mohon hubungi " . $mailSupport . " untuk keterangan lebih lanjut terkait masalah ini.";
+        $pesan.="Warning!!, please text to " . $mailSupport . " for support this error!.";
     }
     header("Location:index.php?page=$curPage&pesan=" . $pesan);
     exit;
@@ -44,7 +44,6 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 <section class="content-header">
     <h1>
         LABA RUGI 
-        <small>List Laba Rugi </small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -61,13 +60,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>
-                    <h3 class="box-title">Periode Bulanan </h3>
+                    <h3 class="box-title">Monthly Period</h3>
                 </div>
                 <form name="frmCariJurnal" method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <div class="box-body">
                         <input type="hidden" name="page" value="<?php echo $curPage; ?>">
                         <div class="form-group">
-                            <label>Range Tanggal Transaksi Jurnal </label>
+                            <label>Range Transaction Date</label>
                             <input type="text" class="form-control" name="tglJurnal" id="tglJurnal" 
                             <?php
                             if (isset($_GET["tglKirim"])) {
@@ -78,7 +77,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         </div>
                     </div>
                     <div class="box-footer clearfix">
-                        <button type="Submit" class="btn btn-default pull-right"><i class="fa fa-search"></i> Tampilkan</button>
+                        <button type="Submit" class="btn btn-default pull-right"><i class="fa fa-search"></i> Show</button>
                     </div>
                 </form>
 
@@ -116,7 +115,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         <section class="col-lg-12 connectedSortable">
             <div class="box box-primary">
                 <div class="box-header">
-                    <i class="ion ion-clipboard"></i>&nbsp;&nbsp;Data Laba Rugi <?php if (!empty($tglJurnal1)){ echo " dari tanggal ". $tglJurnal1 . " sampai dengan tanggal ". $tglJurnal2; } ?> 
+                    <i class="ion ion-clipboard"></i>&nbsp;&nbsp;Data Laba Rugi <?php if (!empty($tglJurnal1)){ echo $tglJurnal1 . " to ". $tglJurnal2; } ?> 
                     <a href="excel/c_exportexcel_rl.php?&bulan=<?=$bulan;?>&tahun=<?=$tahun; ?>"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a>
                     <form action="index.php?page=view/neracaPercobaan_list" method="post" name="frmPosting">
                         <!-- <a href="pdf/pdf_rugilaba.php?&bulan=<?=$bulan;?>&tahun=<?=$tahun;?>" title="Cetak PDF Neraca Percobaan"><button type="button" class="btn btn-info pull-right"><i class="fa fa-print "></i> Cetak Laba Rugi</button></a> &nbsp;&nbsp; -->
@@ -127,10 +126,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <table class="table table-bordered table-striped table-hover" style="margin-bottom: 0;">
                         <thead>
                             <tr>
-                                <th style="width: 10%">Kode</th>
-                                <th style="width: 20%">Nama Akun</th>
+                                <th style="width: 10%">Code</th>
+                                <th style="width: 20%">Account Name</th>
                                 <th style="width: 10%">Normal</th>
-                                <th style="width: 30%"colspan="2" >Saldo</th>
+                                <th style="width: 30%"colspan="2" >Balance</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -139,7 +138,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <div class="col-md">
                         <div class="box box-default box-solid collapsed-box"style="margin-bottom: 0;">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Pendapatan</h3>
+                                <h3 class="box-title">Income</h3>
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                                     </button>
@@ -203,7 +202,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                         echo "</tr></div>";
                                     }else {
                                         echo("<tr class='even'>");
-                                        echo ("<td colspan='8' align='center'>Maaf, data tidak ditemukan</td>");
+                                        echo ("<td colspan='8' align='center'>No data Found!</td>");
                                         echo("</tr>");
                                     }
                                     ?>
@@ -216,7 +215,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     </div>
                     <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
                     echo "<tfooter><tr>";
-                    echo "<td align='right' style='width: 40%' ><b>Total Pendapatan</td>";
+                    echo "<td align='right' style='width: 40%' ><b>Total Income</td>";
                     echo "<td align='right' style='width: 10%' ><b></td>";
                     echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
                     echo "</tr></tfooter>";
@@ -226,7 +225,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 <div class="col-md">
                     <div class="box box-default box-solid collapsed-box" style="margin-bottom: 0;">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Biaya Atas Pendapatan</h3>
+                            <h3 class="box-title">Cost of Income</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                                 </button>
@@ -276,7 +275,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                     echo "</tr></div>";
                                 }else {
                                     echo("<tr class='even'>");
-                                    echo ("<td colspan='8' align='center'>Maaf, data tidak ditemukan</td>");
+                                    echo ("<td colspan='8' align='center'>No data Found!</td>");
                                     echo("</tr>");
                                 }
                                 ?>
@@ -289,11 +288,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
                 $TbiayaHpp = $totADebet+$totAKredit;
                 echo "<tfooter><tr>";
-                echo "<td align='right' style='width: 40%' ><b>Total Biaya Atas Pendapatan / HPP</td>";
+                echo "<td align='right' style='width: 40%' ><b>Total Cost of Income / HPP</td>";
                 echo "<td align='right' style='width: 10%' ><b></td>";
                 echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
                 echo "</tr><tr>";
-                echo "<td align='right' style='width: 40%' ><b>Laba Kotor</td>";
+                echo "<td align='right' style='width: 40%' ><b>Gross Profit</td>";
                 echo "<td align='right' style='width: 10%' ><b></td>";
                 echo "<td align='center' style='width: 30%' ><b>".number_format( $Tpendapatan-$TbiayaHpp, 2)."</td>";
                 echo "</tr></tfooter>";
@@ -302,7 +301,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             <div class="col-md">
                 <div class="box box-default box-solid collapsed-box" style="margin-bottom: 0;">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Total Biaya Operasional</h3>
+                        <h3 class="box-title">Total Cost Operational</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                             </button>
@@ -352,7 +351,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 echo "</tr></div>";
                             }else {
                                 echo("<tr class='even'>");
-                                echo ("<td colspan='8' align='center'>Maaf, data tidak ditemukan</td>");
+                                echo ("<td colspan='8' align='center'>No data Found!</td>");
                                 echo("</tr>");
                             }
                             ?>
@@ -364,7 +363,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             </div>
             <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
             echo "<tfooter><tr>";
-            echo "<td align='right' style='width: 40%' ><b>Total Biaya Operasional</td>";
+            echo "<td align='right' style='width: 40%' ><b>Total Cost Operational</td>";
             echo "<td align='right' style='width: 10%' ><b></td>";
             echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
             echo "</tr></tfooter>";
@@ -374,7 +373,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         <div class="col-md">
             <div class="box box-default box-solid collapsed-box" style="margin-bottom: 0;">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Total Pendapatan Lainnya</h3>
+                    <h3 class="box-title">Total Other Income</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                         </button>
@@ -424,7 +423,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             echo "</tr></div>";
                         }else {
                             echo("<tr class='even'>");
-                            echo ("<td colspan='8' align='center'>Maaf, data tidak ditemukan</td>");
+                            echo ("<td colspan='8' align='center'>No data Found!</td>");
                             echo("</tr>");
                         }
                         ?>
@@ -436,7 +435,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         </div>
         <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
         echo "<tfooter><tr>";
-        echo "<td align='right' style='width: 40%' ><b>Total Pendapatan Lainnya</td>";
+        echo "<td align='right' style='width: 40%' ><b>Total Other Income</td>";
         echo "<td align='right' style='width: 10%' ><b></td>";
         echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
         echo "</tr></tfooter>";
@@ -446,7 +445,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     <div class="col-md">
         <div class="box box-default box-solid collapsed-box" style="margin-bottom: 0;">
             <div class="box-header with-border">
-                <h3 class="box-title">Total Biaya Lainnya</h3>
+                <h3 class="box-title">Total Other Cost</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                     </button>
@@ -496,7 +495,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         echo "</tr></div>";
                     }else {
                         echo("<tr class='even'>");
-                        echo ("<td colspan='8' align='center'>Maaf, data tidak ditemukan</td>");
+                        echo ("<td colspan='8' align='center'>No data Found!</td>");
                         echo("</tr>");
                     }
                     ?>
@@ -512,7 +511,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     $tlabarugi = '';
 
     echo "<tfooter><tr>";
-    echo "<td align='right' style='width: 40%' ><b>Total Biaya Lainnya</td>";
+    echo "<td align='right' style='width: 40%' ><b>Total Other Cost</td>";
     echo "<td align='right' style='width: 10%' ><b></td>";
     echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
     echo "</tr><tr>";

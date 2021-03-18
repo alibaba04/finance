@@ -19,7 +19,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 //Jika masih ada masalah, berarti ada exception/masalah yang belum teridentifikasi dan harus segera diperbaiki!
     if (strtoupper(substr($pesan, 0, 5)) == "GAGAL") {
         global $mailSupport;
-        $pesan.="Gagal simpan data, mohon hubungi " . $mailSupport . " untuk keterangan lebih lanjut terkait masalah ini.";
+        $pesan.="Warning!!, please text to " . $mailSupport . " for support this error!.";
     }
     header("Location:index.php?page=$curPage&pesan=" . $pesan);
     exit;
@@ -214,13 +214,13 @@ select: function( event, ui ) {
                     <table class="table table-bordered table-striped table-hover" >
                         <thead>
                             <tr>
-                                <th style="width: 5%">Tanggal</th>
-                                <th style="width: 10%">Nomor Bukti</th>
-                                <th style="width: 15%">Kode Akun</th>
-                                <th style="width: 23%">Keterangan</th>
-                                <th style="width: 12%">Debit</th>
-                                <th style="width: 12%">Kredit</th>
-                                <th style="width: 12%">Saldo</th>
+                                <th style="width: 5%">Date</th>
+                                <th style="width: 10%">Transaction Number</th>
+                                <th style="width: 15%">Account</th>
+                                <th style="width: 23%">Description</th>
+                                <th style="width: 12%">Debt</th>
+                                <th style="width: 12%">Credit</th>
+                                <th style="width: 12%">Balance</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -257,7 +257,7 @@ select: function( event, ui ) {
                                     $totKredit += $query_data["kredit"]; 
                                 }
                                 echo "<tr>";
-                                echo "<td colspan='4' align='right'>TOTAL TRANSAKSI</td>";
+                                echo "<td colspan='4' align='right'>Amount</td>";
                                 echo "<td align='right'>". number_format($totDebet, 2) ."</td>";
                                 echo "<td align='right'>". number_format($totKredit, 2) ."</td>";
                                 echo "<td align='right'>". number_format($saldo, 2) ."</td>";

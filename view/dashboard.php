@@ -45,7 +45,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
             <div class="small-box bg-light-blue">
                 <div class="inner">
                     <h3>1</h3>
-                    <p>Jurnal Umum</p>
+                    <p>General Entries</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-android-globe"></i>
@@ -77,7 +77,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
             <div class="small-box bg-aqua">
                 <div class="inner">
                     <h3>2</h3>
-                    <p>Jurnal Penyesuaian</p>
+                    <p>Adjustment Entries</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-android-list"></i>
@@ -111,7 +111,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>
-                    <h3 class="box-title">Akuntansi </h3>
+                    <h3 class="box-title">Accounting </h3>
                 </div>
                 <div class="box-body">
                     <ul class="todo-list">

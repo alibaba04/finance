@@ -12,7 +12,7 @@ $hakUser = getUserPrivilege($curPage);
 if ($hakUser < 10) {
     session_unregister("my");
     echo "<p class='error'>";
-    die('User anda tidak terdaftar untuk mengakses halaman ini!');
+    die('User cannot access this page!');
     echo "</p>";
 }
 
@@ -56,13 +56,13 @@ if(array_key_exists('htParent', $_POST)){
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>
-                    <h3 class="box-title">Periode Bulanan </h3>
+                    <h3 class="box-title">Monthly Period</h3>
                 </div>
                 <form name="frmCariJurnal" method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <div class="box-body">
                         <input type="hidden" name="page" value="<?php echo $curPage; ?>">
                         <div class="form-group">
-                            <label>Range Tanggal Transaksi Jurnal </label>
+                            <label>Range Transaction Date</label>
                             <input type="text" class="form-control" name="tglJurnal" id="tglJurnal" 
                             <?php
                             if (isset($_GET["tglKirim"])) {
@@ -73,7 +73,7 @@ if(array_key_exists('htParent', $_POST)){
                         </div>
                     </div>
                     <div class="box-footer clearfix">
-                        <button type="Submit" class="btn btn-default pull-right"><i class="fa fa-search"></i> Tampilkan</button>
+                        <button type="Submit" class="btn btn-default pull-right"><i class="fa fa-search"></i> Show</button>
                     </div>
                 </form>
             </div>
@@ -86,7 +86,7 @@ if(array_key_exists('htParent', $_POST)){
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <i class="fa fa-warning"></i>
-                        <h3 class="box-title">Pesan</h3>
+                        <h3 class="box-title">Message</h3>
                     </div>
                     <div class="box-body">
                         <?php
@@ -116,7 +116,7 @@ if(array_key_exists('htParent', $_POST)){
 
                     <?php 
                     
-                    if (!empty($tglJurnal1)){ echo " dari tanggal ". $tglJurnal1 . " sampai dengan tanggal ". $tglJurnal2; } 
+                    if (!empty($tglJurnal1)){ echo  $tglJurnal1 . " to ". $tglJurnal2; } 
                     $bulan = $tahun = '';
                     if (isset($_GET["bulan"])){
                         $bulan = $_GET["bulan"];
@@ -133,10 +133,10 @@ if(array_key_exists('htParent', $_POST)){
                     <table class="table table-bordered table-striped table-hover" style="margin-bottom: 0;">
                         <thead>
                             <tr>
-                                <th style="width: 10%">Kode</th>
-                                <th style="width: 20%">Nama Akun</th>
+                                <th style="width: 10%">Code</th>
+                                <th style="width: 20%">Account Name</th>
                                 <th style="width: 10%">Normal</th>
-                                <th style="width: 30%"colspan="2" >Saldo</th>
+                                <th style="width: 30%"colspan="2" >Balance</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -145,7 +145,7 @@ if(array_key_exists('htParent', $_POST)){
                     <div class="col-md">
                         <div class="box box-default box-solid collapsed-box"style="margin-bottom: 0;">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Aktiva Lancar</h3>
+                                <h3 class="box-title">Current Assets</h3>
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                                     </button>
@@ -211,7 +211,7 @@ if(array_key_exists('htParent', $_POST)){
                                         echo "</tr></div>";
                                     }else {
                                         echo("<tr class='even'>");
-                                        echo ("<td colspan='8' align='center'>Maaf, data tidak ditemukan</td>");
+                                        echo ("<td colspan='8' align='center'>No data Found!</td>");
                                         echo("</tr>");
                                     }
                                     ?>
@@ -223,7 +223,7 @@ if(array_key_exists('htParent', $_POST)){
                     </div>
                     <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
                     echo "<tfooter><tr>";
-                    echo "<td align='right' style='width: 40%' ><b>Total Aktiva Lancar</td>";
+                    echo "<td align='right' style='width: 40%' ><b>Total Current Assets</td>";
                     echo "<td align='right' style='width: 10%' ><b></td>";
                     echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
                     echo "</tr></tfooter>";
@@ -233,7 +233,7 @@ if(array_key_exists('htParent', $_POST)){
                 <div class="col-md">
                     <div class="box box-default box-solid collapsed-box" style="margin-bottom: 0;">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Aktiva Tetap</h3>
+                            <h3 class="box-title">Fixed Assets</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                                 </button>
@@ -283,7 +283,7 @@ if(array_key_exists('htParent', $_POST)){
                                     echo "</tr></div>";
                                 }else {
                                     echo("<tr class='even'>");
-                                    echo ("<td colspan='8' align='center'>Maaf, data tidak ditemukan</td>");
+                                    echo ("<td colspan='8' align='center'>No data Found!</td>");
                                     echo("</tr>");
                                 }
                                 ?>
@@ -296,11 +296,11 @@ if(array_key_exists('htParent', $_POST)){
                 <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
                 $TATetap = $totADebet+$totAKredit;
                 echo "<tfooter><tr>";
-                echo "<td align='right' style='width: 40%' ><b>Total Aktiva Tetap</td>";
+                echo "<td align='right' style='width: 40%' ><b>Total Fixed Assets</td>";
                 echo "<td align='right' style='width: 10%' ><b></td>";
                 echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
                 echo "</tr><tr>";
-                echo "<td align='right' style='width: 40%' ><b>TOTAL AKTIVA</td>";
+                echo "<td align='right' style='width: 40%' ><b>TOTAL Assets</td>";
                 echo "<td align='right' style='width: 10%' ><b></td>";
                 echo "<td align='center' style='width: 30%' ><b>".number_format( $TALancar+$TATetap, 2)."</td>";
                 echo "</tr></tfooter>";
@@ -310,7 +310,7 @@ if(array_key_exists('htParent', $_POST)){
             <div class="col-md">
                 <div class="box box-default box-solid collapsed-box" style="margin-bottom: 0;">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Total Kewajiban</h3>
+                        <h3 class="box-title">Total Liabilities</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                             </button>
@@ -360,7 +360,7 @@ if(array_key_exists('htParent', $_POST)){
                                 echo "</tr></div>";
                             }else {
                                 echo("<tr class='even'>");
-                                echo ("<td colspan='8' align='center'>Maaf, data tidak ditemukan</td>");
+                                echo ("<td colspan='8' align='center'>No data Found!</td>");
                                 echo("</tr>");
                             }
                             ?>
@@ -372,7 +372,7 @@ if(array_key_exists('htParent', $_POST)){
             </div>
             <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
             echo "<tfooter><tr>";
-            echo "<td align='right' style='width: 40%' ><b>Total Kewajiban</td>";
+            echo "<td align='right' style='width: 40%' ><b>Total Liabilities</td>";
             echo "<td align='right' style='width: 10%' ><b></td>";
             echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
             echo "</tr></tfooter>";
@@ -382,7 +382,7 @@ if(array_key_exists('htParent', $_POST)){
         <div class="col-md">
             <div class="box box-default box-solid collapsed-box" style="margin-bottom: 0;">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Total Ekuitas</h3>
+                    <h3 class="box-title">Total Equity</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                         </button>
@@ -432,7 +432,7 @@ if(array_key_exists('htParent', $_POST)){
                             echo "</tr></div>";
                         }else {
                             echo("<tr class='even'>");
-                            echo ("<td colspan='8' align='center'>Maaf, data tidak ditemukan</td>");
+                            echo ("<td colspan='8' align='center'>No data Found!</td>");
                             echo("</tr>");
                         }
                         ?>
@@ -445,11 +445,11 @@ if(array_key_exists('htParent', $_POST)){
         <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
         $TEkuitas = $totADebet+$totAKredit;
         echo "<tfooter><tr>";
-        echo "<td align='right' style='width: 40%' ><b>Total Ekuitas</td>";
+        echo "<td align='right' style='width: 40%' ><b>Total Equity</td>";
         echo "<td align='right' style='width: 10%' ><b></td>";
         echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
         echo "</tr><tr>";
-        echo "<td align='right' style='width: 40%' ><b>TOTAL KEWAJIBAN DAN EKUITAS</td>";
+        echo "<td align='right' style='width: 40%' ><b>TOTAL Liabilities DAN Equity</td>";
         echo "<td align='right' style='width: 10%' ><b></td>";
         echo "<td align='center' style='width: 30%' ><b>".number_format( $TKewajiban+$TEkuitas, 2)."</td>";
         echo "</tr></tfooter>";

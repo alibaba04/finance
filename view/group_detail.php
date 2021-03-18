@@ -10,7 +10,7 @@ $hakUser = getUserPrivilege($curPage);
 if ($hakUser != 90) {
     session_unregister("my");
     echo "<p class='error'>";
-    die('User anda tidak terdaftar untuk mengakses halaman ini!');
+    die('User cannot access this page!');
     echo "</p>";
 }
 ?>
@@ -61,12 +61,11 @@ if ($hakUser != 90) {
 </SCRIPT>
 <section class="content-header">
     <h1>
-        PENGATURAN GROUP
-        <small>Detail Pengaturan Group</small>
+        GROUP SETTINGS 
     </h1>
     <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Pengaturan</li>
+        <li class="active">Setting</li>
         <li class="active">Group</li>
     </ol>
 </section>
@@ -79,7 +78,7 @@ if ($hakUser != 90) {
                         <i class="ion ion-clipboard"></i>
                         <?php
                         if ($_GET["mode"] == "edit") {
-                            echo '<h3 class="box-title">UBAH DATA GROUP </h3>';
+                            echo '<h3 class="box-title">UPDATE DATA  </h3>';
                             echo "<input type='hidden' name='txtMode' value='Edit'>";
                             $kode = secureParam($_GET["kode"], $dbLink);
                             $q = "SELECT g.kodeGroup, g.nama ";
@@ -90,20 +89,20 @@ if ($hakUser != 90) {
                             } else {
                                 ?>
                                 <script language="javascript">
-                                    alert("Kode Tidak Valid");
+                                    alert("Invalid Code!");
                                     history.go(-1);
                                 </script>
                                 <?php
                             }
                         } else {
-                            echo '<h3 class="box-title">TAMBAH DATA GROUP </h3>';
+                            echo '<h3 class="box-title">ADD DATA </h3>';
                             echo "<input type='hidden' name='txtMode'  value='Add'>";
                         }
                         ?>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
-                            <label class="control-label" for="txtKodeGroup">Kode Group</label>
+                            <label class="control-label" for="txtKodeGroup">Group Code</label>
                             <script language="javascript">
                                 $(document).ready(function(){
                                     $("#kodeGroup").blur(function()

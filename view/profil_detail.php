@@ -12,7 +12,7 @@ $hakUser = getUserPrivilege($curPage);
 if ($hakUser != 90) {
     session_unregister("my");
     echo "<p class='error'>";
-    die('User anda tidak terdaftar untuk mengakses halaman ini!');
+    die('User cannot access this page!');
     echo "</p>";
 }
 ?>
@@ -145,7 +145,7 @@ if ($hakUser != 90) {
                             } else {
                                 ?>
                                 <script language="javascript">
-                                    alert("Kode Tidak Valid");
+                                    alert("Invalid Code!");
                                     history.go(-1);
                                 </script>
                                 <?php

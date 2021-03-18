@@ -11,7 +11,7 @@ $hakUser = getUserPrivilege($curPage);
 if ($hakUser < 10) {
     session_unregister("my");
     echo "<p class='error'>";
-    die('User anda tidak terdaftar untuk mengakses halaman ini!');
+    die('User cannot access this page!');
     echo "</p>";
 }
 //Periksa apakah merupakan proses headerless (tambah, edit atau hapus) dan apakah hak user cukup
@@ -44,7 +44,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 //Jika masih ada masalah, berarti ada exception/masalah yang belum teridentifikasi dan harus segera diperbaiki!
     if (strtoupper(substr($pesan, 0, 5)) == "GAGAL") {
         global $mailSupport;
-        $pesan.="Gagal simpan data, mohon hubungi " . $mailSupport . " untuk keterangan lebih lanjut terkait masalah ini.";
+        $pesan.="Warning!!, please text to " . $mailSupport . " for support this error!.";
     }
     header("Location:index.php?page=$curPage&pesan=" . $pesan);
     exit;
@@ -53,13 +53,12 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
 <section class="content-header">
     <h1>
-        DATA PERKIRAAN
-        <small>List Perkiraan</small>
+        CHART OF ACCOUNTS
     </h1>
     <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Input</li>
-        <li class="active">Data Perkiraan</li>
+        <li class="active">COA</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -74,7 +73,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>
-                    <h3 class="box-title">Pencarian Data Perkiraan </h3>
+                    <h3 class="box-title">Search </h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -95,7 +94,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         </div>
                         <p>- atau -</p>
                         <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" name="kodePerkiraan" id="kodePerkiraan" placeholder="Kode Akun..."
+                            <input type="text" class="form-control" name="kodePerkiraan" id="kodePerkiraan" placeholder="Account . ..."
                             <?php
                             if (isset($_GET["kodePerkiraan"])) {
                                 echo("value='" . $_GET["kodePerkiraan"] . "'");
@@ -113,7 +112,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <?php
                     if ($hakUser==90){
                         ?>
-                        <a href="<?php echo $_SERVER['PHP_SELF']."?page=html/perkiraan_detail&mode=add";?>"><button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Tambah Data</button></a>
+                        <a href="<?php echo $_SERVER['PHP_SELF']."?page=html/perkiraan_detail&mode=add";?>"><button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add Data</button></a>
                         <?php
                     }
                     ?>
@@ -131,7 +130,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <i class="fa fa-warning"></i>
-                        <h3 class="box-title">Pesan</h3>
+                        <h3 class="box-title">Message</h3>
                     </div>
                     <div class="box-body">
                         <?php
@@ -188,7 +187,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <ul class="pagination pagination-sm inline"><?php echo $rs->getPageNav($_SERVER['QUERY_STRING']) ?></ul>
                     <!--Cetak PDF dan Export Excel -->
                     <!-- <a href="index2.php?page=<?= $curPage; ?>&mode=lap&tgl1=<?= $tglKirim1; ?>&tgl2=<?= $tglKirim2; ?>" title="Expot Excel"><i class="fa fa-file-excel-o pull-right inline"></i></a><i></i> -->
-                    <a href="pdf/pdf_perkiraan.php" title="Cetak PDF CoA"><button type="button" class="btn btn-primary pull-right"><i class="fa fa-print "></i> Cetak CoA</button></a>
+                    <a href="pdf/pdf_perkiraan.php" title="Cetak PDF CoA"><button type="button" class="btn btn-primary pull-right"><i class="fa fa-print "></i> Print COA</button></a>
                     <!--End Cetak PDF dan Export Excel -->
                 </div>
 
@@ -196,14 +195,12 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <table class="table table-bordered table-striped table-hover" >
                         <thead>
                             <tr>
-                                <th style="width: 5%">Kode Akun</th>
-                                <th style="width: 15%">Nama Akun</th>
-                                <th style="width: 25%">Awal Debet</th>
-                                <th style="width: 25%">Awal Kredit</th>
-                                <th style="width: 25%">Posisi</th>
+                                <th style="width: 15%">Account</th>
+                                <th style="width: 10%">Debt</th>
+                                <th style="width: 10%">Credit</th>
+                                <th style="width: 5%">Position</th>
                                 <th style="width: 5%">Normal</th>
-                                <th colspan="2" width="3%">Aksi</th>
-
+                                <th colspan="2" width="3%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -213,15 +210,14 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             $totDebet = 0; $totKredit = 0;
                             while ($query_data = $rs->fetchArray()) {
                                 echo "<tr>";
-                                echo "<td>" . $query_data["kode_rekening"] . "</td>";
-                                echo "<td>" . $query_data["nama_rekening"] . "</td>";
+                                echo "<td>" . $query_data["kode_rekening"] . " - " . $query_data["nama_rekening"] . "</td>";
                                 echo "<td align='right'>" . number_format($query_data["awal_debet"],2) . "</td>";
                                 echo "<td align='right'>" . number_format($query_data["awal_kredit"],2) . "</td>";
                                 echo "<td>" . $query_data["posisi"] . "</td>";
                                 echo "<td>" . $query_data["normal"] . "</td>";
 
                                 if ($hakUser == 90) {
-                                    echo "<td><span class='label label-success' style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/perkiraan_detail&mode=edit&kode=" . md5($query_data["kode_rekening"]) . "'><i class='fa fa-edit'></i>&nbsp;Ubah</span></td>";
+                                    echo "<td><span class='label label-success' style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/perkiraan_detail&mode=edit&kode=" . md5($query_data["kode_rekening"]) . "'><i class='fa fa-edit'></i>&nbsp;Update</span></td>";
                                 } else {
                                     echo("<td>&nbsp;</td>");
                                     echo("<td>&nbsp;</td>");
@@ -236,14 +232,14 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             }
                             if (!$rs->getNumPages()) {
                                 echo("<tr class='even'>");
-                                echo ("<td colspan='10' align='center'>Maaf, data tidak ditemukan</td>");
+                                echo ("<td colspan='10' align='center'>No Data Found!</td>");
                                 echo("</tr>");
                             }
                             ?>
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="2" align="right">JUMLAH</td>
+                                <td colspan="2" align="right">Count</td>
                                 <td align="right"><?php echo number_format($totDebet,2); ?></td>
                                 <td align="right"><?php echo number_format($totKredit,2); ?></td>
                                 <td colspan="3">

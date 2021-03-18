@@ -12,7 +12,7 @@ $hakUser = getUserPrivilege($curPage);
 if ($hakUser < 10) {
     session_unregister("my");
     echo "<p class='error'>";
-    die('User anda tidak terdaftar untuk mengakses halaman ini!');
+    die('User cannot access this page!');
     echo "</p>";
 }
 
@@ -32,7 +32,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 //Jika masih ada masalah, berarti ada exception/masalah yang belum teridentifikasi dan harus segera diperbaiki!
     if (strtoupper(substr($pesan, 0, 5)) == "GAGAL") {
         global $mailSupport;
-        $pesan.="Gagal simpan data, mohon hubungi " . $mailSupport . " untuk keterangan lebih lanjut terkait masalah ini.";
+        $pesan.="Warning!!, please text to " . $mailSupport . " for support this error!.";
     }
     header("Location:index.php?page=$curPage&pesan=" . $pesan);
     exit;
@@ -117,7 +117,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             } else {
                                 ?>
                                 <script language="javascript">
-                                    alert("Kode Tidak Valid");
+                                    alert("Invalid Code!");
                                     history.go(-1);
                                 </script>
                                 <?php

@@ -278,7 +278,7 @@ return true;
                             } else {
                                 ?>
                                 <script language="javascript">
-                                    alert("Kode Tidak Valid ");
+                                    alert("Invalid Code! ");
                                     history.go(-1);
                                 </script>
                                 <?php

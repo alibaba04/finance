@@ -207,7 +207,7 @@
 
 		} else {
 			echo("<tr class='even'>");
-			echo ("<td colspan='8' align='center'>Maaf, data tidak ditemukan</td>");
+			echo ("<td colspan='8' align='center'>No data Found!</td>");
 			echo("</tr>");
 		}
 		?>

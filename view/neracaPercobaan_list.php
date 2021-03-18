@@ -12,7 +12,7 @@ $hakUser = getUserPrivilege($curPage);
 if ($hakUser < 10) {
     session_unregister("my");
     echo "<p class='error'>";
-    die('User anda tidak terdaftar untuk mengakses halaman ini!');
+    die('User cannot access this page!');
     echo "</p>";
 }
 //Periksa apakah merupakan proses headerless (tambah, edit atau hapus) dan apakah hak user cukup
@@ -21,7 +21,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 //Jika masih ada masalah, berarti ada exception/masalah yang belum teridentifikasi dan harus segera diperbaiki!
     if (strtoupper(substr($pesan, 0, 5)) == "GAGAL") {
         global $mailSupport;
-        $pesan.="Gagal simpan data, mohon hubungi " . $mailSupport . " untuk keterangan lebih lanjut terkait masalah ini.";
+        $pesan.="Warning!!, please text to " . $mailSupport . " for support this error!.";
     }
     header("Location:index.php?page=$curPage&pesan=" . $pesan);
     exit;
@@ -41,13 +41,12 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 </script>
 <section class="content-header">
     <h1>
-        NERACA PERCOBAAN
-        <small>List Neraca Percobaan</small>
+        TRIAL BALANCE
     </h1>
     <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Output</li>
-        <li class="active">Neraca Percobaan</li>
+        <li class="active">Trial Balance</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -59,7 +58,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>
-                    <h3 class="box-title">Periode Bulanan </h3>
+                    <h3 class="box-title">Monthly Period </h3>
                 </div>
 
                 <form name="frmCariJurnal" method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -67,16 +66,16 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <input type="hidden" name="page" value="<?php echo $curPage; ?>">
                         <div class="form-group">
                             <select class="form-control col-lg-6" name="bulan" id="bulan"style="width: 50%">
-                                <option value="01">Januari</option>
-                                <option value="02">Februari</option>
-                                <option value="03">Maret</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
                                 <option value="04">April</option>
-                                <option value="05">Mei</option>
-                                <option value="06">Juni</option>
-                                <option value="07">Juli</option>
-                                <option value="08">Agustus</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
                                 <option value="09">September</option>
-                                <option value="10">Oktober</option>
+                                <option value="10">October</option>
                                 <option value="11">November</option>
                                 <option value="12">Desember</option>
                             </select>
@@ -93,7 +92,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         </div>
                     </div>
                     <div class="box-footer clearfix">
-                        <button type="Submit" class="btn btn-default pull-right"><i class="fa fa-search"></i> Tampilkan</button>
+                        <button type="Submit" class="btn btn-default pull-right"><i class="fa fa-search"></i> Show</button>
                     </div>
                 </form>
 
@@ -107,7 +106,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <i class="fa fa-warning"></i>
-                        <h3 class="box-title">Pesan</h3>
+                        <h3 class="box-title">Message</h3>
                     </div>
                     <div class="box-body">
                         <?php
@@ -152,7 +151,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 $hasilrs = mysql_num_rows($rs);
                 ?>
                 <div class="box-header">
-                    <i class="ion ion-clipboard"></i>&nbsp;&nbsp;Data Neraca Percobaan <?php if (!empty($tglJurnal1)){ echo " dari tanggal ". $tglJurnal1 . " sampai dengan tanggal ". $tglJurnal2; } ?> 
+                    <i class="ion ion-clipboard"></i>&nbsp;&nbsp;Data <?php if (!empty($tglJurnal1)){ echo  $tglJurnal1 . " to ". $tglJurnal2; } ?> 
                     <a href="excel/c_exportexcel_npercobaan.php?&bulan=<?=$bln; ?>&tahun=<?=$thn; ?>"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a>
                 </div>
                 <style type="text/css">
@@ -166,31 +165,28 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 <div class="box-body ea_table" >
                     <table class="table table-bordered table-striped table-hover" >
                         <thead>
-                            <th style="width: 5%"rowspan="2">Kode</th>
-                            <th style="width: 15%"rowspan="2">Nama Akun</th>
-                            <!-- <th style="width: 2%"rowspan="2">SN</th>
-                            <th style="width: 2%"rowspan="2">POS</th> -->
-                            <th style="width: 10%"colspan="2">Saldo Awal</th>
-                            <th style="width: 10%"rowspan="2">Debet</th>
-                            <th style="width: 10%"rowspan="2">Kredit</th>
-                            <th style="width: 10%"colspan="2">Neraca Saldo</th>
-                            <th style="width: 10%"colspan="2">Penyesuaian</th>
-                            <th style="width: 10%"colspan="2">NS Setelah Penyesuaian</th>
+                            <th style="width: 15%"rowspan="2">Account</th>
+                            <th style="width: 10%"colspan="2">Balance</th>
+                            <th style="width: 10%"rowspan="2">Debt</th>
+                            <th style="width: 10%"rowspan="2">Credit</th>
+                            <th style="width: 10%"colspan="2">Trial Balance</th>
+                            <th style="width: 10%"colspan="2">Adjustment</th>
+                            <th style="width: 10%"colspan="2">Balance after Adjustment</th>
                             <th style="width: 10%"colspan="2">Rugi Laba</th>
                             <th style="width: 10%"colspan="2">Neraca</th>
                             <tr>
-                                <th style="width: 5%">Debet</th>
-                                <th style="width: 5%">Kredit</th>
-                                <th style="width: 5%">Debet</th>
-                                <th style="width: 5%">Kredit</th>
-                                <th style="width: 5%">Debet</th>
-                                <th style="width: 5%">Kredit</th>
-                                <th style="width: 5%">Debet</th>
-                                <th style="width: 5%">Kredit</th>
-                                <th style="width: 5%">Debet</th>
-                                <th style="width: 5%">Kredit</th>
-                                <th style="width: 5%">Debet</th>
-                                <th style="width: 5%">Kredit</th>
+                                <th style="width: 5%">Debt</th>
+                                <th style="width: 5%">Credit</th>
+                                <th style="width: 5%">Debt</th>
+                                <th style="width: 5%">Credit</th>
+                                <th style="width: 5%">Debt</th>
+                                <th style="width: 5%">Credit</th>
+                                <th style="width: 5%">Debt</th>
+                                <th style="width: 5%">Credit</th>
+                                <th style="width: 5%">Debt</th>
+                                <th style="width: 5%">Credit</th>
+                                <th style="width: 5%">Debt</th>
+                                <th style="width: 5%">Credit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -207,8 +203,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                     $nspenyesuaianD=0;
                                     $nspenyesuaianK=0;
                                     echo "<tr>";
-                                    echo "<td>" . $query_data["kode_rekening"] . "</td>";
-                                    echo "<td>" . $query_data["nama_rekening"] . "</td>";
+                                    echo "<td>" . $query_data["kode_rekening"] . " - " . $query_data["nama_rekening"] . "</td>";
                                     /*echo "<td>" . $query_data["normal"] . "</td>";
                                     echo "<td>" . $query_data["posisi"] . "</td>";*/
                                     echo "<td align='right'>" . number_format($query_data["awal_debet"], 2) ."</td>";
@@ -321,7 +316,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 
                             } else {
                                 echo("<tr class='even'>");
-                                echo ("<td colspan='8' align='center'>Maaf, data tidak ditemukan</td>");
+                                echo ("<td colspan='8' align='center'>No data Found!</td>");
                                 echo("</tr>");
                             }
                             ?>

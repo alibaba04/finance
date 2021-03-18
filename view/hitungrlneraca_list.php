@@ -8,7 +8,7 @@ $hakUser = getUserPrivilege($curPage);
 if ($hakUser < 10) {
     session_unregister("my");
     echo "<p class='error'>";
-    die('User anda tidak terdaftar untuk mengakses halaman ini!');
+    die('User cannot access this page!');
     echo "</p>";
 }
 //Periksa apakah merupakan proses headerless (tambah, edit atau hapus) dan apakah hak user cukup
@@ -25,7 +25,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 //Jika masih ada masalah, berarti ada exception/masalah yang belum teridentifikasi dan harus segera diperbaiki!
     if (strtoupper(substr($pesan, 0, 5)) == "GAGAL") {
         global $mailSupport;
-        $pesan.="Gagal simpan data, mohon hubungi " . $mailSupport . " untuk keterangan lebih lanjut terkait masalah ini.";
+        $pesan.="Warning!!, please text to " . $mailSupport . " for support this error!.";
     }
     header("Location:index.php?page=$curPage&pesan=" . $pesan);
     exit;
@@ -50,7 +50,6 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 <section class="content-header">
     <h1>
         HITUNG RUGI LABA & NERACA
-        <small>List Hitung Rugi Laba & Neraca</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -68,7 +67,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>
-                    <h3 class="box-title">Proses Hitung Rugi Laba dan Neraca </h3>
+                    <h3 class="box-title"> </h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -76,7 +75,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <input type="hidden" name="page" value="<?php echo $curPage; ?>">
 
                         <div class="form-group">
-                            <label>Range Tanggal Transaksi Yang Akan Dihitung</label>
+                            <label>Range Transaction Date</label>
                             <input type="text" class="form-control" name="tglTransaksi" id="tglTransaksi" 
                             <?php
                             if (isset($_GET["tglTransaksi"])) {
@@ -87,7 +86,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         </div>
                     </form>
                     <div class="callout callout-danger">
-                        <h4><strong>PERHATIAN!</strong></h4>
+                        <h4><strong>WARNING!</strong></h4>
                         <p align="justify">
                             Menu ini adalah Proses untuk <strong>MENGHITUNG RUGI LABA dan NERACA</strong>. Dari proses ini akan menghasilkan laporan keuangan berupa Laporan Rugi Laba dan Neraca.
                         </p>
@@ -101,7 +100,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <form name="frmProsesRL" method="POST" action="index2.php?page=view/hitungrlneraca_list" onSubmit="return validate(this);">
                         <input type="hidden" id="starts" name="starts">
                         <input type="hidden" id="ends" name="ends" >
-                        <input type="submit" name="sbmHitungRL" onclick="return confirm('Dengan menekan tombol OK, Anda akan menghitung RUGI LABA dan NERACA semua transaksi yang sudah terposting, Transaksi yang sudah Terproses Rugi Laba dan Neraca TIDAK DAPAT Diubah Lagi. Bila Anda Yakin Data Sudah BENAR Semua, tekan Ok, tekan Cancel untuk membatalkan proses ini')" class="btn btn-primary pull-right" value="Proses Hitung">
+                        <input type="submit" name="sbmHitungRL" onclick="return confirm('Dengan menekan tombol OK, Anda akan menghitung RUGI LABA dan NERACA semua transaksi yang sudah terposting, Transaksi yang sudah Terproses Rugi Laba dan Neraca TIDAK DAPAT Diubah Lagi. Bila Anda Yakin Data Sudah BENAR Semua, tekan Ok, tekan Cancel untuk membatalkan proses ini')" class="btn btn-primary pull-right" value="SUBMIT">
                     </form>
                 </div>
                 <!-- /.box-body -->
@@ -118,7 +117,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <i class="fa fa-warning"></i>
-                        <h3 class="box-title">Pesan</h3>
+                        <h3 class="box-title">Message</h3>
                     </div>
                     <div class="box-body">
                         <?php
@@ -155,7 +154,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         <script type="text/javascript">
             function validate(form){
                 if(form.starts.value=='' ){
-                    alert("Range Tanggal Transaksi Yang Akan Diposting Harus Diisi! ");
+                    alert("Range Transaction Date cannot be Empty! ");
                     $('#tglTransaksi').focus();
                     return false;
                 }
