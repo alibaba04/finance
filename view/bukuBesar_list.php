@@ -197,10 +197,17 @@ select: function( event, ui ) {
                 $q.= "WHERE 1=1 and keterangan_posting='Post'" . $filter;
                 $q.= " ORDER BY t.tanggal_transaksi, id_transaksi ";
                 $rs = mysql_query($q, $dbLink);
-
+                
                 $hasilrs = mysql_num_rows($rs);
 
-                $q2 = "SELECT * FROM `aki_tabel_master` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
+                $filter2 = "";
+                if ($tglJurnal2){
+                    $filter2 = " AND tanggal_transaksi< '" . tgl_mysql($tglJurnal2) . "'  ";
+                    $q2 = "SELECT *,(awal_debet+d) as saldo_d, (awal_kredit+k) as saldo_k FROM `aki_tabel_master` m inner join (SELECT tanggal_transaksi,kode_rekening,sum(debet) as d, sum(kredit) as k FROM `aki_tabel_transaksi` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."' ".$filter2." and keterangan_posting='Post') as t on m.kode_rekening=t.kode_rekening WHERE m.kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
+                }else{
+                    $q2 = "SELECT awal_debet as saldo_d, awal_kredit as saldo_k FROM `aki_tabel_master` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
+                }
+                
                 $rs2 = mysql_query($q2, $dbLink);
                 $hasilrs2 = mysql_num_rows($rs2);
                 ?>
@@ -230,18 +237,17 @@ select: function( event, ui ) {
                             $saldo=0;
                             
                             if ($hasilrs>0){
-                                while ($query_data = mysql_fetch_array($rs2)) {
+                                $query_data = mysql_fetch_array($rs2);
                                     echo "<tr>";
                                     echo "<td></td>";
                                     echo "<td></td>";
                                     echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. ".</td>";
                                     echo "<td> Saldo Awal</td>";
-                                    echo "<td align='right'>" . number_format($query_data["awal_debet"], 2) . "</td>";
-                                    echo "<td align='right'>" . number_format($query_data["awal_kredit"], 2) . "</td>";
-                                    $saldo = $saldo+$query_data["awal_debet"]-$query_data["awal_kredit"];
+                                    echo "<td align='right'>" . number_format($query_data["saldo_d"], 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_k"], 2) . "</td>";
+                                    $saldo = $saldo+$query_data["saldo_d"]-$query_data["saldo_k"];
                                     echo "<td align='right'>" . number_format($saldo, 2) . "</td>";
                                     echo("</tr>");
-                                }
                                 while ($query_data = mysql_fetch_array($rs)) {
                                     echo "<tr>";
                                     echo "<td>" . tgl_ind($query_data["tanggal_transaksi"]) . "</td>";
@@ -263,6 +269,17 @@ select: function( event, ui ) {
                                 echo "<td align='right'>". number_format($saldo, 2) ."</td>";
                                 echo "</tr>";
                             } else {
+                                $query_data = mysql_fetch_array($rs2);
+                                    echo "<tr>";
+                                    echo "<td></td>";
+                                    echo "<td></td>";
+                                    echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. ".</td>";
+                                    echo "<td> Saldo Awal</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_d"], 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_k"], 2) . "</td>";
+                                    $saldo = $saldo+$query_data["saldo_d"]-$query_data["saldo_k"];
+                                    echo "<td align='right'>" . number_format($saldo, 2) . "</td>";
+                                    echo("</tr>");
                                 echo("<tr class='even'>");
                                 echo ("<td colspan='6' align='center'>No Data Found!</td>");
                                 echo("</tr>");
