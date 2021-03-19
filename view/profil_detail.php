@@ -160,42 +160,42 @@ if ($hakUser != 90) {
                         <div class="form-group">
                             <label class="control-label" for="txtNamaYayasan">Nama Yayasan</label>
 
-                            <input name="txtNamaYayasan" id="txtNamaYayasan" maxlength="50" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['nama_perusahaan']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">    
+                            <input name="txtNamaYayasan" id="txtNamaYayasan" maxlength="50" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['nama_perusahaan']; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">    
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="txtGedung">Alamat 1</label>
 
-                            <input name="txtGedung" id="txtGedung"  class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['gedung']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtGedung" id="txtGedung"  class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['gedung']; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="txtJalan">Alamat 2</label>
 
-                            <input name="txtJalan" id="txtJalan" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['jalan']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtJalan" id="txtJalan" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['jalan']; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="txtKelurahan">Kelurahan</label>
 
-                            <input name="txtKelurahan" id="txtKelurahan" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['kelurahan']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtKelurahan" id="txtKelurahan" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['kelurahan']; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="txtKecamatan">Kecamatan</label>
 
-                            <input name="txtKecamatan" id="txtKecamatan" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['kecamatan']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtKecamatan" id="txtKecamatan" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['kecamatan']; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="txtKota">Kota</label>
 
-                            <input name="txtKota" id="txtKota" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['kota']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtKota" id="txtKota" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['kota']; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="txtPropinsi">Propinsi</label>
 
-                            <input name="txtPropinsi" id="txtPropinsi" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['propinsi']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtPropinsi" id="txtPropinsi" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['propinsi']; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                         <div class="form-group">
@@ -207,25 +207,25 @@ if ($hakUser != 90) {
                         <div class="form-group">
                             <label class="control-label" for="txtTelepon">Telepon</label>
 
-                            <input name="txtTelepon" id="txtTelepon" maxlength="12" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['telepon']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtTelepon" id="txtTelepon" maxlength="12" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['telepon']; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="txtFax">Fax</label>
 
-                            <input name="txtFax" id="txtFax" maxlength="12" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['fax']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtFax" id="txtFax" maxlength="12" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['fax']; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="txtEmail">Email</label>
 
-                            <input name="txtEmail" id="txtEmail" maxlength="25" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['email']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtEmail" id="txtEmail" maxlength="25" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['email']; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="txtWebsite">Website</label>
 
-                            <input name="txtWebsite" id="txtWebsite" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['website']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtWebsite" id="txtWebsite" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['website']; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
 
                         </div>
 

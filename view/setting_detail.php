@@ -152,7 +152,7 @@ if ($hakUser != 90) {
 
                             <input name="txtNamaSetting" id="txtNamaSetting" maxlength="45" 
                             class="form-control" value="<?php if ($_GET["mode"]=='edit'){ echo $dataSetting[1]; }?>" 
-                            placeholder="Wajib diisi" 
+                            placeholder="-- Empty --" 
                             <?php if ($_GET["mode"]=='edit'){ echo "readonly";}?>
                             onKeyPress="return handleEnter(this, event)" onblur="cekKode();"><span id="msgbox"></span>
 
@@ -161,7 +161,7 @@ if ($hakUser != 90) {
                             <label class="control-label" for="txtNilai">Nilai</label>
 
                             <input name="txtNilai" id="txtNilai" maxlength="20" class="form-control" 
-                            value="<?php if ($_GET["mode"]=='edit'){ echo $dataSetting[2]; } ?>" placeholder="Wajib diisi" 
+                            value="<?php if ($_GET["mode"]=='edit'){ echo $dataSetting[2]; } ?>" placeholder="-- Empty --" 
                             onKeyPress="return handleEnter(this, event)">
 
                         </div>

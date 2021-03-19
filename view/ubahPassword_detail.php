@@ -124,7 +124,7 @@ if ($hakUser != 90) {
                         <div class="form-group">
                             <label class="control-label" for="txtKodeUser">Kode User</label>
                             <input name="txtKodeUser" id="txtKodeUser" maxlength="15" class="form-control" 
-                            value="<?= $dataUser["kodeUser"]; ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            value="<?= $dataUser["kodeUser"]; ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
 
                         </div>
 
@@ -132,7 +132,7 @@ if ($hakUser != 90) {
                             <label class="control-label" for="txtNama">Nama</label>
 
                             <input name="txtNama" id="txtNama" maxlength="20" class="form-control" 
-                            value="<?= $dataUser["nama"]; ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            value="<?= $dataUser["nama"]; ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
 
                         </div>
 
@@ -140,13 +140,13 @@ if ($hakUser != 90) {
                             <label class="control-label" for="txtPassword">Password Baru</label>
 
                             <input type="password" name="txtPasswordBaru" id="txtPasswordBaru" maxlength="50" class="form-control" 
-                            value="" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            value="" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="txtConfirmPassword">Konfirmasi Password Baru</label>
 
                             <input type="password" name="txtConfirmPassword" id="txtConfirmPassword" class="form-control" 
-                            value="" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            value="" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
                         </div>
 
                     </div>

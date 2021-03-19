@@ -138,13 +138,13 @@ if ($hakUser != 90) {
                                 }
                             </style>
                             <input name="txtKodeGroup" id="txtKodeGroup" maxlength="15" class="form-control" 
-                                   value="<?php if ($_GET['mode'] == "edit") { echo $dataGroup["kodeGroup"] ; } ?>" placeholder="Wajib diisi" 
+                                   value="<?php if ($_GET['mode'] == "edit") { echo $dataGroup["kodeGroup"] ; } ?>" placeholder="-- Empty --" 
                                    onKeyPress="return handleEnter(this, event)"><span id="msgbox"></span>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="txtNamaGroup">Nama</label>
                             <input name="txtNamaGroup" id="txtNamaGroup" maxlength="30" class="form-control" 
-                                   value="<?php if ($_GET['mode'] == "edit") { echo $dataGroup["nama"]; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                                   value="<?php if ($_GET['mode'] == "edit") { echo $dataGroup["nama"]; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
                         </div>
                     </div>
                 </div>    

@@ -143,12 +143,12 @@ if ($hakUser != 90) {
                         <div class="form-group">
                             <label class="control-label" for="txtKodePerkiraan">Account</label>
 
-                            <input name="txtKodePerkiraan" id="txtKodePerkiraan" maxlength="30" class="form-control" <?php if ($_GET['mode']=='edit') { echo "readonly"; } ?> value="<?php if ($_GET['mode']=='edit') { echo $dataRekening['kode_rekening']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">    
+                            <input name="txtKodePerkiraan" id="txtKodePerkiraan" maxlength="30" class="form-control" <?php if ($_GET['mode']=='edit') { echo "readonly"; } ?> value="<?php if ($_GET['mode']=='edit') { echo $dataRekening['kode_rekening']; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">    
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="txtNamaPerkiraan">Name</label>
 
-                            <input name="txtNamaPerkiraan" id="txtNamaPerkiraan" maxlength="100" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataRekening['nama_rekening']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtNamaPerkiraan" id="txtNamaPerkiraan" maxlength="100" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataRekening['nama_rekening']; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                         <div class="form-group">
@@ -207,7 +207,7 @@ if ($hakUser != 90) {
                             <label class="control-label" for="txtAwalDebet">Debit Balance</label>
 
                             <input name="txtAwalDebet" id="txtAwalDebet" maxlength="30" class="form-control" 
-                            value="<?php if ($_GET['mode']=='edit') { echo $dataRekening['awal_debet']; }else{ echo "0";} ?>" placeholder="Wajib diisi" 
+                            value="<?php if ($_GET['mode']=='edit') { echo $dataRekening['awal_debet']; }else{ echo "0";} ?>" placeholder="-- Empty --" 
                             onKeyPress="return handleEnter(this, event)" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
 
                         </div>
@@ -215,7 +215,7 @@ if ($hakUser != 90) {
                             <label class="control-label" for="txtAwalKredit">Credit Balance</label>
 
                             <input name="txtAwalKredit" id="txtAwalKredit" maxlength="30" class="form-control" 
-                            value="<?php if ($_GET['mode']=='edit') { echo $dataRekening['awal_kredit']; }else{ echo "0";} ?>" placeholder="Wajib diisi" 
+                            value="<?php if ($_GET['mode']=='edit') { echo $dataRekening['awal_kredit']; }else{ echo "0";} ?>" placeholder="-- Empty --" 
                             onKeyPress="return handleEnter(this, event)" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
                             <input type="hidden" name="txtUpdate" id="txtUpdate" class="form-control" 
                             value="" placeholder="Empty" onKeyPress="return handleEnter(this, event)">

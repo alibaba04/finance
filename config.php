@@ -32,7 +32,7 @@ $mailSupport = 'albaihaqial@gmail.com';
 $siteTitle = 'Akuntansi AKI';
 $recordPerPage = 10;
 
-$wajibIsiKeterangan ='<font style="color:#FF0000; font-weight:bold">Field Bertanda * Wajib Diisi</font>';
+$wajibIsiKeterangan ='<font style="color:#FF0000; font-weight:bold">Field Bertanda * -- Empty --</font>';
 $wajibIsiSimbol = '<font style="color:#FF0000; font-weight:bold">&nbsp;&nbsp;*</font>';
 $SITUS = "";
 ?>

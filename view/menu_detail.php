@@ -208,7 +208,7 @@ if ($hakUser != 90) {
                             <label class="control-label" for="txtJudul">Judul Menu</label>
 
                             <input name="txtJudul" id="txtJudul" size="42" maxlength="40" class="form-control" 
-                            value="<?php if($_GET['mode']=="edit") {echo $dataMenu[1];} ?>" placeholder="Wajib diisi..."
+                            value="<?php if($_GET['mode']=="edit") {echo $dataMenu[1];} ?>" placeholder="-- Empty --..."
                             onKeyPress="return handleEnter(this, event)">
 
                             <select name="cboLink" id="cboLink" class="form-control" size="10" onblur="getLink();" onKeyPress="return handleEnter(this, event)" >

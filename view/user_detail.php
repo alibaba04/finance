@@ -172,7 +172,7 @@ if ($hakUser != 90) {
                                 }
                             </style>
                             <input name="txtKodeUser" id="txtKodeUser" maxlength="15" class="form-control" onblur="cekKode();"
-                            value="<?php if($_GET['mode']=="edit") { echo $dataUser["kodeUser"]; }?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)"><span id="msgbox"></span>
+                            value="<?php if($_GET['mode']=="edit") { echo $dataUser["kodeUser"]; }?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)"><span id="msgbox"></span>
 
                         </div>
 
@@ -180,7 +180,7 @@ if ($hakUser != 90) {
                             <label class="control-label" for="txtNama">Nama</label>
 
                             <input name="txtNama" id="txtNama" maxlength="20" class="form-control" 
-                            value="<?php if($_GET['mode']=="edit") { echo $dataUser["nama"]; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            value="<?php if($_GET['mode']=="edit") { echo $dataUser["nama"]; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                         <?php 
@@ -191,13 +191,13 @@ if ($hakUser != 90) {
                                 <label class="control-label" for="txtPassword">Password</label>
 
                                 <input type="password" name="txtPassword" id="txtPassword" maxlength="50" class="form-control" 
-                                value="" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                                value="" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="txtConfirmPassword">Konfirmasi Password</label>
 
                                 <input type="password" name="txtConfirmPassword" id="txtConfirmPassword" class="form-control" 
-                                value="" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                                value="" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
                             </div>
                             <?php
                         }
