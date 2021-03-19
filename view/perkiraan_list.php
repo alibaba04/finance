@@ -81,7 +81,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <input type="hidden" name="page" value="<?php echo $curPage; ?>">
 
                         <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" name="namaPerkiraan" id="namaPerkiraan" placeholder="Namae ...."
+                            <input type="text" class="form-control" name="namaPerkiraan" id="namaPerkiraan" placeholder="Name ...."
                             <?php
                             if (isset($_GET["namaSiswa"])) {
                                 echo("value='" . $_GET["namaSiswa"] . "'");
