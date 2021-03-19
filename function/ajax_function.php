@@ -135,6 +135,7 @@ switch ($_POST['fungsi']) {
                 
         } 
     break;
+   
     case "ambilPendapatan":
         $filter = "";
         if (isset($_POST["bulan"])){

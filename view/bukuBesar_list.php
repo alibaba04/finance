@@ -34,9 +34,8 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             locale: { format: 'DD-MM-YYYY' } });
     });
     $(function () {
-//Initialize Select2 Elements
-$(".select2").select2();
-});
+        $(".select2").select2();
+    });
     $(document).ready(function () {
         $('#tglJurnal').val('');
     });
