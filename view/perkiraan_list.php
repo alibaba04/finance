@@ -81,7 +81,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <input type="hidden" name="page" value="<?php echo $curPage; ?>">
 
                         <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" name="namaPerkiraan" id="namaPerkiraan" placeholder="Nama Akun..."
+                            <input type="text" class="form-control" name="namaPerkiraan" id="namaPerkiraan" placeholder="Namae ...."
                             <?php
                             if (isset($_GET["namaSiswa"])) {
                                 echo("value='" . $_GET["namaSiswa"] . "'");
@@ -92,9 +92,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
-                        <p>- atau -</p>
+                        <p>- or -</p>
                         <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" name="kodePerkiraan" id="kodePerkiraan" placeholder="Account . ..."
+                            <input type="text" class="form-control" name="kodePerkiraan" id="kodePerkiraan" placeholder="Account ...."
                             <?php
                             if (isset($_GET["kodePerkiraan"])) {
                                 echo("value='" . $_GET["kodePerkiraan"] . "'");
