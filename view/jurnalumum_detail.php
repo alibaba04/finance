@@ -225,7 +225,7 @@ function validasiForm(form)
     }
 
     if ($("#idebit").val()!=$("#ikredit").val()) {
-        alert("Debt & Credit must be same amount!");
+        alert("Debit & Credit must be same amount!");
         form.txtDebet_0.focus();
         return false;
     }
@@ -328,7 +328,7 @@ return true;
                                     <th style="width: 2%"><i class='fa fa-edit'></i></th>
                                     <th style="width: ">Account</th>
                                     <th style="width: 30%">Description</th>
-                                    <th style="width: 15%">Debt</th>
+                                    <th style="width: 15%">Debit</th>
                                     <th style="width: 15%">Credit</th>
                                     <?php
                                     if ($_GET['mode']=='edit'){

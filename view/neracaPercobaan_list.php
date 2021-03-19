@@ -167,7 +167,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <thead>
                             <th style="width: 15%"rowspan="2">Account</th>
                             <th style="width: 10%"colspan="2">Balance</th>
-                            <th style="width: 10%"rowspan="2">Debt</th>
+                            <th style="width: 10%"rowspan="2">Debit</th>
                             <th style="width: 10%"rowspan="2">Credit</th>
                             <th style="width: 10%"colspan="2">Trial Balance</th>
                             <th style="width: 10%"colspan="2">Adjustment</th>
@@ -175,17 +175,17 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             <th style="width: 10%"colspan="2">Rugi Laba</th>
                             <th style="width: 10%"colspan="2">Neraca</th>
                             <tr>
-                                <th style="width: 5%">Debt</th>
+                                <th style="width: 5%">Debit</th>
                                 <th style="width: 5%">Credit</th>
-                                <th style="width: 5%">Debt</th>
+                                <th style="width: 5%">Debit</th>
                                 <th style="width: 5%">Credit</th>
-                                <th style="width: 5%">Debt</th>
+                                <th style="width: 5%">Debit</th>
                                 <th style="width: 5%">Credit</th>
-                                <th style="width: 5%">Debt</th>
+                                <th style="width: 5%">Debit</th>
                                 <th style="width: 5%">Credit</th>
-                                <th style="width: 5%">Debt</th>
+                                <th style="width: 5%">Debit</th>
                                 <th style="width: 5%">Credit</th>
-                                <th style="width: 5%">Debt</th>
+                                <th style="width: 5%">Debit</th>
                                 <th style="width: 5%">Credit</th>
                             </tr>
                         </thead>

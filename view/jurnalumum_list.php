@@ -215,7 +215,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 <th style="width: 15%">Account</th>
                                 <th style="width: 5%">Transaction Date</th>
                                 <th style="width: 15%">Description</th>
-                                <th style="width: 10%">Debt</th>
+                                <th style="width: 10%">Debit</th>
                                 <th style="width: 10%">Credit</th>
                                 <th style="width: 5%">Post Date</th>
                                 <th colspan="2" width="3%">Action</th>

@@ -196,7 +196,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <thead>
                             <tr>
                                 <th style="width: 15%">Account</th>
-                                <th style="width: 10%">Debt</th>
+                                <th style="width: 10%">Debit</th>
                                 <th style="width: 10%">Credit</th>
                                 <th style="width: 5%">Position</th>
                                 <th style="width: 5%">Normal</th>
@@ -215,7 +215,8 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 echo "<td align='right'>" . number_format($query_data["awal_kredit"],2) . "</td>";
                                 echo "<td>" . $query_data["posisi"] . "</td>";
                                 echo "<td>" . $query_data["normal"] . "</td>";
-
+                                $totDebet += $query_data["awal_debet"];
+                                    $totKredit += $query_data["awal_kredit"];
                                 if ($hakUser == 90) {
                                     echo "<td><span class='label label-success' style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/perkiraan_detail&mode=edit&kode=" . md5($query_data["kode_rekening"]) . "'><i class='fa fa-edit'></i>&nbsp;Update</span></td>";
                                 } else {
@@ -224,11 +225,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 }
                                 echo("</tr>");
                                 $rowCounter++;
-
-                                if (($query_data["kode_rekening"]) == '1110.000' OR ($query_data["kode_rekening"]) == '2110.000' OR ($query_data["kode_rekening"]) == '3000.000' OR ($query_data["kode_rekening"]) == '4000.000' OR ($query_data["kode_rekening"]) == '5000.000') {
-                                    $totDebet += $query_data["awal_debet"];
-                                    $totKredit += $query_data["awal_kredit"];
-                                }
+                                
                             }
                             if (!$rs->getNumPages()) {
                                 echo("<tr class='even'>");
@@ -239,7 +236,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="2" align="right">Count</td>
+                                <td colspan="1" align="right">Count</td>
                                 <td align="right"><?php echo number_format($totDebet,2); ?></td>
                                 <td align="right"><?php echo number_format($totKredit,2); ?></td>
                                 <td colspan="3">

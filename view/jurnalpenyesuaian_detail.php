@@ -270,7 +270,7 @@ return true;
                                     <th style="width: 2%"><i class='fa fa-edit'></i></th>
                                     <th style="width: ">Account</th>
                                     <th style="width: 30%">Description</th>
-                                    <th style="width: 15%">Debt</th>
+                                    <th style="width: 15%">Debit</th>
                                     <th style="width: 15%">Credit</th>
                                     <?php
                                     if ($_GET['mode']=='edit'){

@@ -77,9 +77,9 @@ class c_perkiraan
 	{
 		global $dbLink;
 		
-		//Jika input tidak valid, langsung kembalikan pesan error ke user ($this->strResults)
+		//Jika input tidak valid, langsung kembalikan pesan Error update ke user ($this->strResults)
 		if(!$this->validate($params))
-		{	//Pesan error harus diawali kata "Gagal"
+		{	//Pesan Error update harus diawali kata "Gagal"
 			$this->strResults="Gagal Tambah Data Perkiraan - ".$this->strResults;
 			return $this->strResults;
 		}
@@ -130,9 +130,9 @@ class c_perkiraan
 	{
 		global $dbLink;
 		
-		//Jika input tidak valid, langsung kembalikan pesan error ke user ($this->strResults)
+		//Jika input tidak valid, langsung kembalikan pesan Error update ke user ($this->strResults)
 		if(!$this->validate($params))
-		{	//Pesan error harus diawali kata "Gagal"
+		{	//Pesan Error update harus diawali kata "Gagal"
 			$this->strResults="Gagal Ubah Data Perkiraan - ".$this->strResults;
 			return $this->strResults;
 		}
@@ -159,9 +159,26 @@ class c_perkiraan
                         
 			$q.= "WHERE kode_rekening='".$kodeRekening."' ";
 			
+			//report
+			$rsTemp=mysql_query("SELECT * FROM `aki_tabel_master` WHERE kode_rekening='".$kodeRekening."' ", $dbLink);
+			$temp = mysql_fetch_array($rsTemp);
+			$tempName  = $temp['nama_rekening'];
+			$tempD  = $temp['awal_debet'];
+			$tempK  = $temp['awal_kredit'];
+			$tempNormal  = $temp['normal'];
+			$tempPos  = $temp['posisi'];
+			$desc = secureParam($params["txtUpdate"], $dbLink);
+
+			date_default_timezone_set("Asia/Jakarta");
+			$tgl = date("Y-m-d h:i:sa");
+			$ket = "desc : ".$desc." `nomer`=".$kodeRekening."  -has change, ket : ".$tempName.", ".$tempD.", ".$tempK.", ".$tempNormal.", ".$tempPos.", datetime: ".$tgl;
+			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
+			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
+			if (!mysql_query( $q4, $dbLink))
+				throw new Exception('Error update database.');
 			if (!mysql_query( $q, $dbLink))
-				throw new Exception('Gagal mengubah database.');
-				
+				throw new Exception('Error update database.');
+			
 			@mysql_query("COMMIT", $dbLink);
 			$this->strResults="Sukses Ubah Data Perkiraan ";
 		}
@@ -179,9 +196,9 @@ class c_perkiraan
 	{
 		global $dbLink;
 
-		//Jika input tidak valid, langsung kembalikan pesan error ke user ($this->strResults)
+		//Jika input tidak valid, langsung kembalikan pesan Error update ke user ($this->strResults)
 		if(!$this->validateDelete($kodeSiswa))
-		{	//Pesan error harus diawali kata "Gagal"
+		{	//Pesan Error update harus diawali kata "Gagal"
 			$this->strResults="Gagal Hapus Data Perkiraan - ".$this->strResults;
 			return $this->strResults;
 		}
@@ -197,7 +214,7 @@ class c_perkiraan
 			$this->strResults="Sukses Hapus Data Perkiraan";
 		}
 		else
-		{	//Pesan error harus diawali kata "Gagal"
+		{	//Pesan Error update harus diawali kata "Gagal"
 			$this->strResults="Gagal Hapus Data Perkiraan - ".mysql_error();
 		}
 		return $this->strResults;

@@ -22,24 +22,22 @@ if ($hakUser != 90) {
 <script type="text/javascript" src="js/jquery.datePicker.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="css/datePicker.css">
 
-<script type="text/javascript" charset="utf-8">
-    $(function()
-    {
-        $('.date-pick').datePicker({startDate:'01/01/1970'});
-    });
-</script>
-<!-- End of Script Tanggal -->
-
 <!-- Include script di bawah jika ada field yang Huruf Besar semua -->
-<script src="js/jquery.bestupper.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="./js/angka.js"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(".bestupper").bestupper();
-    });
-</script>
 
 <SCRIPT language="JavaScript" TYPE="text/javascript">
+    function omodal() {
+        $("#myModal").modal({backdrop: 'static'});
+        $("#txtUpdate1").val();
+        $('#btnUpdate').click(function(){
+            if($("#txtUpdate1").val()== ''){
+                alert('Description Cannot Empty!');
+                $("#txtUpdate1").focus();
+                return false;
+            }
+            $("#txtUpdate").val($("#txtUpdate1").val());
+        });
+    }
     function validasiForm(form)
     {
 
@@ -91,13 +89,12 @@ if ($hakUser != 90) {
 
 <section class="content-header">
     <h1>
-        DATA PERKIRAAN
-        <small>Detail Data Perkiraan</small>
+        CHART OF ACCOUNT
     </h1>
     <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Input</li>
-        <li class="active">Data Perkiraan</li>
+        <li class="active">Chart of Account</li>
     </ol>
 </section>
 
@@ -112,7 +109,7 @@ if ($hakUser != 90) {
                         <?php
                         $dataRekening = "";
                         if ($_GET["mode"] == "edit") {
-                            echo '<h3 class="box-title">UBAH DATA PERKIRAAN </h3>';
+                            echo '<h3 class="box-title">UPDATE</h3>';
                             echo "<input type='hidden' name='txtMode' value='Edit'>";
 
 //Secure parameter from SQL injection
@@ -137,19 +134,19 @@ if ($hakUser != 90) {
                                 <?php
                             }
                         } else {
-                            echo '<h3 class="box-title">TAMBAH DATA REKENING </h3>';
+                            echo '<h3 class="box-title">ADD</h3>';
                             echo "<input type='hidden' name='txtMode'  value='Add'>";
                         }
                         ?>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
-                            <label class="control-label" for="txtKodePerkiraan">Kode Akun</label>
+                            <label class="control-label" for="txtKodePerkiraan">Account</label>
 
                             <input name="txtKodePerkiraan" id="txtKodePerkiraan" maxlength="30" class="form-control" <?php if ($_GET['mode']=='edit') { echo "readonly"; } ?> value="<?php if ($_GET['mode']=='edit') { echo $dataRekening['kode_rekening']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">    
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="txtNamaPerkiraan">Nama Perkiraan</label>
+                            <label class="control-label" for="txtNamaPerkiraan">Name</label>
 
                             <input name="txtNamaPerkiraan" id="txtNamaPerkiraan" maxlength="100" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataRekening['nama_rekening']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
 
@@ -157,30 +154,28 @@ if ($hakUser != 90) {
                         <div class="form-group">
                             <label class="control-label" for="cboNormal">Normal Balance</label>
                             <select name="cboNormal" id="cboNormal" class="form-control" onKeyPress="return handleEnter(this, event)">
-                                <option value="0">--Wajib Pilih Normal Balance--</option>
                                 <?php
                                 $selected = "";
                                 if ($_GET['mode'] == 'edit') {
                                     if ($dataRekening['normal']=="Debit") {
                                         $selected = " selected";
                                         echo "<option value=Debit" . $selected . ">Debit</option>";
-                                        echo "<option value=Kredit>Kredit</option>";
+                                        echo "<option value=Kredit>Credit</option>";
                                     }else{
                                         $selected = " selected";
                                         echo "<option value=Debit>Debit</option>";
-                                        echo "<option value=Kredit" . $selected . ">Kredit</option>";
+                                        echo "<option value=Kredit" . $selected . ">Credit</option>";
                                     }
                                 }else{
                                     echo "<option value=Debit>Debit</option>";
-                                    echo "<option value=Kredit>Kredit</option>";
+                                    echo "<option value=Kredit>Credit</option>";
                                 }
                                 ?>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="cboPosisi">Posisi</label>
+                            <label class="control-label" for="cboPosisi">Position</label>
                             <select name="cboPosisi" id="cboPosisi" class="form-control" onKeyPress="return handleEnter(this, event)">
-                                <option value="0">--Wajib Pilih Posisi--</option>
                                 <?php
                                 $selected = "";
                                 if ($_GET['mode'] == 'edit') {
@@ -209,7 +204,7 @@ if ($hakUser != 90) {
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="txtAwalDebet">Saldo Awal Debet</label>
+                            <label class="control-label" for="txtAwalDebet">Debit Balance</label>
 
                             <input name="txtAwalDebet" id="txtAwalDebet" maxlength="30" class="form-control" 
                             value="<?php if ($_GET['mode']=='edit') { echo $dataRekening['awal_debet']; }else{ echo "0";} ?>" placeholder="Wajib diisi" 
@@ -217,19 +212,44 @@ if ($hakUser != 90) {
 
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="txtAwalKredit">Saldo Awal Kredit</label>
+                            <label class="control-label" for="txtAwalKredit">Credit Balance</label>
 
                             <input name="txtAwalKredit" id="txtAwalKredit" maxlength="30" class="form-control" 
                             value="<?php if ($_GET['mode']=='edit') { echo $dataRekening['awal_kredit']; }else{ echo "0";} ?>" placeholder="Wajib diisi" 
                             onKeyPress="return handleEnter(this, event)" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
+                            <input type="hidden" name="txtUpdate" id="txtUpdate" class="form-control" 
+                            value="" placeholder="Empty" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                     </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Upadate Description</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <textarea class="form-control" id="txtUpdate1"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-primary" value="Save"  id="btnUpdate">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="box-footer">
-                        <input type="submit" class="btn btn-primary" value="Simpan">
-
+                        <?php 
+                        if ($_GET['mode']=='edit'){
+                            echo '<input type="button" class="btn btn-primary" onclick="omodal()" value="Save">';
+                        }else{
+                            echo '<input type="submit" class="btn btn-primary" value="Save">';
+                        }
+                        ?>
                         <a href="index.php?page=view/perkiraan_list">
-                            <button type="button" class="btn btn-default pull-right">&nbsp;&nbsp;Batal&nbsp;&nbsp;</button>    
+                            <button type="button" class="btn btn-default pull-right">&nbsp;&nbsp;Cancel&nbsp;&nbsp;</button>    
                         </a>
                     </div>
                 </form>

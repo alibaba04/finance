@@ -225,7 +225,7 @@ select: function( event, ui ) {
                                 <th style="width: 10%">Transaction Number</th>
                                 <th style="width: 15%">Account</th>
                                 <th style="width: 23%">Description</th>
-                                <th style="width: 12%">Debt</th>
+                                <th style="width: 12%">Debit</th>
                                 <th style="width: 12%">Credit</th>
                                 <th style="width: 12%">Balance</th>
                             </tr>
