@@ -206,8 +206,9 @@ select: function( event, ui ) {
                 }else{
                     $q2 = "SELECT awal_debet as saldo_d, awal_kredit as saldo_k FROM `aki_tabel_master` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
                 }
-                
+                $q3 = "SELECT awal_debet as saldo_d, awal_kredit as saldo_k FROM `aki_tabel_master` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
                 $rs2 = mysql_query($q2, $dbLink);
+                $rs3 = mysql_query($q3, $dbLink);
                 $hasilrs2 = mysql_num_rows($rs2);
                 ?>
                 <div class="box-header">
@@ -235,13 +236,13 @@ select: function( event, ui ) {
                             $rowCounter = 1; $totDebet=$totKredit=0;
                             $saldo=0;
                             
-                            if ($hasilrs>0){
+                            if ($hasilrs2>0){
                                 $query_data = mysql_fetch_array($rs2);
                                     echo "<tr>";
                                     echo "<td></td>";
                                     echo "<td></td>";
                                     echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. ".</td>";
-                                    echo "<td> Saldo Awal</td>";
+                                    echo "<td> saldo</td>";
                                     echo "<td align='right'>" . number_format($query_data["saldo_d"], 2) . "</td>";
                                     echo "<td align='right'>" . number_format($query_data["saldo_k"], 2) . "</td>";
                                     $saldo = $saldo+$query_data["saldo_d"]-$query_data["saldo_k"];
@@ -261,27 +262,24 @@ select: function( event, ui ) {
                                     $totDebet += $query_data["debet"];
                                     $totKredit += $query_data["kredit"]; 
                                 }
-                                echo "<tr>";
+                                echo "<tfoot><tr>";
                                 echo "<td colspan='4' align='right'>Amount</td>";
                                 echo "<td align='right'>". number_format($totDebet, 2) ."</td>";
                                 echo "<td align='right'>". number_format($totKredit, 2) ."</td>";
-                                echo "<td align='right'>". number_format($saldo, 2) ."</td>";
-                                echo "</tr>";
+                                echo "<td align='right'><b>". number_format($saldo, 2) ."</b></td>";
+                                echo "</tr></tfoot>";
                             } else {
-                                $query_data = mysql_fetch_array($rs2);
-                                    echo "<tr>";
+                                $query_data = mysql_fetch_array($rs3);
+                                    echo "<tfoot><tr>";
                                     echo "<td></td>";
                                     echo "<td></td>";
                                     echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. ".</td>";
-                                    echo "<td> Saldo Awal</td>";
+                                    echo "<td> Saldo Akhir</td>";
                                     echo "<td align='right'>" . number_format($query_data["saldo_d"], 2) . "</td>";
                                     echo "<td align='right'>" . number_format($query_data["saldo_k"], 2) . "</td>";
                                     $saldo = $saldo+$query_data["saldo_d"]-$query_data["saldo_k"];
-                                    echo "<td align='right'>" . number_format($saldo, 2) . "</td>";
-                                    echo("</tr>");
-                                echo("<tr class='even'>");
-                                echo ("<td colspan='6' align='center'>No Data Found!</td>");
-                                echo("</tr>");
+                                    echo "<td align='right'><b>". number_format($saldo, 2) ."</b></td>";
+                                    echo("</tr></tfoot>");
                             }
                             ?>
                         </tbody>
