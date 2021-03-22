@@ -236,7 +236,7 @@ select: function( event, ui ) {
                             $rowCounter = 1; $totDebet=$totKredit=0;
                             $saldo=0;
                             
-                            if ($hasilrs2>0){
+                            if ($hasilrs>0){
                                 $query_data = mysql_fetch_array($rs2);
                                     echo "<tr>";
                                     echo "<td></td>";
