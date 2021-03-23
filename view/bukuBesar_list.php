@@ -182,6 +182,7 @@ select: function( event, ui ) {
                     $tglJurnal1 = $tglJurnal[0];
                     $tglJurnal2 = $tglJurnal[1];
                     $namarek=$_GET["txtKodeRekeningbb"];
+                    $tgl=$_GET["tglJurnal"];
                 }else{
                     $tglJurnal1 = "";
                     $tglJurnal2 = "";
@@ -212,7 +213,7 @@ select: function( event, ui ) {
                 $hasilrs2 = mysql_num_rows($rs2);
                 ?>
                 <div class="box-header">
-                    <i class="ion ion-clipboard"></i>&nbsp;&nbsp;No COA <?php echo $namarek ?> 
+                    <i class="ion ion-clipboard"></i>&nbsp;&nbsp;No COA <?php echo $namarek." tanggal : ".$tgl?> 
                     <!-- <a href="pdf/pdf_bukubesar.php?&tglJurnal1=<?=$tglJurnal1; ?>&tglJurnal2=<?=$tglJurnal2;?>&no=<?=$namarek; ?>" title="Cetak PDF Buku Jurnal"><button type="button" class="btn btn-info pull-right"><i class="fa fa-print "></i> Cetak Buku Besar</button></a> -->
                     <a href="excel/c_exportexcel_bb.php?&tglJurnal1=<?=$tglJurnal1; ?>&tglJurnal2=<?=$tglJurnal2; ?>&no=<?=$namarek; ?>"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a>
                 </div>
@@ -237,7 +238,8 @@ select: function( event, ui ) {
                             $saldo=0;
                             
                             if ($hasilrs>0){
-                                $query_data = mysql_fetch_array($rs2);
+                                if ($hasilrs2>0){
+                                    $query_data = mysql_fetch_array($rs2);
                                     echo "<tr>";
                                     echo "<td></td>";
                                     echo "<td></td>";
@@ -248,6 +250,20 @@ select: function( event, ui ) {
                                     $saldo = $saldo+$query_data["saldo_d"]-$query_data["saldo_k"];
                                     echo "<td align='right'>" . number_format($saldo, 2) . "</td>";
                                     echo("</tr>");
+                                }else{
+                                    $query_data = mysql_fetch_array($rs);
+                                    echo "<tr>";
+                                    echo "<td></td>";
+                                    echo "<td></td>";
+                                    echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. ".</td>";
+                                    echo "<td> saldo</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_d"], 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_k"], 2) . "</td>";
+                                    $saldo = $saldo+$query_data["saldo_d"]-$query_data["saldo_k"];
+                                    echo "<td align='right'>" . number_format($saldo, 2) . "</td>";
+                                    echo("</tr>");
+                                }
+                                
                                 while ($query_data = mysql_fetch_array($rs)) {
                                     echo "<tr>";
                                     echo "<td>" . tgl_ind($query_data["tanggal_transaksi"]) . "</td>";
@@ -269,7 +285,8 @@ select: function( event, ui ) {
                                 echo "<td align='right'><b>". number_format($saldo, 2) ."</b></td>";
                                 echo "</tr></tfoot>";
                             } else {
-                                $query_data = mysql_fetch_array($rs3);
+                                if ($hasilrs2>0){
+                                    $query_data = mysql_fetch_array($rs2);
                                     echo "<tfoot><tr>";
                                     echo "<td></td>";
                                     echo "<td></td>";
@@ -280,6 +297,19 @@ select: function( event, ui ) {
                                     $saldo = $saldo+$query_data["saldo_d"]-$query_data["saldo_k"];
                                     echo "<td align='right'><b>". number_format($saldo, 2) ."</b></td>";
                                     echo("</tr></tfoot>");
+                                }else{
+                                    $query_data = mysql_fetch_array($rs3);
+                                    echo "<tfoot><tr>";
+                                    echo "<td></td>";
+                                    echo "<td></td>";
+                                    echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. ".</td>";
+                                    echo "<td> Saldo Akhir</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_d"], 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_k"], 2) . "</td>";
+                                    $saldo = $saldo+$query_data["saldo_d"]-$query_data["saldo_k"];
+                                    echo "<td align='right'><b>". number_format($saldo, 2) ."</b></td>";
+                                    echo("</tr></tfoot>");
+                                }
                             }
                             ?>
                         </tbody>

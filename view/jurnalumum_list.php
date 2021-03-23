@@ -197,8 +197,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 $q = "SELECT  m.nama_rekening,t.no_transaksi,t.debet,t.kredit,j.nomor_jurnal, j.kode_transaksi, j.tanggal_selesai, t.kode_rekening, t.tanggal_transaksi, t.keterangan_transaksi, t.tanggal_posting, t.keterangan_posting ";
                 $q.= "FROM aki_jurnal_umum j INNER JOIN aki_tabel_transaksi t ON j.kode_transaksi=t.kode_transaksi INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening ";
                 $q.= "WHERE 1=1 and t.ref='-' " . $filter;
-                $q.= " ORDER BY j.kode_transaksi asc,t.keterangan_transaksi,t.debet desc";
+                $q.= " ORDER BY j.kode_transaksi asc,t.no_transaksi,t.keterangan_transaksi,t.debet desc";
 //Paging
+                echo $q;
                 $rs = new MySQLPagedResultSet($q, 100, $dbLink);
                 ?>
                 <div class="box-header">
