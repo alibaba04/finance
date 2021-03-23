@@ -199,7 +199,6 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 $q.= "WHERE 1=1 and t.ref='-' " . $filter;
                 $q.= " ORDER BY j.kode_transaksi asc,t.no_transaksi,t.keterangan_transaksi,t.debet desc";
 //Paging
-                echo $q;
                 $rs = new MySQLPagedResultSet($q, 100, $dbLink);
                 ?>
                 <div class="box-header">
