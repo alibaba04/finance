@@ -120,9 +120,10 @@ class c_jurnalumum
                     $debet = str_replace(".", "", $debet);
                     $kredit = secureParam($params["txtKredit_" . $j], $dbLink);
                     $kredit = str_replace(".", "", $kredit);
-
-                    $q2 = "INSERT INTO aki_tabel_transaksi(no_transaksi,id_transaksi, kode_transaksi, kode_rekening, tanggal_transaksi, jenis_transaksi, keterangan_transaksi, debet, kredit, tanggal_posting, keterangan_posting, last_updater) ";
-					$q2.= "VALUES ('".$notran."',  'NULL',  '".$kodeTransaksi."',  '".$kodeRekenening."', '".$tglTransaksi."', 'Bukti Umum', '".$keterangan."', '".$debet."', '".$kredit."', '0000-00-00', '', '".$pembuat."');";
+					
+                    date_default_timezone_set("Asia/Jakarta");
+                    $q2 = "INSERT INTO aki_tabel_transaksi(no_transaksi,id_transaksi, kode_transaksi, kode_rekening, tanggal_transaksi,dtime, jenis_transaksi, keterangan_transaksi, debet, kredit, tanggal_posting, keterangan_posting, last_updater) ";
+					$q2.= "VALUES ('".$notran."',  'NULL',  '".$kodeTransaksi."',  '".$kodeRekenening."', '".$tglTransaksi."', '".date("H:i:sa")."', 'Bukti Umum', '".$keterangan."', '".$debet."', '".$kredit."', '0000-00-00', '', '".$pembuat."');";
 
 					if (!mysql_query( $q2, $dbLink))
 						throw new Exception('Gagal tambah data transaksi jurnal umum.');
