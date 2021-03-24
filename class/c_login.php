@@ -65,19 +65,27 @@ class c_login
                     session_name("akunaki");
 
                     $_SESSION["my"] = new c_user($query_data[0], $query_data[1], $tempGroup, $tempMenu,"");
-
+                    $_SESSION["my"]->timeout =  time();
+                    
                     $rsGroup = mysql_query("SELECT kodeGroup FROM aki_usergroup WHERE kodeUser='".$query_data[0]."';", $dbLink);
                     if(mysql_num_rows($rsGroup)<=1)
                     {
                         $group = mysql_fetch_row($rsGroup);
                         $_SESSION["my"]->privilege = $group["0"];
                     }
+                    
                     //update ip
-                    $result=mysql_query("UPDATE `aki_user` SET `ip`='1' where kodeUser='".$userId."'" , $dbLink);
+                    $result=mysql_query("UPDATE `aki_user` SET `ip`='".$_SERVER['REMOTE_ADDR']."' where kodeUser='".$userId."'" , $dbLink);
                     if($query_data=mysql_fetch_row($result))
                     {
                         //alert($ip);
                     }
+                    date_default_timezone_set("Asia/Jakarta");
+                    $tgl = date("Y-m-d h:i:sa");
+                    $q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
+                    $q4.= "('".$userId."','".$tgl."','User Login ip : ".$_SERVER['REMOTE_ADDR']."');";
+                    if (!mysql_query( $q4, $dbLink))
+                        throw new Exception($q4.'Gagal update report. ');
                     return "Sukses";
                 }
                 else

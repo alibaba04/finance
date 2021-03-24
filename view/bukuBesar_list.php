@@ -208,6 +208,7 @@ select: function( event, ui ) {
                     $q2 = "SELECT awal_debet as saldo_d, awal_kredit as saldo_k FROM `aki_tabel_master` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
                 }
                 $q3 = "SELECT awal_debet as saldo_d, awal_kredit as saldo_k FROM `aki_tabel_master` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
+
                 $rs2 = mysql_query($q2, $dbLink);
                 $rs3 = mysql_query($q3, $dbLink);
                 $hasilrs2 = mysql_num_rows($rs2);
@@ -251,7 +252,7 @@ select: function( event, ui ) {
                                     echo "<td align='right'>" . number_format($saldo, 2) . "</td>";
                                     echo("</tr>");
                                 }else{
-                                    $query_data = mysql_fetch_array($rs);
+                                    $query_data = mysql_fetch_array($rs3);
                                     echo "<tr>";
                                     echo "<td></td>";
                                     echo "<td></td>";
