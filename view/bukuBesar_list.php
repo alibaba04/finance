@@ -209,7 +209,6 @@ select: function( event, ui ) {
                 }
                 
                 $q3 = "SELECT awal_debet as saldo_d, awal_kredit as saldo_k FROM `aki_tabel_master` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
-                echo $q;
                 $rs2 = mysql_query($q2, $dbLink);
                 $rs3 = mysql_query($q3, $dbLink);
                 $hasilrs2 = mysql_num_rows($rs2);
