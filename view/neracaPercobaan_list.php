@@ -206,57 +206,57 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                     echo "<td>" . $query_data["kode_rekening"] . " - " . $query_data["nama_rekening"] . "</td>";
                                     /*echo "<td>" . $query_data["normal"] . "</td>";
                                     echo "<td>" . $query_data["posisi"] . "</td>";*/
-                                    echo "<td align='right'>" . number_format($query_data["awal_debet"], 2) ."</td>";
-                                    echo "<td align='right'>" . number_format($query_data["awal_kredit"], 2) . "</td>";
-                                    echo "<td align='right'>" . number_format($query_data["debet"], 2) . "</td>";
-                                    echo "<td align='right'>" . number_format($query_data["kredit"], 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["awal_debet"], 0) ."</td>";
+                                    echo "<td align='right'>" . number_format($query_data["awal_kredit"], 0) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["debet"], 0) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["kredit"], 0) . "</td>";
 
                                     if ($query_data["normal"] == 'Debit') {
                                         $nsdebet = $query_data["awal_debet"]+$query_data["debet"]-$query_data["awal_kredit"]-$query_data["kredit"];
                                         $nspenyesuaianD = $nsdebet+$query_data["pdebet"]-$nskredit-$query_data["pkredit"];
-                                        echo "<td align='right'>" . number_format($nsdebet, 2) . "</td>";
+                                        echo "<td align='right'>" . number_format($nsdebet, 0) . "</td>";
                                     }else{
                                         echo "<td align='right'>" . number_format(0, 2) . "</td>";
                                     }
                                     if($query_data["normal"] == 'Kredit'){
                                         $nskredit = $query_data["awal_kredit"]+$query_data["kredit"]-$query_data["awal_debet"]-$query_data["debet"];
                                         $nspenyesuaianK = $nskredit+$query_data["pkredit"]-$nsdebet-$query_data["pdebet"];
-                                        echo "<td align='right'>" . number_format($nskredit, 2) . "</td>";
+                                        echo "<td align='right'>" . number_format($nskredit, 0) . "</td>";
                                     }else{
-                                        echo "<td align='right'>" . number_format(0, 2) . "</td>";
+                                        echo "<td align='right'>" . number_format(0, 0) . "</td>";
                                     }
                                     //penyesuaian
-                                    echo "<td align='right'>" . number_format($query_data["pdebet"], 2) . "</td>";
-                                    echo "<td align='right'>" . number_format($query_data["pkredit"], 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["pdebet"], 0) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["pkredit"], 0) . "</td>";
                                     //NS Setelah penyesuaian
-                                    echo "<td align='right'>" . number_format($nspenyesuaianD, 2) . "</td>";
-                                    echo "<td align='right'>" . number_format($nspenyesuaianK, 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($nspenyesuaianD, 0) . "</td>";
+                                    echo "<td align='right'>" . number_format($nspenyesuaianK, 0) . "</td>";
                                     //LR
                                     if ($query_data["posisi"] == 'LR') {
                                         $totRlDebet += $nspenyesuaianD;
-                                        echo "<td align='right'>" . number_format($nspenyesuaianD, 2) . "</td>";
+                                        echo "<td align='right'>" . number_format($nspenyesuaianD, 0) . "</td>";
                                     }else{
-                                        echo "<td align='right'>" . number_format(0, 2) . "</td>";
+                                        echo "<td align='right'>" . number_format(0, 0) . "</td>";
                                     }
                                     if($query_data["posisi"] == 'LR'){
                                         $totRlKredit += $nspenyesuaianK;
-                                        echo "<td align='right'>" . number_format($nspenyesuaianK, 2) . "</td>";
+                                        echo "<td align='right'>" . number_format($nspenyesuaianK, 0) . "</td>";
                                     }else{
-                                        echo "<td align='right'>" . number_format(0, 2) . "</td>";
+                                        echo "<td align='right'>" . number_format(0, 0) . "</td>";
                                     }
 
                                     //NRC
                                     if ($query_data["posisi"] == 'NRC') {
                                         $totNeDebet += $nspenyesuaianD;
-                                        echo "<td align='right'>" . number_format($nspenyesuaianD, 2) . "</td>";
+                                        echo "<td align='right'>" . number_format($nspenyesuaianD, 0) . "</td>";
                                     }else{
-                                        echo "<td align='right'>" . number_format(0, 2) . "</td>";
+                                        echo "<td align='right'>" . number_format(0, 0) . "</td>";
                                     }
                                     if($query_data["posisi"] == 'NRC'){
                                         $totNeKredit += $nspenyesuaianK;
-                                        echo "<td align='right'>" . number_format($nspenyesuaianK, 2) . "</td>";
+                                        echo "<td align='right'>" . number_format($nspenyesuaianK, 0) . "</td>";
                                     }else{
-                                        echo "<td align='right'>" . number_format(0, 2) . "</td>";
+                                        echo "<td align='right'>" . number_format(0, 0) . "</td>";
                                     }
                                     echo("</tr>");
 // $rowCounter++;
@@ -274,20 +274,20 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 echo "</tr>";
                                 echo "<tfoot><tr>";
                                 echo "<td ></td>";
-                                echo "<td align='right'>" . number_format($totADebet, 2) ."</td>";
-                                echo "<td align='right'>" . number_format($totAKredit, 2) . "</td>";
-                                echo "<td align='right'>" . number_format($totMutDebet, 2) ."</td>";
-                                echo "<td align='right'>" . number_format($totMutKredit, 2) . "</td>";
-                                echo "<td align='right'>" . number_format($totNDebet, 2) ."</td>";
-                                echo "<td align='right'>" . number_format($totNKredit, 2) . "</td>";
-                                echo "<td align='right'>" . number_format($totPDebet, 2) . "</td>";
-                                echo "<td align='right'>" . number_format($totPKredit, 2) . "</td>";
-                                echo "<td align='right'>" . number_format($totNsDebet, 2) . "</td>";
-                                echo "<td align='right'>" . number_format($totNsKredit, 2) . "</td>";
-                                echo "<td align='right'>" . number_format($totRlDebet, 2) . "</td>";
-                                echo "<td align='right'>" . number_format($totRlKredit, 2) . "</td>";
-                                echo "<td align='right'>" . number_format($totNeDebet, 2) . "</td>";
-                                echo "<td align='right'>" . number_format($totNeKredit, 2) . "</td></tr>";
+                                echo "<td align='right'>" . number_format($totADebet, 0) ."</td>";
+                                echo "<td align='right'>" . number_format($totAKredit, 0) . "</td>";
+                                echo "<td align='right'>" . number_format($totMutDebet, 0) ."</td>";
+                                echo "<td align='right'>" . number_format($totMutKredit, 0) . "</td>";
+                                echo "<td align='right'>" . number_format($totNDebet, 0) ."</td>";
+                                echo "<td align='right'>" . number_format($totNKredit, 0) . "</td>";
+                                echo "<td align='right'>" . number_format($totPDebet, 0) . "</td>";
+                                echo "<td align='right'>" . number_format($totPKredit, 0) . "</td>";
+                                echo "<td align='right'>" . number_format($totNsDebet, 0) . "</td>";
+                                echo "<td align='right'>" . number_format($totNsKredit, 0) . "</td>";
+                                echo "<td align='right'>" . number_format($totRlDebet, 0) . "</td>";
+                                echo "<td align='right'>" . number_format($totRlKredit, 0) . "</td>";
+                                echo "<td align='right'>" . number_format($totNeDebet, 0) . "</td>";
+                                echo "<td align='right'>" . number_format($totNeKredit, 0) . "</td></tr>";
                                 echo "<tr>";
                                 echo "<td colspan='10'></td>";
 
@@ -296,23 +296,23 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 if ($totRlDebet>$totRlKredit) {
                                     $totDneraca = $totRlDebet-$totRlKredit;
                                     echo "<td align='right'><font color='red'><b>Rugi</td>";
-                                    echo "<td align='right'>" . number_format($totDneraca, 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($totDneraca, 0) . "</td>";
                                 }else{
-                                    echo "<td align='right'>" . number_format(0, 2) . "</td>";
+                                    echo "<td align='right'>" . number_format(0, 0) . "</td>";
                                 }
                                 if ($totRlDebet<$totRlKredit) {
                                     $totKneraca = $totRlKredit-$totRlDebet;
                                     echo "<td align='right'><font color='blue'><b>Laba</td>";
-                                    echo "<td align='right'>" . number_format($totKneraca, 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($totKneraca, 0) . "</td>";
                                 }else{
-                                    echo "<td align='right'>" . number_format(0, 2) . "</td>";
+                                    echo "<td align='right'>" . number_format(0, 0) . "</td>";
                                 }
-                                echo "<td align='right'>" . number_format($totDneraca, 2) . "</td>";
-                                echo "<td align='right'>" . number_format($totKneraca, 2) . "</td></tr>";
+                                echo "<td align='right'>" . number_format($totDneraca, 0) . "</td>";
+                                echo "<td align='right'>" . number_format($totKneraca, 0) . "</td></tr>";
                                 echo "<tr>";
                                 echo "<td colspan='13'></td>";
-                                echo "<td align='right'>" . number_format($totNeDebet+$totDneraca, 2) . "</td>";
-                                echo "<td align='right'>" . number_format($totNeKredit+$totKneraca, 2) . "</td></tr></tfoot>";
+                                echo "<td align='right'>" . number_format($totNeDebet+$totDneraca, 0) . "</td>";
+                                echo "<td align='right'>" . number_format($totNeKredit+$totKneraca, 0) . "</td></tr></tfoot>";
 
                             } else {
                                 echo("<tr class='even'>");

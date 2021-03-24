@@ -154,16 +154,16 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                     echo "<td>" . $query_data["kode_transaksi"] . "</td>";
                                     echo "<td>" . $query_data["keterangan_transaksi"] . "</td>";
                                     echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. ".</td>";
-                                    echo "<td align='right'>" . number_format($query_data["debet"], 2) . "</td>";
-                                    echo "<td align='right'>" . number_format($query_data["kredit"], 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["debet"], 0) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["kredit"], 0) . "</td>";
                                     echo("</tr>");
                                     $totDebet += $query_data["debet"];
                                     $totKredit += $query_data["kredit"]; 
                                 }
                                 echo "<tr>";
                                 echo "<td colspan='4' align='right'>Amount</td>";
-                                echo "<td align='right'>". number_format($totDebet, 2) ."</td>";
-                                echo "<td align='right'>". number_format($totKredit, 2) ."</td>";
+                                echo "<td align='right'>". number_format($totDebet, 0) ."</td>";
+                                echo "<td align='right'>". number_format($totKredit, 0) ."</td>";
                                 echo "</tr>";
                             } else {
                                 echo("<tr class='even'>");

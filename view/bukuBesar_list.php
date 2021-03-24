@@ -194,7 +194,7 @@ select: function( event, ui ) {
 
                 $q = "SELECT t.tanggal_transaksi, t.kode_transaksi, t.kode_rekening, m.nama_rekening, t.keterangan_transaksi, t.debet, t.kredit ";
                 $q.= "FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening  AND t.kode_rekening= '". $_GET["txtKodeRekeningbb"]."'  ";
-                $q.= "WHERE 1=1 and keterangan_posting='Post'" . $filter;
+                $q.= "WHERE 1=1 " . $filter;
                 $q.= " ORDER BY t.kode_transaksi asc,t.no_transaksi,t.keterangan_transaksi,t.debet desc";
                 $rs = mysql_query($q, $dbLink);
                 
@@ -203,7 +203,7 @@ select: function( event, ui ) {
                 $filter2 = "";
                 if ($tglJurnal1 && $tglJurnal2){
                     $filter2 = " AND tanggal_transaksi< '" . tgl_mysql($tglJurnal1) . "'  ";
-                    $q2 = "SELECT *,(awal_debet+d) as saldo_d, (awal_kredit+k) as saldo_k FROM `aki_tabel_master` m inner join (SELECT tanggal_transaksi,kode_rekening,sum(debet) as d, sum(kredit) as k FROM `aki_tabel_transaksi` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."' ".$filter2." and keterangan_posting='Post') as t on m.kode_rekening=t.kode_rekening WHERE m.kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
+                    $q2 = "SELECT *,(awal_debet+d) as saldo_d, (awal_kredit+k) as saldo_k FROM `aki_tabel_master` m inner join (SELECT tanggal_transaksi,kode_rekening,sum(debet) as d, sum(kredit) as k FROM `aki_tabel_transaksi` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."' ".$filter2.") as t on m.kode_rekening=t.kode_rekening WHERE m.kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
                 }else{
                     $q2 = "SELECT awal_debet as saldo_d, awal_kredit as saldo_k FROM `aki_tabel_master` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
                 }
@@ -224,12 +224,12 @@ select: function( event, ui ) {
                         <thead>
                             <tr>
                                 <th style="width: 5%">Date</th>
-                                <th style="width: 10%">Transaction Number</th>
+                                <th style="width: 5%">Transaction Number</th>
                                 <th style="width: 15%">Account</th>
-                                <th style="width: 23%">Description</th>
-                                <th style="width: 12%">Debit</th>
-                                <th style="width: 12%">Credit</th>
-                                <th style="width: 12%">Balance</th>
+                                <th style="width: 30%">Description</th>
+                                <th style="width: 10%">Debit</th>
+                                <th style="width: 10%">Credit</th>
+                                <th style="width: 10%">Balance</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -246,10 +246,10 @@ select: function( event, ui ) {
                                     echo "<td></td>";
                                     echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. ".</td>";
                                     echo "<td> saldo</td>";
-                                    echo "<td align='right'>" . number_format($query_data["saldo_d"], 2) . "</td>";
-                                    echo "<td align='right'>" . number_format($query_data["saldo_k"], 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_d"], 0) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_k"], 0) . "</td>";
                                     $saldo = $saldo+$query_data["saldo_d"]-$query_data["saldo_k"];
-                                    echo "<td align='right'>" . number_format($saldo, 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($saldo, 0) . "</td>";
                                     echo("</tr>");
                                 }else{
                                     $query_data = mysql_fetch_array($rs3);
@@ -258,10 +258,10 @@ select: function( event, ui ) {
                                     echo "<td></td>";
                                     echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. ".</td>";
                                     echo "<td> saldo</td>";
-                                    echo "<td align='right'>" . number_format($query_data["saldo_d"], 2) . "</td>";
-                                    echo "<td align='right'>" . number_format($query_data["saldo_k"], 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_d"], 0) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_k"], 0) . "</td>";
                                     $saldo = $saldo+$query_data["saldo_d"]-$query_data["saldo_k"];
-                                    echo "<td align='right'>" . number_format($saldo, 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($saldo, 0) . "</td>";
                                     echo("</tr>");
                                 }
                                 
@@ -271,19 +271,19 @@ select: function( event, ui ) {
                                     echo "<td>" . $query_data["kode_transaksi"] . "</td>";
                                     echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. ".</td>";
                                     echo "<td>" . $query_data["keterangan_transaksi"] . "</td>";
-                                    echo "<td align='right'>" . number_format($query_data["debet"], 2) . "</td>";
-                                    echo "<td align='right'>" . number_format($query_data["kredit"], 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["debet"], 0) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["kredit"], 0) . "</td>";
                                     $saldo = $saldo+$query_data["debet"]-$query_data["kredit"];
-                                    echo "<td align='right'>" . number_format($saldo, 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($saldo, 0) . "</td>";
                                     echo("</tr>");
                                     $totDebet += $query_data["debet"];
                                     $totKredit += $query_data["kredit"]; 
                                 }
                                 echo "<tfoot><tr>";
                                 echo "<td colspan='4' align='right'>Amount</td>";
-                                echo "<td align='right'>". number_format($totDebet, 2) ."</td>";
-                                echo "<td align='right'>". number_format($totKredit, 2) ."</td>";
-                                echo "<td align='right'><b>". number_format($saldo, 2) ."</b></td>";
+                                echo "<td align='right'>". number_format($totDebet, 0) ."</td>";
+                                echo "<td align='right'>". number_format($totKredit, 0) ."</td>";
+                                echo "<td align='right'><b>". number_format($saldo, 0) ."</b></td>";
                                 echo "</tr></tfoot>";
                             } else {
                                 if ($hasilrs2>0){
@@ -293,10 +293,10 @@ select: function( event, ui ) {
                                     echo "<td></td>";
                                     echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. ".</td>";
                                     echo "<td> Saldo Akhir</td>";
-                                    echo "<td align='right'>" . number_format($query_data["saldo_d"], 2) . "</td>";
-                                    echo "<td align='right'>" . number_format($query_data["saldo_k"], 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_d"], 0) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_k"], 0) . "</td>";
                                     $saldo = $saldo+$query_data["saldo_d"]-$query_data["saldo_k"];
-                                    echo "<td align='right'><b>". number_format($saldo, 2) ."</b></td>";
+                                    echo "<td align='right'><b>". number_format($saldo, 0) ."</b></td>";
                                     echo("</tr></tfoot>");
                                 }else{
                                     $query_data = mysql_fetch_array($rs3);
@@ -305,10 +305,10 @@ select: function( event, ui ) {
                                     echo "<td></td>";
                                     echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. ".</td>";
                                     echo "<td> Saldo Akhir</td>";
-                                    echo "<td align='right'>" . number_format($query_data["saldo_d"], 2) . "</td>";
-                                    echo "<td align='right'>" . number_format($query_data["saldo_k"], 2) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_d"], 0) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["saldo_k"], 0) . "</td>";
                                     $saldo = $saldo+$query_data["saldo_d"]-$query_data["saldo_k"];
-                                    echo "<td align='right'><b>". number_format($saldo, 2) ."</b></td>";
+                                    echo "<td align='right'><b>". number_format($saldo, 0) ."</b></td>";
                                     echo("</tr></tfoot>");
                                 }
                             }

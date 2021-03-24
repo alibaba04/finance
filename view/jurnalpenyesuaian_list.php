@@ -219,8 +219,8 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. "</td>";
                                 echo "<td>" . tgl_ind($query_data["tanggal_transaksi"]) . "</td>";
                                 echo "<td>" . $query_data["keterangan_transaksi"] . "</td>";
-                                echo "<td style='text-align: right;'>" . number_format($query_data["debet"], 2) . "</td>";
-                                echo "<td style='text-align: right;'>" . number_format($query_data["kredit"], 2) . "</td>";
+                                echo "<td style='text-align: right;'>" . number_format($query_data["debet"], 0) . "</td>";
+                                echo "<td style='text-align: right;'>" . number_format($query_data["kredit"], 0) . "</td>";
                                 if ($query_data["tanggal_posting"]=="0000-00-00") {
                                     echo "<td style='text-align: center;'>-</td>";
                                 }else{

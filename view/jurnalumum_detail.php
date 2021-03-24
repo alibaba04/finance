@@ -263,14 +263,14 @@ return true;
 //Secure parameter from SQL injection
                             if (isset($_GET["kode"])){
                                 $kode = secureParam($_GET["kode"], $dbLink);
-                                $kodet = secureParam($_GET["kodet"], $dbLink);
+                                $ket = secureParam($_GET["ket"], $dbLink);
                             }else{
                                 $kode = "";
                             }
 
                             $q = "SELECT j.nomor_jurnal, j.kode_transaksi, j.tanggal_selesai, t.tanggal_transaksi ";
                             $q.= "FROM aki_jurnal_umum j INNER JOIN aki_tabel_transaksi t ON j.kode_transaksi=t.kode_transaksi ";
-                            $q.= "WHERE md5(t.no_transaksi)='".$kode."' and md5(t.kode_transaksi)='".$kodet."'";
+                            $q.= "WHERE md5(t.no_transaksi)='".$kode."' and md5(t.keterangan_transaksi)='".$ket."'";
 
                             $rsTemp = mysql_query($q, $dbLink);
 
@@ -342,7 +342,7 @@ return true;
 
                                 <?php
                                 if ($_GET['mode']=='edit'){
-                                    $q = "SELECT t.id_transaksi, t.kode_transaksi, t.kode_rekening, t.tanggal_transaksi, t.keterangan_transaksi, t.debet, t.kredit, m.nama_rekening FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening WHERE MD5(t.no_transaksi)='" . $kode . "' ANd MD5(t.kode_transaksi)='" . $kodet . "' ORDER BY id_transaksi ";
+                                    $q = "SELECT t.id_transaksi, t.kode_transaksi, t.kode_rekening, t.tanggal_transaksi, t.keterangan_transaksi, t.debet, t.kredit, m.nama_rekening FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening WHERE MD5(t.no_transaksi)='" . $kode . "' ANd MD5(t.keterangan_transaksi)='" . $ket . "' ORDER BY id_transaksi ";
                                     $rsDetilJurnal = mysql_query($q, $dbLink);
                                     $iJurnal = 0;
                                     while ($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {

@@ -180,14 +180,14 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <table class="table table-bordered table-striped table-hover" >
                         <thead>
                             <tr>
-                                <th style="width: 3%">#</th>
-                                <th style="width: 6%">Transaction Date</th>
-                                <th style="width: 10%">Transaction Code</th>
+                                <th style="width: 2%">#</th>
+                                <th style="width: 5%">Transaction Date</th>
+                                <th style="width: 5%">Transaction Code</th>
                                 <th style="width: 20%">Account</th>
                                 <th style="width: 30%">Description</th>
                                 <th style="width: 10%">Debit</th>
                                 <th style="width: 10%">Credit</th>
-                                <th style="width: 5%">Posted?</th>
+                                <th style="width: 2%">Posted?</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -206,8 +206,8 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                     echo "<td>" . $query_data["kode_transaksi"] . "</td>";
                                     echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. "</td>";
                                     echo "<td>" . $query_data["keterangan_transaksi"] . "</td>";
-                                    echo "<td align='right'>" . number_format($query_data["debet"],2) . "</td>";
-                                    echo "<td align='right'>" . number_format($query_data["kredit"],2) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["debet"],0) . "</td>";
+                                    echo "<td align='right'>" . number_format($query_data["kredit"],0) . "</td>";
                                     echo "<td align='center'>" . $ketpost . "</td>";
                                     echo("</tr>");
                                     $totDebet += $query_data["debet"];
@@ -224,8 +224,8 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <tfoot>
                             <tr>
                                 <td colspan="5" align="center"><b>Count</td>
-                                <td align="right"><b><?php echo number_format($totDebet,2); ?></td>
-                                <td align="right"><b><?php echo number_format($totKredit,2); ?></td>
+                                <td align="right"><b><?php echo number_format($totDebet,0); ?></td>
+                                <td align="right"><b><?php echo number_format($totKredit,0); ?></td>
                             </tr>
                             <tr>
                                 <td colspan="5" align="center"><b></td>

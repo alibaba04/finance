@@ -187,11 +187,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                                 if ($query_data["normal"] == 'Debit') {
                                                     $nsdebet = $query_data["awal_debet"]+$query_data["debet"]-$query_data["awal_kredit"]-$query_data["kredit"];
                                                     $nspenyesuaianD = $nsdebet+$query_data["pdebet"]-$nskredit-$query_data["pkredit"];
-                                                    echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 2). "</td>";
+                                                    echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 0). "</td>";
                                                 }else{
                                                     $nskredit = $query_data["awal_kredit"]+$query_data["kredit"]-$query_data["awal_debet"]-$query_data["debet"];
                                                     $nspenyesuaianK = $nskredit+$query_data["pkredit"]-$nsdebet-$query_data["pdebet"];
-                                                    echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 2) . "</td>";
+                                                    echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 0) . "</td>";
                                                 }
                                                 echo "<td align='right' style='width: 15%'> </td>";
 
@@ -260,11 +260,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                             if ($query_data["normal"] == 'Debit') {
                                                 $nsdebet = $query_data["awal_debet"]+$query_data["debet"]-$query_data["awal_kredit"]-$query_data["kredit"];
                                                 $nspenyesuaianD = $nsdebet+$query_data["pdebet"]-$nskredit-$query_data["pkredit"];
-                                                echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 2). "</td>";
+                                                echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 0). "</td>";
                                             }else{
                                                 $nskredit = $query_data["awal_kredit"]+$query_data["kredit"]-$query_data["awal_debet"]-$query_data["debet"];
                                                 $nspenyesuaianK = $nskredit+$query_data["pkredit"]-$nsdebet-$query_data["pdebet"];
-                                                echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 2) . "</td>";
+                                                echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 0) . "</td>";
                                             }
                                             echo "<td align='right' style='width: 15%'> </td>";
 
@@ -290,11 +290,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 echo "<tfooter><tr>";
                 echo "<td align='right' style='width: 40%' ><b>Total Cost of Income / HPP</td>";
                 echo "<td align='right' style='width: 10%' ><b></td>";
-                echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
+                echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 0)."</td>";
                 echo "</tr><tr>";
                 echo "<td align='right' style='width: 40%' ><b>Gross Profit</td>";
                 echo "<td align='right' style='width: 10%' ><b></td>";
-                echo "<td align='center' style='width: 30%' ><b>".number_format( $Tpendapatan-$TbiayaHpp, 2)."</td>";
+                echo "<td align='center' style='width: 30%' ><b>".number_format( $Tpendapatan-$TbiayaHpp, 0)."</td>";
                 echo "</tr></tfooter>";
                 ?></table>
             </div>
@@ -336,11 +336,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                         if ($query_data["normal"] == 'Debit') {
                                             $nsdebet = $query_data["awal_debet"]+$query_data["debet"]-$query_data["awal_kredit"]-$query_data["kredit"];
                                             $nspenyesuaianD = $nsdebet+$query_data["pdebet"]-$nskredit-$query_data["pkredit"];
-                                            echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 2). "</td>";
+                                            echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 0). "</td>";
                                         }else{
                                             $nskredit = $query_data["awal_kredit"]+$query_data["kredit"]-$query_data["awal_debet"]-$query_data["debet"];
                                             $nspenyesuaianK = $nskredit+$query_data["pkredit"]-$nsdebet-$query_data["pdebet"];
-                                            echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 2) . "</td>";
+                                            echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 0) . "</td>";
                                         }
                                         echo "<td align='right' style='width: 15%'> </td>";
 
@@ -365,7 +365,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             echo "<tfooter><tr>";
             echo "<td align='right' style='width: 40%' ><b>Total Cost Operational</td>";
             echo "<td align='right' style='width: 10%' ><b></td>";
-            echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
+            echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 0)."</td>";
             echo "</tr></tfooter>";
             $TbiayaOp = $totADebet+$totAKredit;
             ?></table>
@@ -408,11 +408,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                     if ($query_data["normal"] == 'Debit') {
                                         $nsdebet = $query_data["awal_debet"]+$query_data["debet"]-$query_data["awal_kredit"]-$query_data["kredit"];
                                         $nspenyesuaianD = $nsdebet+$query_data["pdebet"]-$nskredit-$query_data["pkredit"];
-                                        echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 2). "</td>";
+                                        echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 0). "</td>";
                                     }else{
                                         $nskredit = $query_data["awal_kredit"]+$query_data["kredit"]-$query_data["awal_debet"]-$query_data["debet"];
                                         $nspenyesuaianK = $nskredit+$query_data["pkredit"]-$nsdebet-$query_data["pdebet"];
-                                        echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 2) . "</td>";
+                                        echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 0) . "</td>";
                                     }
                                     echo "<td align='right' style='width: 15%'> </td>";
 
@@ -437,7 +437,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         echo "<tfooter><tr>";
         echo "<td align='right' style='width: 40%' ><b>Total Other Income</td>";
         echo "<td align='right' style='width: 10%' ><b></td>";
-        echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
+        echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 0)."</td>";
         echo "</tr></tfooter>";
         $Tpendlain = $totADebet+$totAKredit;
         ?></table>
@@ -480,11 +480,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 if ($query_data["normal"] == 'Debit') {
                                     $nsdebet = $query_data["awal_debet"]+$query_data["debet"]-$query_data["awal_kredit"]-$query_data["kredit"];
                                     $nspenyesuaianD = $nsdebet+$query_data["pdebet"]-$nskredit-$query_data["pkredit"];
-                                    echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 2). "</td>";
+                                    echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 0). "</td>";
                                 }else{
                                     $nskredit = $query_data["awal_kredit"]+$query_data["kredit"]-$query_data["awal_debet"]-$query_data["debet"];
                                     $nspenyesuaianK = $nskredit+$query_data["pkredit"]-$nsdebet-$query_data["pdebet"];
-                                    echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 2) . "</td>";
+                                    echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 0) . "</td>";
                                 }
                                 echo "<td align='right' style='width: 15%'> </td>";
 
@@ -513,23 +513,23 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     echo "<tfooter><tr>";
     echo "<td align='right' style='width: 40%' ><b>Total Other Cost</td>";
     echo "<td align='right' style='width: 10%' ><b></td>";
-    echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
+    echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 0)."</td>";
     echo "</tr><tr>";
     if ($labarugi<0){
         $tlabarugi = 'Rugi';
         echo "<td align='right' style='width: 40%' ><font color='red'><b>".$tlabarugi."</td>";
         echo "<td align='right' style='width: 10%' ><b></td>";
-        echo "<td align='center' style='width: 30%' ><font color='red'><b>".number_format($labarugi , 2)."</td>";
+        echo "<td align='center' style='width: 30%' ><font color='red'><b>".number_format($labarugi , 0)."</td>";
     }else if ($labarugi==0) {
         $tlabarugi = 'Laba Rugi';
         echo "<td align='right' style='width: 40%' ><b>".$tlabarugi."</td>";
         echo "<td align='right' style='width: 10%' ><b></td>";
-        echo "<td align='center' style='width: 30%' ><b>".number_format($labarugi , 2)."</td>";
+        echo "<td align='center' style='width: 30%' ><b>".number_format($labarugi , 0)."</td>";
     }else{
         $tlabarugi = 'Laba';
         echo "<td align='right' style='width: 40%' ><font color='blue'><b>".$tlabarugi."</td>";
         echo "<td align='right' style='width: 10%' ><b></td>";
-        echo "<td align='center' style='width: 30%' ><font color='blue'><b>".number_format($labarugi , 2)."</td>";
+        echo "<td align='center' style='width: 30%' ><font color='blue'><b>".number_format($labarugi , 0)."</td>";
 
     }
     echo "</tr></tfooter>";

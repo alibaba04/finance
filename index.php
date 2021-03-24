@@ -102,15 +102,10 @@ require_once('./function/fungsi_formatdate.php');
     } else {
         
         ?>
-
         <body class="hold-transition skin-green sidebar-mini">
-            
-        
         <?php
-        
     }
         ?>
-       
     </div>
         <div class="wrapper">
             <header class="main-header">

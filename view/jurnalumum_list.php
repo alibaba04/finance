@@ -210,15 +210,14 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <table class="table table-bordered table-striped table-hover" >
                         <thead>
                             <tr>
-                                <th style="width: 3%">#</th>
-                                <th style="width: 10%">Transaction Code</th>
+                                <th style="width: 1%">#</th>
+                                <th style="width: 5%">Transaction Code</th>
                                 <th style="width: 15%">Account</th>
                                 <th style="width: 5%">Transaction Date</th>
-                                <th style="width: 15%">Description</th>
+                                <th style="width: 25%">Description</th>
                                 <th style="width: 10%">Debit</th>
                                 <th style="width: 10%">Credit</th>
-                                <th style="width: 5%">Post Date</th>
-                                <th colspan="2" width="3%">Action</th>
+                                <th colspan="2" width="1%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -231,23 +230,17 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. "</td>";
                                 echo "<td>" . tgl_ind($query_data["tanggal_transaksi"]) . "</td>";
                                 echo "<td>" . $query_data["keterangan_transaksi"] . "</td>";
-                                echo "<td style='text-align: right;'>" . number_format($query_data["debet"], 2) . "</td>";
-                                echo "<td style='text-align: right;'>" . number_format($query_data["kredit"], 2) . "</td>";
-                                if ($query_data["tanggal_posting"]=="0000-00-00") {
-                                    echo "<td style='text-align: center;'>-</td>";
-                                }else{
-                                    echo "<td>" . tgl_ind($query_data["tanggal_posting"]) . "</td>";
-                                }
-
+                                echo "<td style='text-align: right;'>" . number_format($query_data["debet"], 0) . "</td>";
+                                echo "<td style='text-align: right;'>" . number_format($query_data["kredit"], 0) . "</td>";
                                 if ($hakUser == 90) {
                                     
                                     if(empty($query_data["keterangan_posting"])){
-                                        echo "<td><a class='label label-success' style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/jurnalumum_detail&mode=edit&kode=" . md5($query_data["no_transaksi"]) . "&kodet=" . md5($query_data["kode_transaksi"]) . "'><i class='fa fa-edit'></i>&nbsp;Update</span></td>";
+                                        echo "<td><a class='label label-success' style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/jurnalumum_detail&mode=edit&kode=" . md5($query_data["no_transaksi"]) . "&ket=" . md5($query_data["keterangan_transaksi"]) . "'><i class='fa fa-edit'></i>&nbsp;Update</span></td>";
 
                                         echo("<td><span class='label label-danger' onclick=\"if(confirm('Apakah anda yakin akan menghapus data Transaksi Jurnal Umum " . $query_data["kode_transaksi"] . " ?')){location.href='index2.php?page=" . $curPage . "&txtMode=Delete&kode=" . md5($query_data["no_transaksi"]) . "'}\" style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</span></td>");
                                     }else{
                                         if ($_SESSION["my"]->privilege == 'GODMODE' or $_SESSION["my"]->privilege == "ADMIN1") {
-                                             echo "<td><a class='label label-success' style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/jurnalumum_detail&mode=edit&kode=" . md5($query_data["no_transaksi"]) . "&kodet=" . md5($query_data["kode_transaksi"]) . "'><i class='fa fa-edit'></i>&nbsp;Update</span></td>";
+                                             echo "<td><a class='label label-success' style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/jurnalumum_detail&mode=edit&kode=" . md5($query_data["no_transaksi"]) . "&ket=" . md5($query_data["keterangan_transaksi"]) . "'><i class='fa fa-edit'></i>&nbsp;Update</span></td>";
 
                                             echo("<td><span class='label label-danger' onclick=omodal('" . md5($query_data['no_transaksi']) . "') value='" . md5($query_data["no_transaksi"]) . "' id='btnModal'style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</span></td>");
                                         }else{

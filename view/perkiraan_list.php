@@ -211,8 +211,8 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             while ($query_data = $rs->fetchArray()) {
                                 echo "<tr>";
                                 echo "<td>" . $query_data["kode_rekening"] . " - " . $query_data["nama_rekening"] . "</td>";
-                                echo "<td align='right'>" . number_format($query_data["awal_debet"],2) . "</td>";
-                                echo "<td align='right'>" . number_format($query_data["awal_kredit"],2) . "</td>";
+                                echo "<td align='right'>" . number_format($query_data["awal_debet"],0) . "</td>";
+                                echo "<td align='right'>" . number_format($query_data["awal_kredit"],0) . "</td>";
                                 echo "<td>" . $query_data["posisi"] . "</td>";
                                 echo "<td>" . $query_data["normal"] . "</td>";
                                 $totDebet += $query_data["awal_debet"];
@@ -237,8 +237,8 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <tfoot>
                             <tr>
                                 <td colspan="1" align="right">Count</td>
-                                <td align="right"><?php echo number_format($totDebet,2); ?></td>
-                                <td align="right"><?php echo number_format($totKredit,2); ?></td>
+                                <td align="right"><?php echo number_format($totDebet,0); ?></td>
+                                <td align="right"><?php echo number_format($totKredit,0); ?></td>
                                 <td colspan="3">
                                     <!-- <?php 
                                     if ($totDebet == $totKredit){
