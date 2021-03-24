@@ -201,14 +201,14 @@ select: function( event, ui ) {
                 $hasilrs = mysql_num_rows($rs);
 
                 $filter2 = "";
-                if ($tglJurnal2){
-                    $filter2 = " AND tanggal_transaksi< '" . tgl_mysql($tglJurnal2) . "'  ";
+                if ($tglJurnal1 && $tglJurnal2){
+                    $filter2 = " AND tanggal_transaksi< '" . tgl_mysql($tglJurnal1) . "'  ";
                     $q2 = "SELECT *,(awal_debet+d) as saldo_d, (awal_kredit+k) as saldo_k FROM `aki_tabel_master` m inner join (SELECT tanggal_transaksi,kode_rekening,sum(debet) as d, sum(kredit) as k FROM `aki_tabel_transaksi` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."' ".$filter2." and keterangan_posting='Post') as t on m.kode_rekening=t.kode_rekening WHERE m.kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
                 }else{
                     $q2 = "SELECT awal_debet as saldo_d, awal_kredit as saldo_k FROM `aki_tabel_master` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
                 }
+                
                 $q3 = "SELECT awal_debet as saldo_d, awal_kredit as saldo_k FROM `aki_tabel_master` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
-
                 $rs2 = mysql_query($q2, $dbLink);
                 $rs3 = mysql_query($q3, $dbLink);
                 $hasilrs2 = mysql_num_rows($rs2);
