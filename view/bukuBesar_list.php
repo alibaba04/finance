@@ -195,7 +195,7 @@ select: function( event, ui ) {
                 $q = "SELECT t.tanggal_transaksi, t.kode_transaksi, t.kode_rekening, m.nama_rekening, t.keterangan_transaksi, t.debet, t.kredit ";
                 $q.= "FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening  AND t.kode_rekening= '". $_GET["txtKodeRekeningbb"]."'  ";
                 $q.= "WHERE 1=1 and keterangan_posting='Post'" . $filter;
-                $q.= " ORDER BY t.tanggal_transaksi, id_transaksi ";
+                $q.= " ORDER BY t.kode_transaksi asc,t.no_transaksi,t.keterangan_transaksi,t.debet desc";
                 $rs = mysql_query($q, $dbLink);
                 
                 $hasilrs = mysql_num_rows($rs);
@@ -209,6 +209,7 @@ select: function( event, ui ) {
                 }
                 
                 $q3 = "SELECT awal_debet as saldo_d, awal_kredit as saldo_k FROM `aki_tabel_master` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
+                echo $q;
                 $rs2 = mysql_query($q2, $dbLink);
                 $rs3 = mysql_query($q3, $dbLink);
                 $hasilrs2 = mysql_num_rows($rs2);
