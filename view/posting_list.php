@@ -164,7 +164,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 //database
                 $q = "SELECT m.nama_rekening,t.kode_transaksi, t.kode_rekening, t.tanggal_transaksi, t.keterangan_transaksi, t.debet, t.kredit, t.tanggal_posting, t.keterangan_posting ";
                 $q.= "FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening ";
-                $q.= "WHERE 1=1 " . $filter;
+                $q.= "WHERE 1=1 and t.aktif=1 " . $filter;
                 $q.= " ORDER BY t.tanggal_transaksi desc, t.id_transaksi, t.kode_rekening desc ";
                 $rs = mysql_query($q, $dbLink);
                 $hasilrs = mysql_num_rows($rs);

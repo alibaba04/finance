@@ -67,16 +67,15 @@ class c_hitungrlneraca
 			//Ambil data tabel master
 			$filter =  " AND b.tanggal_transaksi BETWEEN '" . tgl_mysql($this->tgl1) . "' AND '" . tgl_mysql($this->tgl2) . "'";
 		
-			$q = 'SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, (t.debet) as debet, (t.kredit)as kredit,m.normal,t.ref,t.ket_hitungrlneraca FROM `aki_tabel_transaksi`t left join aki_tabel_master m on t.kode_rekening=m.kode_rekening ';
+			$q = 'SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, (t.debet) as debet, (t.kredit)as kredit,m.normal,t.ref,t.ket_hitungrlneraca FROM `aki_tabel_transaksi`t left join aki_tabel_master m on t.kode_rekening=m.kode_rekening where aktif=1';
 			if (!$query_hitung_sisa=mysql_query($q, $dbLink))
 				throw new Exception('Gagal Hitung Rugi Laba & Neraca, data master tidak dapat diproses.');
-			echo $q;
 			$hasilrs = mysql_num_rows($query_hitung_sisa);
 			if ($hasilrs>0){
 				$nsdebet = $nskredit = $nspenyesuaianD = $nspenyesuaianK = 0;
 				while($row_hit=mysql_fetch_array($query_hitung_sisa)){
 					$kode_rekening=$row_hit['kode_rekening'];
-					$qPeriode="UPDATE `aki_tabel_transaksi` SET `ket_hitungrlneraca`='y' where kode_rekening='$kode_rekening'";
+					$qPeriode="UPDATE `aki_tabel_transaksi` SET `ket_hitungrlneraca`='y' where aktif=1 and kode_rekening='$kode_rekening'";
 					if(!mysql_query($qPeriode, $dbLink))
 						throw new Exception($qPeriode.'Gagal Hitung Rugi Laba, tidak bisa update data rugi laba.');
 				}
@@ -85,7 +84,13 @@ class c_hitungrlneraca
 
 			}
 
-			$hrini = date('d-m-Y',time());
+			date_default_timezone_set("Asia/Jakarta");
+			$tgl = date("Y-m-d h:i:sa");
+			$ket = "desc : Hitung Rugi Laba dan Neraca tanggal_transaksi BETWEEN " . tgl_mysql($this->tgl1) . " AND " . tgl_mysql($this->tgl2) .", datetime: ".$tgl;
+			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
+			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
+			if (!mysql_query( $q4, $dbLink))
+				throw new Exception('Gagal insert report!');
 			@mysql_query("COMMIT", $dbLink);
 			$this->strResults="Sukses Hitung Rugi Laba Neraca ";
 		}

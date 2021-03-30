@@ -138,7 +138,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <div class="col-md">
                         <div class="box box-default box-solid collapsed-box"style="margin-bottom: 0;">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Income</h3>
+                                <h3 class="box-title">Pendapatan</h3>
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                                     </button>
@@ -164,10 +164,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                         $filter = $filter . " AND t.tanggal_transaksi BETWEEN '" . tgl_mysql($tglJurnal1) . "' 
                                     AND '" . tgl_mysql($tglJurnal2) . "' ";
                                     $q = "SELECT m.kode_rekening, m.nama_rekening, m.awal_debet, m.awal_kredit,IFNULL((b.debet),0) as debet,IFNULL((b.kredit),0) as kredit,IFNULL((c.debet),0) as pdebet,IFNULL((c.kredit),0) as pkredit,b.ref,m.normal  FROM `aki_tabel_master` m";
-                                    $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1";
+                                    $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                                     $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref='-' GROUP by m.kode_rekening) as b ";
                                     $q.="on m.kode_rekening=b.kode_rekening left join";
-                                    $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 ";
+                                    $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1 ";
                                     $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref!='-' GROUP by m.kode_rekening) as c on m.kode_rekening=c.kode_rekening";
                                     $q.=" where m.kode_rekening BETWEEN '4000.000' and '4300.000' GROUP by m.kode_rekening ORDER BY m.kode_rekening asc" ;
                                     $rs = mysql_query($q, $dbLink);
@@ -187,11 +187,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                                 if ($query_data["normal"] == 'Debit') {
                                                     $nsdebet = $query_data["awal_debet"]+$query_data["debet"]-$query_data["awal_kredit"]-$query_data["kredit"];
                                                     $nspenyesuaianD = $nsdebet+$query_data["pdebet"]-$nskredit-$query_data["pkredit"];
-                                                    echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 0). "</td>";
+                                                    echo "<td align='right'style='width: 15%'>" . ( $nspenyesuaianD). "</td>";
                                                 }else{
                                                     $nskredit = $query_data["awal_kredit"]+$query_data["kredit"]-$query_data["awal_debet"]-$query_data["debet"];
                                                     $nspenyesuaianK = $nskredit+$query_data["pkredit"]-$nsdebet-$query_data["pdebet"];
-                                                    echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 0) . "</td>";
+                                                    echo "<td align='right'style='width: 15%'>" . ( $nspenyesuaianK) . "</td>";
                                                 }
                                                 echo "<td align='right' style='width: 15%'> </td>";
 
@@ -215,9 +215,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     </div>
                     <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
                     echo "<tfooter><tr>";
-                    echo "<td align='right' style='width: 40%' ><b>Total Income</td>";
+                    echo "<td align='right' style='width: 40%' ><b>Total Pendapatan</td>";
                     echo "<td align='right' style='width: 10%' ><b></td>";
-                    echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
+                    echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 0)."</td>";
                     echo "</tr></tfooter>";
                     $Tpendapatan = $totADebet+$totAKredit;
                     ?></table>
@@ -225,7 +225,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 <div class="col-md">
                     <div class="box box-default box-solid collapsed-box" style="margin-bottom: 0;">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Cost of Income</h3>
+                            <h3 class="box-title">Biaya Atas Pendapatan</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                                 </button>
@@ -237,10 +237,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             <table class="table table-bordered table-striped table-hover"style="height: auto; overflow-y: scroll;">
                                 <?php
                                 $q = "SELECT m.kode_rekening, m.nama_rekening, m.awal_debet, m.awal_kredit,IFNULL((b.debet),0) as debet,IFNULL((b.kredit),0) as kredit,IFNULL((c.debet),0) as pdebet,IFNULL((c.kredit),0) as pkredit,b.ref,m.normal  FROM `aki_tabel_master` m";
-                                $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1";
+                                $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                                 $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref='-' GROUP by m.kode_rekening) as b ";
                                 $q.="on m.kode_rekening=b.kode_rekening left join";
-                                $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 ";
+                                $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                                 $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref!='-' GROUP by m.kode_rekening) as c on m.kode_rekening=c.kode_rekening";
                                 $q.=" where m.kode_rekening BETWEEN '5000.000' and '5490.000' GROUP by m.kode_rekening ORDER BY m.kode_rekening asc" ;
                                 $rs = mysql_query($q, $dbLink);
@@ -288,11 +288,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
                 $TbiayaHpp = $totADebet+$totAKredit;
                 echo "<tfooter><tr>";
-                echo "<td align='right' style='width: 40%' ><b>Total Cost of Income / HPP</td>";
+                echo "<td align='right' style='width: 40%' ><b>Total Biaya Atas Pendapatan / HPP</td>";
                 echo "<td align='right' style='width: 10%' ><b></td>";
                 echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 0)."</td>";
                 echo "</tr><tr>";
-                echo "<td align='right' style='width: 40%' ><b>Gross Profit</td>";
+                echo "<td align='right' style='width: 40%' ><b>Laba Kotor</td>";
                 echo "<td align='right' style='width: 10%' ><b></td>";
                 echo "<td align='center' style='width: 30%' ><b>".number_format( $Tpendapatan-$TbiayaHpp, 0)."</td>";
                 echo "</tr></tfooter>";
@@ -301,7 +301,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             <div class="col-md">
                 <div class="box box-default box-solid collapsed-box" style="margin-bottom: 0;">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Total Cost Operational</h3>
+                        <h3 class="box-title">Biaya Operasional</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                             </button>
@@ -313,10 +313,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <table class="table table-bordered table-striped table-hover"style="height: auto; overflow-y: scroll;">
                             <?php
                             $q = "SELECT m.kode_rekening, m.nama_rekening, m.awal_debet, m.awal_kredit,IFNULL((b.debet),0) as debet,IFNULL((b.kredit),0) as kredit,IFNULL((c.debet),0) as pdebet,IFNULL((c.kredit),0) as pkredit,b.ref,m.normal  FROM `aki_tabel_master` m";
-                            $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1";
+                            $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                             $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref='-' GROUP by m.kode_rekening) as b ";
                             $q.="on m.kode_rekening=b.kode_rekening left join";
-                            $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 ";
+                            $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                             $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref!='-' GROUP by m.kode_rekening) as c on m.kode_rekening=c.kode_rekening";
                             $q.=" where m.kode_rekening BETWEEN '6000.000' and '6990.001' GROUP by m.kode_rekening ORDER BY m.kode_rekening asc" ;
                             $rs = mysql_query($q, $dbLink);
@@ -363,7 +363,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             </div>
             <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
             echo "<tfooter><tr>";
-            echo "<td align='right' style='width: 40%' ><b>Total Cost Operational</td>";
+            echo "<td align='right' style='width: 40%' ><b>Total Biaya Operasional</td>";
             echo "<td align='right' style='width: 10%' ><b></td>";
             echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 0)."</td>";
             echo "</tr></tfooter>";
@@ -373,7 +373,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         <div class="col-md">
             <div class="box box-default box-solid collapsed-box" style="margin-bottom: 0;">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Total Other Income</h3>
+                    <h3 class="box-title">Pendapatan Lainnya</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                         </button>
@@ -385,10 +385,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <table class="table table-bordered table-striped table-hover"style="height: auto; overflow-y: scroll;">
                         <?php
                         $q = "SELECT m.kode_rekening, m.nama_rekening, m.awal_debet, m.awal_kredit,IFNULL((b.debet),0) as debet,IFNULL((b.kredit),0) as kredit,IFNULL((c.debet),0) as pdebet,IFNULL((c.kredit),0) as pkredit,b.ref,m.normal  FROM `aki_tabel_master` m";
-                        $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1";
+                        $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                         $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref='-' GROUP by m.kode_rekening) as b ";
                         $q.="on m.kode_rekening=b.kode_rekening left join";
-                        $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 ";
+                        $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                         $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref!='-' GROUP by m.kode_rekening) as c on m.kode_rekening=c.kode_rekening";
                         $q.=" where m.kode_rekening BETWEEN '7000.000' and '7170.000' GROUP by m.kode_rekening ORDER BY m.kode_rekening asc" ;
                         $rs = mysql_query($q, $dbLink);
@@ -435,7 +435,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         </div>
         <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
         echo "<tfooter><tr>";
-        echo "<td align='right' style='width: 40%' ><b>Total Other Income</td>";
+        echo "<td align='right' style='width: 40%' ><b>Total Pendapatan Lainnya</td>";
         echo "<td align='right' style='width: 10%' ><b></td>";
         echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 0)."</td>";
         echo "</tr></tfooter>";
@@ -445,7 +445,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     <div class="col-md">
         <div class="box box-default box-solid collapsed-box" style="margin-bottom: 0;">
             <div class="box-header with-border">
-                <h3 class="box-title">Total Other Cost</h3>
+                <h3 class="box-title">Biaya Lainnya</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                     </button>
@@ -457,10 +457,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 <table class="table table-bordered table-striped table-hover"style="height: auto; overflow-y: scroll;">
                     <?php
                     $q = "SELECT m.kode_rekening, m.nama_rekening, m.awal_debet, m.awal_kredit,IFNULL((b.debet),0) as debet,IFNULL((b.kredit),0) as kredit,IFNULL((c.debet),0) as pdebet,IFNULL((c.kredit),0) as pkredit,b.ref,m.normal  FROM `aki_tabel_master` m";
-                    $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1";
+                    $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                     $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref='-' GROUP by m.kode_rekening) as b ";
                     $q.="on m.kode_rekening=b.kode_rekening left join";
-                    $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 ";
+                    $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                     $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref!='-' GROUP by m.kode_rekening) as c on m.kode_rekening=c.kode_rekening";
                     $q.=" where m.kode_rekening BETWEEN '8000.000' and '8190.000' GROUP by m.kode_rekening ORDER BY m.kode_rekening asc" ;
                     $rs = mysql_query($q, $dbLink);
@@ -511,7 +511,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     $tlabarugi = '';
 
     echo "<tfooter><tr>";
-    echo "<td align='right' style='width: 40%' ><b>Total Other Cost</td>";
+    echo "<td align='right' style='width: 40%' ><b>Total Biaya Lainnya</td>";
     echo "<td align='right' style='width: 10%' ><b></td>";
     echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 0)."</td>";
     echo "</tr><tr>";

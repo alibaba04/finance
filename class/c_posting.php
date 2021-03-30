@@ -71,12 +71,12 @@ class c_posting
 
 			///////////////////////// HITUNG MUTASI /////////////////////
 			$filter =  " AND tanggal_transaksi BETWEEN '" . tgl_mysql($this->tgl1) . "' AND '" . tgl_mysql($this->tgl2) . "'";
-			$q_transaksi = "select id_transaksi, kode_rekening from aki_tabel_transaksi where keterangan_posting=''".$filter." order by kode_rekening";
+			$q_transaksi = "select id_transaksi, kode_rekening from aki_tabel_transaksi where  keterangan_posting=''".$filter." order by kode_rekening";
 			if (!$query_hitung_mutasi=mysql_query($q_transaksi, $dbLink))
 				throw new Exception('Gagal Posting Jurnal, tidak bisa ambil data kode rekening transaksi. ');
 
 			////////////////////////// UBAH STATUS POSTING //////////////////////////////
-			$selesai_tr="update aki_tabel_transaksi set tanggal_posting='$tanggal', keterangan_posting='Post' where keterangan_posting=''".$filter;
+			$selesai_tr="update aki_tabel_transaksi set tanggal_posting='$tanggal', keterangan_posting='Post' where aktif=1 and keterangan_posting=''".$filter;
 			if (!$update_tr=mysql_query($selesai_tr, $dbLink))
 				throw new Exception('Gagal Posting Jurnal, tidak bisa update data tanggal selesai di transaksi.');
 			

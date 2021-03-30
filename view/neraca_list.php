@@ -145,7 +145,7 @@ if(array_key_exists('htParent', $_POST)){
                     <div class="col-md">
                         <div class="box box-default box-solid collapsed-box"style="margin-bottom: 0;">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Current Assets</h3>
+                                <h3 class="box-title">Aktiva Lancar</h3>
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                                     </button>
@@ -171,10 +171,10 @@ if(array_key_exists('htParent', $_POST)){
                                         $filter = $filter . " AND t.tanggal_transaksi BETWEEN '" . tgl_mysql($tglJurnal1) . "' 
                                     AND '" . tgl_mysql($tglJurnal2) . "' ";
                                     $q = "SELECT m.kode_rekening, m.nama_rekening, m.awal_debet, m.awal_kredit,IFNULL((b.debet),0) as debet,IFNULL((b.kredit),0) as kredit,IFNULL((c.debet),0) as pdebet,IFNULL((c.kredit),0) as pkredit,b.ref,m.normal  FROM `aki_tabel_master` m";
-                                    $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1";
+                                    $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                                     $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref='-' GROUP by m.kode_rekening) as b ";
                                     $q.="on m.kode_rekening=b.kode_rekening left join";
-                                    $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 ";
+                                    $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                                     $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref!='-' GROUP by m.kode_rekening) as c on m.kode_rekening=c.kode_rekening";
                                     $q.=" where m.kode_rekening BETWEEN '1110.000' and '1140.003' or m.kode_rekening BETWEEN '1300.000' and '1453.000' GROUP by m.kode_rekening ORDER BY m.kode_rekening asc" ;
                                     $rs = mysql_query($q, $dbLink);
@@ -200,7 +200,7 @@ if(array_key_exists('htParent', $_POST)){
                                                     $nspenyesuaianD = $nskredit+$query_data["pkredit"]-$nsdebet-$query_data["pdebet"];
                                                 }
 
-                                                echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 2). "</td>";
+                                                echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 0). "</td>";
                                                 echo "<td align='right' style='width: 15%'> </td>";
 
                                                 $totADebet += $nspenyesuaianD;
@@ -223,9 +223,9 @@ if(array_key_exists('htParent', $_POST)){
                     </div>
                     <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
                     echo "<tfooter><tr>";
-                    echo "<td align='right' style='width: 40%' ><b>Total Current Assets</td>";
+                    echo "<td align='right' style='width: 40%' ><b>Total Aktiva Lancar</td>";
                     echo "<td align='right' style='width: 10%' ><b></td>";
-                    echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
+                    echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 0)."</td>";
                     echo "</tr></tfooter>";
                     $TALancar = $totADebet+$totAKredit;
                     ?></table>
@@ -233,7 +233,7 @@ if(array_key_exists('htParent', $_POST)){
                 <div class="col-md">
                     <div class="box box-default box-solid collapsed-box" style="margin-bottom: 0;">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Fixed Assets</h3>
+                            <h3 class="box-title">Aktiva Tetap</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                                 </button>
@@ -245,10 +245,10 @@ if(array_key_exists('htParent', $_POST)){
                             <table class="table table-bordered table-striped table-hover"style="height: auto; overflow-y: scroll;">
                                 <?php
                                 $q = "SELECT m.kode_rekening, m.nama_rekening, m.awal_debet, m.awal_kredit,IFNULL((b.debet),0) as debet,IFNULL((b.kredit),0) as kredit,IFNULL((c.debet),0) as pdebet,IFNULL((c.kredit),0) as pkredit,b.ref,m.normal  FROM `aki_tabel_master` m";
-                                $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1";
+                                $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                                 $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref='-' GROUP by m.kode_rekening) as b ";
                                 $q.="on m.kode_rekening=b.kode_rekening left join";
-                                $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 ";
+                                $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                                 $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref!='-' GROUP by m.kode_rekening) as c on m.kode_rekening=c.kode_rekening";
                                 $q.=" where m.kode_rekening BETWEEN '1140.004' and '1270.000' or m.kode_rekening BETWEEN '1500.000' and '1790.000' GROUP by m.kode_rekening ORDER BY m.kode_rekening asc" ;
                                 $rs = mysql_query($q, $dbLink);
@@ -268,11 +268,11 @@ if(array_key_exists('htParent', $_POST)){
                                             if ($query_data["normal"] == 'Debit') {
                                                 $nsdebet = $query_data["awal_debet"]+$query_data["debet"]-$query_data["awal_kredit"]-$query_data["kredit"];
                                                 $nspenyesuaianD = $nsdebet+$query_data["pdebet"]-$nskredit-$query_data["pkredit"];
-                                                echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 2). "</td>";
+                                                echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 0). "</td>";
                                             }else{
                                                 $nskredit = $query_data["awal_kredit"]+$query_data["kredit"]-$query_data["awal_debet"]-$query_data["debet"];
                                                 $nspenyesuaianK = $nskredit+$query_data["pkredit"]-$nsdebet-$query_data["pdebet"];
-                                                echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 2) . "</td>";
+                                                echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 0) . "</td>";
                                             }
                                             echo "<td align='right' style='width: 15%'> </td>";
 
@@ -296,13 +296,13 @@ if(array_key_exists('htParent', $_POST)){
                 <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
                 $TATetap = $totADebet+$totAKredit;
                 echo "<tfooter><tr>";
-                echo "<td align='right' style='width: 40%' ><b>Total Fixed Assets</td>";
+                echo "<td align='right' style='width: 40%' ><b>Total Aktiva Tetap</td>";
                 echo "<td align='right' style='width: 10%' ><b></td>";
-                echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
+                echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 0)."</td>";
                 echo "</tr><tr>";
                 echo "<td align='right' style='width: 40%' ><b>TOTAL Assets</td>";
                 echo "<td align='right' style='width: 10%' ><b></td>";
-                echo "<td align='center' style='width: 30%' ><b>".number_format( $TALancar+$TATetap, 2)."</td>";
+                echo "<td align='center' style='width: 30%' ><b>".number_format( $TALancar+$TATetap, 0)."</td>";
                 echo "</tr></tfooter>";
 
                 ?></table>
@@ -310,7 +310,7 @@ if(array_key_exists('htParent', $_POST)){
             <div class="col-md">
                 <div class="box box-default box-solid collapsed-box" style="margin-bottom: 0;">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Total Liabilities</h3>
+                        <h3 class="box-title">Kewajiban</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                             </button>
@@ -322,10 +322,10 @@ if(array_key_exists('htParent', $_POST)){
                         <table class="table table-bordered table-striped table-hover"style="height: auto; overflow-y: scroll;">
                             <?php
                             $q = "SELECT m.kode_rekening, m.nama_rekening, m.awal_debet, m.awal_kredit,IFNULL((b.debet),0) as debet,IFNULL((b.kredit),0) as kredit,IFNULL((c.debet),0) as pdebet,IFNULL((c.kredit),0) as pkredit,b.ref,m.normal  FROM `aki_tabel_master` m";
-                            $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1";
+                            $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                             $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref='-' GROUP by m.kode_rekening) as b ";
                             $q.="on m.kode_rekening=b.kode_rekening left join";
-                            $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 ";
+                            $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                             $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref!='-' GROUP by m.kode_rekening) as c on m.kode_rekening=c.kode_rekening";
                             $q.=" where m.kode_rekening BETWEEN '2110.000' and '2310.000' GROUP by m.kode_rekening ORDER BY m.kode_rekening asc" ;
                             $rs = mysql_query($q, $dbLink);
@@ -345,11 +345,11 @@ if(array_key_exists('htParent', $_POST)){
                                         if ($query_data["normal"] == 'Debit') {
                                             $nsdebet = $query_data["awal_debet"]+$query_data["debet"]-$query_data["awal_kredit"]-$query_data["kredit"];
                                             $nspenyesuaianD = $nsdebet+$query_data["pdebet"]-$nskredit-$query_data["pkredit"];
-                                            echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 2). "</td>";
+                                            echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 0). "</td>";
                                         }else{
                                             $nskredit = $query_data["awal_kredit"]+$query_data["kredit"]-$query_data["awal_debet"]-$query_data["debet"];
                                             $nspenyesuaianK = $nskredit+$query_data["pkredit"]-$nsdebet-$query_data["pdebet"];
-                                            echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 2) . "</td>";
+                                            echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 0) . "</td>";
                                         }
                                         echo "<td align='right' style='width: 15%'> </td>";
 
@@ -372,9 +372,9 @@ if(array_key_exists('htParent', $_POST)){
             </div>
             <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
             echo "<tfooter><tr>";
-            echo "<td align='right' style='width: 40%' ><b>Total Liabilities</td>";
+            echo "<td align='right' style='width: 40%' ><b>Total Kewajiban</td>";
             echo "<td align='right' style='width: 10%' ><b></td>";
-            echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
+            echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 0)."</td>";
             echo "</tr></tfooter>";
             $TKewajiban = $totADebet+$totAKredit;
             ?></table>
@@ -382,7 +382,7 @@ if(array_key_exists('htParent', $_POST)){
         <div class="col-md">
             <div class="box box-default box-solid collapsed-box" style="margin-bottom: 0;">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Total Equity</h3>
+                    <h3 class="box-title">Ekuitas</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                         </button>
@@ -394,10 +394,10 @@ if(array_key_exists('htParent', $_POST)){
                     <table class="table table-bordered table-striped table-hover"style="height: auto; overflow-y: scroll;">
                         <?php
                         $q = "SELECT m.kode_rekening, m.nama_rekening, m.awal_debet, m.awal_kredit,IFNULL((b.debet),0) as debet,IFNULL((b.kredit),0) as kredit,IFNULL((c.debet),0) as pdebet,IFNULL((c.kredit),0) as pkredit,b.ref,m.normal  FROM `aki_tabel_master` m";
-                        $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1";
+                        $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                         $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref='-' GROUP by m.kode_rekening) as b ";
                         $q.="on m.kode_rekening=b.kode_rekening left join";
-                        $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 ";
+                        $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                         $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref!='-' GROUP by m.kode_rekening) as c on m.kode_rekening=c.kode_rekening";
                         $q.=" where m.kode_rekening BETWEEN '3000.000' and '3390.000' GROUP by m.kode_rekening ORDER BY m.kode_rekening asc" ;
                         $rs = mysql_query($q, $dbLink);
@@ -417,11 +417,11 @@ if(array_key_exists('htParent', $_POST)){
                                     if ($query_data["normal"] == 'Debit') {
                                         $nsdebet = $query_data["awal_debet"]+$query_data["debet"]-$query_data["awal_kredit"]-$query_data["kredit"];
                                         $nspenyesuaianD = $nsdebet+$query_data["pdebet"]-$nskredit-$query_data["pkredit"];
-                                        echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 2). "</td>";
+                                        echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD, 0). "</td>";
                                     }else{
                                         $nskredit = $query_data["awal_kredit"]+$query_data["kredit"]-$query_data["awal_debet"]-$query_data["debet"];
                                         $nspenyesuaianK = $nskredit+$query_data["pkredit"]-$nsdebet-$query_data["pdebet"];
-                                        echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 2) . "</td>";
+                                        echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK, 0) . "</td>";
                                     }
                                     echo "<td align='right' style='width: 15%'> </td>";
 
@@ -445,13 +445,13 @@ if(array_key_exists('htParent', $_POST)){
         <div class=""><table class="table table-bordered table-striped table-hover"style="margin-bottom: 0;"><?php
         $TEkuitas = $totADebet+$totAKredit;
         echo "<tfooter><tr>";
-        echo "<td align='right' style='width: 40%' ><b>Total Equity</td>";
+        echo "<td align='right' style='width: 40%' ><b>Total Ekuitas</td>";
         echo "<td align='right' style='width: 10%' ><b></td>";
-        echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 2)."</td>";
+        echo "<td align='center' style='width: 30%' ><b>".number_format( $totADebet+$totAKredit, 0)."</td>";
         echo "</tr><tr>";
-        echo "<td align='right' style='width: 40%' ><b>TOTAL Liabilities DAN Equity</td>";
+        echo "<td align='right' style='width: 40%' ><b>Total Kewajiban & Ekuitas</td>";
         echo "<td align='right' style='width: 10%' ><b></td>";
-        echo "<td align='center' style='width: 30%' ><b>".number_format( $TKewajiban+$TEkuitas, 2)."</td>";
+        echo "<td align='center' style='width: 30%' ><b>".number_format( $TKewajiban+$TEkuitas, 0)."</td>";
         echo "</tr></tfooter>";
         ?></table>
     </div>

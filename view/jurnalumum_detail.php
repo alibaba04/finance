@@ -103,11 +103,11 @@ function addJurnal(){
     akun(tcounter);
     var currentdate = new Date(); 
     var tgl = currentdate.getDate() 
-    + (currentdate.getMonth()+1)  
-    + currentdate.getFullYear()
-    + currentdate.getHours() 
-    + currentdate.getMinutes()  
-    + currentdate.getSeconds();
+    +''+ (((currentdate.getMonth()+1) < 10)?"0":"") + (currentdate.getMonth()+1)
+    +''+ currentdate.getFullYear()
+    +''+ (((currentdate.getHours()+1) < 10)?"0":"") + (currentdate.getHours()+1)
+    +''+ (((currentdate.getMinutes()+1) < 10)?"0":"") + (currentdate.getMinutes()+1)
+    +''+ (((currentdate.getSeconds()+1) < 10)?"0":"") + (currentdate.getSeconds()+1)
     $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);
 
     var ttable = document.getElementById("kendali");

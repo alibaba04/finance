@@ -235,7 +235,7 @@ class c_jurnalumum
 		return $this->strResults;
 	}
 	
-	function delete($kode,$desc)
+	function delete($no,$kode,$desc)
 	{
 		global $dbLink;
 
@@ -247,6 +247,7 @@ class c_jurnalumum
 		}
 
 		$kodeTransaksi = secureParam($kode,$dbLink);
+		$noTransaksi = secureParam($no,$dbLink);
 		$desc = secureParam($desc,$dbLink);
         $pembatal = $_SESSION["my"]->id;
 
@@ -259,7 +260,7 @@ class c_jurnalumum
 			}
 
 			//report
-			$qq = "SELECT * FROM `aki_tabel_transaksi` WHERE md5(no_transaksi)='".$kodeTransaksi."'";
+			$qq = "SELECT * FROM `aki_tabel_transaksi` WHERE md5(no_transaksi)='".$noTransaksi."'";
 			$rsTemp=mysql_query($qq, $dbLink);
 			$temp = mysql_fetch_array($rsTemp);
 			$tempKode  = $temp['kode_rekening'];
@@ -277,8 +278,8 @@ class c_jurnalumum
 			if (!mysql_query( $q4, $dbLink))
 				throw new Exception('Gagal ubah transaksi jurnal umum. ');
 			
-			$q = "DELETE FROM aki_tabel_transaksi ";
-			$q.= "WHERE md5(no_transaksi)='".$kodeTransaksi."';";
+			$q = "UPDATE aki_tabel_transaksi set `aktif`=0,`last_updater`='".$pembatal;
+			$q.= "' WHERE md5(no_transaksi)='".$noTransaksi."' and md5(kode_transaksi)='".$kodeTransaksi."';";
 			if (!mysql_query( $q, $dbLink))
 				throw new Exception('Gagal hapus data transaksi jurnal umum.');
 			@mysql_query("COMMIT", $dbLink);

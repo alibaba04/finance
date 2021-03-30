@@ -116,7 +116,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 AND '" . tgl_mysql($tglJurnal2) . "' ";
                 $q = "SELECT t.tanggal_transaksi, t.kode_transaksi, t.kode_rekening, m.nama_rekening, t.keterangan_transaksi, t.debet, t.kredit ";
                 $q.= "FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening ";
-                $q.= "WHERE 1=1 AND t.ref not like 'RL%' " . $filter;
+                $q.= "WHERE 1=1 and t.aktif=1 AND t.ref not like 'RL%' " . $filter;
                 $q.= " ORDER BY t.tanggal_transaksi, id_transaksi ";
                 $rss = new MySQLPagedResultSet($q, 100, $dbLink);
                 $rs = mysql_query($q, $dbLink);
