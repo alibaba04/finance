@@ -63,7 +63,7 @@ require_once('./function/fungsi_formatdate.php');
         <!-- Select2 -->
         <link rel="stylesheet" href="plugins/select2/select2.min.css">
         <link rel="stylesheet" href="css/searchInput1.css">
-        <link rel="icon" href="dist/img/can.png" type="image/png"/>
+        <link rel="icon" href="dist/img/logo-qoobah.png" type="image/png"/>
         <script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
         <style type="text/css">
             .preloader {
@@ -225,7 +225,7 @@ require_once('./function/fungsi_formatdate.php');
                 <footer class="main-footer">
 
                     <div class="pull-right hidden-xs">
-                        <b>Accounting App</b> v 2.0.1 &nbsp;&nbsp;<strong>Created by : <a href="http://instagram.com/baihaqial">alibaba</a>.
+                        <b>Accounting App</b> v 2.2.0 &nbsp;&nbsp;<strong>Created by : <a href="http://instagram.com/baihaqial">alibaba</a>.
                     </div>
                     <strong>.</strong>
                     <!-- <strong>Copyright &copy; 2020 <a href="http://instagram.com/baihaqial">alibaba's</a>.</strong> All rights reserved.  -->
