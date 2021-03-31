@@ -203,7 +203,7 @@ select: function( event, ui ) {
                 $filter2 = "";
                 if ($tglJurnal1 && $tglJurnal2){
                     $filter2 = " AND tanggal_transaksi< '" . tgl_mysql($tglJurnal1) . "'  ";
-                    $q2 = "SELECT *,(awal_debet+d) as saldo_d, (awal_kredit+k) as saldo_k FROM `aki_tabel_master` m inner join (SELECT tanggal_transaksi,kode_rekening,sum(debet) as d, sum(kredit) as k FROM `aki_tabel_transaksi` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."' ".$filter2.") as t on m.kode_rekening=t.kode_rekening WHERE and t.aktif=1 m.kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
+                    $q2 = "SELECT *,(awal_debet+d) as saldo_d, (awal_kredit+k) as saldo_k FROM `aki_tabel_master` m inner join (SELECT tanggal_transaksi,kode_rekening,sum(debet) as d, sum(kredit) as k FROM `aki_tabel_transaksi` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."' ".$filter2.") as t on m.kode_rekening=t.kode_rekening WHERE m.kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
                 }else{
                     $q2 = "SELECT awal_debet as saldo_d, awal_kredit as saldo_k FROM `aki_tabel_master` WHERE kode_rekening= '". $_GET["txtKodeRekeningbb"]."'";
                 }
