@@ -192,7 +192,7 @@ select: function( event, ui ) {
                     $filter = $filter . " AND t.tanggal_transaksi BETWEEN '" . tgl_mysql($tglJurnal1) . "' 
                 AND '" . tgl_mysql($tglJurnal2) . "'  ";
 
-                $q = "SELECT t.tanggal_transaksi, t.kode_transaksi, t.kode_rekening, m.nama_rekening, t.keterangan_transaksi, t.debet, t.kredit ";
+                $q = "SELECT t.no_transaksi,t.tanggal_transaksi, t.kode_transaksi, t.kode_rekening, m.nama_rekening, t.keterangan_transaksi, t.debet, t.kredit ";
                 $q.= "FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening  AND t.kode_rekening= '". $_GET["txtKodeRekeningbb"]."'  ";
                 $q.= "WHERE 1=1 and t.aktif=1 " . $filter;
                 $q.= " ORDER BY t.kode_transaksi asc,t.no_transaksi,t.keterangan_transaksi,t.debet desc";
@@ -268,7 +268,11 @@ select: function( event, ui ) {
                                 while ($query_data = mysql_fetch_array($rs)) {
                                     echo "<tr>";
                                     echo "<td>" . tgl_ind($query_data["tanggal_transaksi"]) . "</td>";
-                                    echo "<td>" . $query_data["kode_transaksi"] . "</td>";
+                                    if (strlen($query_data["no_transaksi"]) == 4) {
+                                        echo "<td>" . $query_data["kode_transaksi"] . "</td>";
+                                    }else{
+                                        echo "<td>" . $query_data["no_transaksi"] . "</td>";
+                                    }
                                     echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. ".</td>";
                                     echo "<td>" . $query_data["keterangan_transaksi"] . "</td>";
                                     echo "<td align='right'>" . number_format($query_data["debet"], 0) . "</td>";
