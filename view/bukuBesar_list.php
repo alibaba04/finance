@@ -268,7 +268,7 @@ select: function( event, ui ) {
                                 while ($query_data = mysql_fetch_array($rs)) {
                                     echo "<tr>";
                                     echo "<td>" . tgl_ind($query_data["tanggal_transaksi"]) . "</td>";
-                                    if (strlen($query_data["no_transaksi"]) > 10) {
+                                    if (strlen($query_data["no_transaksi"]) < 10) {
                                         echo "<td>" . $query_data["kode_transaksi"] . "</td>";
                                     }else{
                                         echo "<td>" . $query_data["no_transaksi"] . "</td>";
