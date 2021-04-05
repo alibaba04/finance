@@ -226,7 +226,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             while ($query_data = $rs->fetchArray()) {
                                 echo "<tr>";
                                 echo "<td>" . $rowCounter . "</td>";
-                                if (strlen($query_data["no_transaksi"]) < 10) {
+                                if (strlen($query_data["no_transaksi"]) < 11) {
                                     echo "<td>" . $query_data["kode_transaksi"] . "</td>";
                                 }else{
                                     echo "<td>" . $query_data["no_transaksi"] . "</td>";
