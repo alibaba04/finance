@@ -279,7 +279,7 @@ class c_jurnalumum
 				throw new Exception('Gagal ubah transaksi jurnal umum. ');
 			
 			$q = "UPDATE aki_tabel_transaksi set `aktif`=0,`last_updater`='".$pembatal;
-			$q.= "' WHERE md5(no_transaksi)='".$noTransaksi."' and md5(kode_transaksi)='".$kodeTransaksi."';";
+			$q.= "' WHERE md5(no_transaksi)='".$noTransaksi."' and md5(kode_transaksi)='".$kodeTransaksi."' and keterangan_transaksi like '%".$tempKet."%'";
 			if (!mysql_query( $q, $dbLink))
 				throw new Exception('Gagal hapus data transaksi jurnal umum.');
 			@mysql_query("COMMIT", $dbLink);
