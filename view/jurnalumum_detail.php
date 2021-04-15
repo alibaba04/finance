@@ -360,7 +360,7 @@ return true;
                                         echo "</select></div></td>";
 
                                         echo '<td align="center" valign="top" width=><div class="form-group">
-                                        <input type="text" class="form-control"  name="txtKeterangan_' . $iJurnal . '" id="txtKeterangan_' . $iJurnal . '" value="' . $DetilJurnal["keterangan_transaksi"] . '" /></div></td>';
+                                        <input type="text" class="form-control"  name="txtKeterangan_' . $iJurnal . '" id="txtKeterangan_' . $iJurnal . '" onKeyUp="txtket('.$iJurnal.')" value="' . $DetilJurnal["keterangan_transaksi"] . '" /></div></td>';
 
                                         echo '<td align="center" valign="top" width=><div class="form-group">
                                         <input type="text" onkeydown="return numbersonly(this, event);"  class="form-control"  name="txtDebet_' . $iJurnal . '" id="txtDebet_' . $iJurnal . '" value="' . number_format($DetilJurnal["debet"], 0, ",", ".") . '" style="text-align:right" /></div></td>';
