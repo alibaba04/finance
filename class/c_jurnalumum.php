@@ -284,7 +284,7 @@ class c_jurnalumum
 			if (!mysql_query( $q, $dbLink))
 				throw new Exception('Gagal hapus data transaksi jurnal umum.');
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults=$q."Sukses Hapus Data Jurnal Umum ";
+			$this->strResults="Sukses Hapus Data Jurnal Umum ";
 		}
 		catch(Exception $e) 
 		{
