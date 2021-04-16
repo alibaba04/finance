@@ -123,7 +123,7 @@ class c_jurnalumum
 					
                     date_default_timezone_set("Asia/Jakarta");
                     $q2 = "INSERT INTO aki_tabel_transaksi(no_transaksi,id_transaksi, kode_transaksi, kode_rekening, tanggal_transaksi,dtime, jenis_transaksi, keterangan_transaksi, debet, kredit, tanggal_posting, keterangan_posting, last_updater) ";
-					$q2.= "VALUES ('".$notran."',  'NULL',  '".$kodeTransaksi."',  '".$kodeRekenening."', '".$tglTransaksi."', '".date("H:i:sa")."', 'Bukti Umum', '".$keterangan."', '".$debet."', '".$kredit."', '0000-00-00', '', '".$pembuat."');";
+					$q2.= "VALUES ('".$notran."',  'NULL',  '".$kodeTransaksi."',  '".$kodeRekenening."', '".$tglTransaksi."', '".date("H:i:s")."', 'Bukti Umum', '".$keterangan."', '".$debet."', '".$kredit."', '0000-00-00', '', '".$pembuat."');";
 
 					if (!mysql_query( $q2, $dbLink))
 						throw new Exception('Gagal tambah data transaksi jurnal umum.');
@@ -213,7 +213,7 @@ class c_jurnalumum
 					if (!mysql_query( $q, $dbLink))
 						throw new Exception('Gagal ubah data transaksi jurnal umum.');
 					date_default_timezone_set("Asia/Jakarta");
-					$tgl = date("Y-m-d h:i:sa");
+					$tgl = date("Y-m-d h:i:s");
 					$ket = "desc : ".$desc." `nomer`=".$tempNo."  -has change, ket : ".$tempKode.", ".$tempTgl.", ".$tempKet.", ".$tempD.", ".$tempK.", datetime: ".$tgl;
 					$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 					$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
@@ -235,7 +235,7 @@ class c_jurnalumum
 		return $this->strResults;
 	}
 	
-	function delete($no,$kode,$desc)
+	function delete($no,$kode,$ket,$desc)
 	{
 		global $dbLink;
 
@@ -248,6 +248,7 @@ class c_jurnalumum
 
 		$kodeTransaksi = secureParam($kode,$dbLink);
 		$noTransaksi = secureParam($no,$dbLink);
+		$ket = secureParam($ket,$dbLink);
 		$desc = secureParam($desc,$dbLink);
         $pembatal = $_SESSION["my"]->id;
 
@@ -260,7 +261,7 @@ class c_jurnalumum
 			}
 
 			//report
-			$qq = "SELECT * FROM `aki_tabel_transaksi` WHERE md5(no_transaksi)='".$noTransaksi."'";
+			$qq = "SELECT * FROM `aki_tabel_transaksi` WHERE md5(no_transaksi)='".$noTransaksi."' and md5(keterangan_transaksi)='".$ket."'";
 			$rsTemp=mysql_query($qq, $dbLink);
 			$temp = mysql_fetch_array($rsTemp);
 			$tempKode  = $temp['kode_rekening'];
@@ -271,7 +272,7 @@ class c_jurnalumum
 			$tempNo  = $temp['no_transaksi'];
 			
 			date_default_timezone_set("Asia/Jakarta");
-			$tgl = date("Y-m-d h:i:sa");
+			$tgl = date("Y-m-d h:i:s");
 			$ket = "desc : ".$desc." `nomer`=".$tempNo."  -has delete, ket : ".$tempKode.", ".$tempTgl.", ".$tempKet.", ".$tempD.", ".$tempK.", datetime: ".$tgl;
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 			$q4.= "('".$pembatal."','".$tgl."','".$ket."');";
@@ -283,7 +284,7 @@ class c_jurnalumum
 			if (!mysql_query( $q, $dbLink))
 				throw new Exception('Gagal hapus data transaksi jurnal umum.');
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults="Sukses Hapus Data Jurnal Umum ";
+			$this->strResults=$q."Sukses Hapus Data Jurnal Umum ";
 		}
 		catch(Exception $e) 
 		{

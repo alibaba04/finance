@@ -38,7 +38,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 
 //Jika Mode Hapus/Delete
     if ($_GET["txtMode"] == "Delete") {
-        $pesan = $tmpJurnalUmum->delete($_GET["no"],$_GET["kode"],$_GET["desc"]);
+        $pesan = $tmpJurnalUmum->delete($_GET["no"],$_GET["kode"],$_GET["ket"],$_GET["desc"]);
     }
 
 //Seharusnya semua transaksi Add dan Edit Sukses karena data sudah tervalidasi dengan javascript di form detail.
@@ -61,13 +61,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         $('#tglTransaksi').daterangepicker({ 
             locale: { format: 'DD-MM-YYYY' } });
     });
-    function omodal(no,kode) {
+    function omodal(no,kode,ket) {
         $("#myModal").modal({backdrop: false});
         $("#txtDelete").val();
         $('#btnDelete').click(function(){
             if($("#txtDelete").val()!= ''){
                 var desc = $("#txtDelete").val();
-                window.location.href='index2.php?page=view/jurnalumum_list&txtMode=Delete&no='+no+'&kode='+kode+'&desc='+desc;
+                window.location.href='index2.php?page=view/jurnalumum_list&txtMode=Delete&no='+no+'&kode='+kode+'&ket='+ket+'&desc='+desc;
             }else{
                 alert('Description Cannot Empty!');
                 $("#txtDelete").focus();
@@ -242,15 +242,18 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                     if(empty($query_data["keterangan_posting"])){
                                         echo "<td><a class='label label-success' style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/jurnalumum_detail&mode=edit&kode=" . md5($query_data["no_transaksi"]) . "&ket=" . md5($query_data["keterangan_transaksi"]) . "'><i class='fa fa-edit'></i>&nbsp;Update</span></td>";
 
-                                        echo("<td><span class='label label-danger' onclick=\"if(confirm('Apakah anda yakin akan menghapus data Transaksi Jurnal Umum " . $query_data["no_transaksi"] . " ?')){location.href='index2.php?page=" . $curPage . "&txtMode=Delete&no=" . md5($query_data["no_transaksi"]) . "&kode=". md5($query_data["kode_transaksi"]) ."'}\" style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</span></td>");
+                                        echo("<td><span class='label label-danger' onclick=\"if(confirm('Apakah anda yakin akan menghapus data Transaksi Jurnal Umum " . $query_data["no_transaksi"] . " ?')){location.href='index2.php?page=" . $curPage . "&txtMode=Delete&no=" . md5($query_data["no_transaksi"]) . "&kode=". md5($query_data["kode_transaksi"]) . "&ket=".md5($query_data["keterangan_transaksi"])."'}\" style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</span></td>");
                                     }else{
                                         if ($_SESSION["my"]->privilege == 'GODMODE' or $_SESSION["my"]->privilege == "ADMIN1") {
                                              echo "<td><a class='label label-success' style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/jurnalumum_detail&mode=edit&kode=" . md5($query_data["no_transaksi"]) . "&ket=" . md5($query_data["keterangan_transaksi"]) . "'><i class='fa fa-edit'></i>&nbsp;Update</span></td>";
 
-                                            echo("<td><span class='label label-danger' onclick=omodal('" . md5($query_data['no_transaksi']) . "','" . md5($query_data['kode_transaksi']) . "') value='' id='btnModal'style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</span></td>");
+                                            echo("<td><span class='label label-danger' onclick=omodal('" . md5($query_data['no_transaksi']) . "','" . md5($query_data['kode_transaksi']) ."','" . md5($query_data['keterangan_transaksi']) . "') value='' id='btnModal'style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</span></td>");
                                         }else{
-                                            echo("<td><span class='label label-default' ><i class='fa fa-edit'></i>&nbsp;Update</span></td>");
-                                            echo("<td><span class='label label-default' ><i class='fa fa-trash'></i>&nbsp;Delete</span></td>");
+                                            if (($rowCounter %2) == 0) {
+                                               echo("<td><span class='label label-default' ><i class='fa fa-edit'></i>&nbsp;Update</span></td>");
+                                               echo("<td><span class='label label-default' ><i class='fa fa-trash'></i>&nbsp;Delete</span></td>");
+                                            }
+                                           
                                         }
                                     }
 

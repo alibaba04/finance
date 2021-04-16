@@ -341,7 +341,7 @@ return true;
 
                                 <?php
                                 if ($_GET['mode']=='edit'){
-                                    $q = "SELECT t.id_transaksi, t.kode_transaksi, t.kode_rekening, t.tanggal_transaksi, t.keterangan_transaksi, t.debet, t.kredit, m.nama_rekening FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening WHERE MD5(t.no_transaksi)='" . $kode . "' ANd MD5(t.keterangan_transaksi)='" . $ket . "' ORDER BY id_transaksi ";
+                                    $q = "SELECT t.id_transaksi, t.kode_transaksi, t.kode_rekening, t.tanggal_transaksi, t.keterangan_transaksi, t.debet, t.kredit, m.nama_rekening FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening WHERE t.aktif=1 and MD5(t.no_transaksi)='" . $kode . "' ANd MD5(t.keterangan_transaksi)='" . $ket . "' ORDER BY id_transaksi ";
                                     $rsDetilJurnal = mysql_query($q, $dbLink);
                                     $iJurnal = 0;
                                     while ($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
