@@ -123,7 +123,7 @@ class c_jurnalumum
 					
                     date_default_timezone_set("Asia/Jakarta");
                     $q2 = "INSERT INTO aki_tabel_transaksi(no_transaksi,id_transaksi, kode_transaksi, kode_rekening, tanggal_transaksi,dtime, jenis_transaksi, keterangan_transaksi, debet, kredit, tanggal_posting, keterangan_posting, last_updater) ";
-					$q2.= "VALUES ('".$notran."',  'NULL',  '".$kodeTransaksi."',  '".$kodeRekenening."', '".$tglTransaksi."', '".date("H:i:s")."', 'Bukti Umum', '".$keterangan."', '".$debet."', '".$kredit."', '0000-00-00', '', '".$pembuat."');";
+					$q2.= "VALUES ('".$notran."',  'NULL',  '".$kodeTransaksi."',  '".$kodeRekenening."', '".$tglTransaksi."', '".date("Y-m-d H:i:s")."', 'Bukti Umum', '".$keterangan."', '".$debet."', '".$kredit."', '0000-00-00', '', '".$pembuat."');";
 
 					if (!mysql_query( $q2, $dbLink))
 						throw new Exception('Gagal tambah data transaksi jurnal umum.');
@@ -277,7 +277,7 @@ class c_jurnalumum
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 			$q4.= "('".$pembatal."','".$tgl."','".$ket."');";
 			if (!mysql_query( $q4, $dbLink))
-				throw new Exception('Gagal ubah transaksi jurnal umum. ');
+				throw new Exception('Gagal tambah report. ');
 			
 			$q = "UPDATE aki_tabel_transaksi set `aktif`=0,`last_updater`='".$pembatal;
 			$q.= "' WHERE md5(no_transaksi)='".$noTransaksi."' and md5(kode_transaksi)='".$kodeTransaksi."' and keterangan_transaksi like '%".$tempKet."%'";

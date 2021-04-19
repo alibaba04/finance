@@ -249,10 +249,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 
                                             echo("<td><span class='label label-danger' onclick=omodal('" . md5($query_data['no_transaksi']) . "','" . md5($query_data['kode_transaksi']) ."','" . md5($query_data['keterangan_transaksi']) . "') value='' id='btnModal'style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</span></td>");
                                         }else{
-                                            if (($rowCounter %2) == 0) {
+                                            //if (($rowCounter %2) == 0) {
                                                echo("<td><span class='label label-default' ><i class='fa fa-edit'></i>&nbsp;Update</span></td>");
                                                echo("<td><span class='label label-default' ><i class='fa fa-trash'></i>&nbsp;Delete</span></td>");
-                                            }
+                                            //}
                                            
                                         }
                                     }
