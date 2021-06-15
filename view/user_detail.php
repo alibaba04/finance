@@ -1,6 +1,6 @@
 <?php
 /* ==================================================
-//=======  : Alibaba
+  //=======  : Alibaba
 ==================================================== */
 //Memastikan file ini tidak diakses secara langsung (direct access is not allowed)
 defined('validSession') or die('Restricted access');
@@ -10,11 +10,13 @@ $curPage = "view/user_detail";
 $judulMenu = 'Pengaturan User';
 $hakUser = getUserPrivilege($curPage);
 
-if ($hakUser != 90) {
-    unset($_SESSION['my']);
-    echo "<p class='error'>";
-    die('User cannot access this page!');
-    echo "</p>";
+if ($hakUser != 90 ) {
+    if ($hakUser != 50) {
+        unset($_SESSION['my']);
+        echo "<p class='error'>";
+        die('User anda tidak terdaftar untuk mengakses halaman ini!');
+        echo "</p>";
+    }
 }
 ?>
 
@@ -40,49 +42,47 @@ if ($hakUser != 90) {
 </script>
 
 <SCRIPT language="JavaScript" TYPE="text/javascript">
-    function validasiForm(form)
-    {
-        if(form.txtKodeUser.value=="")
-        {
-            alert("Kode User harus diisi !");
-            form.txtKodeUser.focus();
-            return false;
-        }
-        if(form.txtNama.value=="")
-        {
-            alert("Nama harus diisi !");
-            form.txtNama.focus();
-            return false;
-        }
-        <?php
-        if($_GET["mode"]!='edit')
-        {
-            ?>
-            if(form.txtPassword.value=="")
-            {
-                alert("Password harus diisi !");
-                form.txtPassword.focus();
-                return false;
-            }
-            if(form.txtConfirmPassword.value=="")
-            {
-                alert("Konfirmasi Password harus diisi !");
-                form.txtConfirmPassword.focus();
-                return false;
-            }
-            if(form.txtConfirmPassword.value!=form.txtPassword.value)
-            {
-                alert("Password tidak sesuai dengan konfirmasi. Silakan ulangi !");
-                form.txtPassword.value = "";
-                form.txtConfirmPassword.value = "";
-                form.txtPassword.focus();
-                return false;
-            }
-            <?php
-        }
-        ?>
-        return true;
+function validasiForm(form){
+    if(form.txtKodeUser.value=="")
+       {
+        alert("Kode User harus diisi !");
+        form.txtKodeUser.focus();
+        return false;
     }
+    if(form.txtNama.value=="")
+    {
+        alert("Nama harus diisi !");
+        form.txtNama.focus();
+        return false;
+    }
+    
+    if(form.txtPassword.value=="")
+    {
+        alert("Password harus diisi !");
+        form.txtPassword.focus();
+        return false;
+    }
+    if(form.txtConfirmPassword.value=="")
+    {
+        alert("Konfirmasi Password harus diisi !");
+        form.txtConfirmPassword.focus();
+        return false;
+    }
+    if(form.txtConfirmPassword.value!=form.txtPassword.value)
+    {
+        alert("Password tidak sesuai dengan konfirmasi. Silakan ulangi !");
+        form.txtConfirmPassword.value = "";
+        form.txtConfirmPassword.focus();
+        return false;
+    }
+    if(form.cbogroup.value=='')
+    {
+        alert("Pilih User Group !");
+        form.cbogroup.focus();
+        return false;
+    }
+    return true;
+}
 </SCRIPT>
 
 <section class="content-header">
@@ -110,20 +110,19 @@ if ($hakUser != 90) {
                             echo '<h3 class="box-title">UBAH DATA USER </h3>';
                             echo "<input type='hidden' name='txtMode' value='Edit'>";
 
-//Secure parameter from SQL injection
+                            //Secure parameter from SQL injection
                             $kode = secureParam($_GET["kode"], $dbLink);
 
-                            $q = "SELECT kodeUser, nama, aktif, password ";
-                            $q.= "FROM aki_user WHERE md5(kodeUser)='".$kode."'";
+                            $q = "SELECT a.kodeUser, a.nama, a.aktif, a.password, u.kodeGroup ";
+                            $q.= "FROM aki_user a left join aki_usergroup u on a.kodeUser=u.kodeUser WHERE md5(a.kodeUser)='".$kode."'";
 
                             $rsTemp = mysql_query($q, $dbLink);
-
                             if ($dataUser = mysql_fetch_array($rsTemp)) {
                                 echo "<input type='hidden' name='kodeUser' value='" . $dataUser["kodeUser"] . "'>";
                             } else {
                                 ?>
                                 <script language="javascript">
-                                    alert("Invalid Code!");
+                                    alert("Kode Tidak Valid");
                                     history.go(-1);
                                 </script>
                                 <?php
@@ -145,81 +144,112 @@ if ($hakUser != 90) {
 
                                     $.post("function/ajax_function.php",{ fungsi: "checkKodeUser", kodeUser:$("#txtKodeUser").val() } ,function(data)
                                     {
-                                        if(data=='yes') 
-                                        {
-                                            $("#msgbox").removeClass().addClass('messageboxerror').text('Kode User telah ada. Gunakan kode lain.').fadeIn("slow");
-                                        }
-                                        else if (data=='no') 
-                                        {
-                                            $("#msgbox").removeClass().addClass('messageboxok').text('Kode User belum tercatat - data baru.').fadeIn("slow");
-                                        } else {
-                                            $("#msgbox").removeClass().addClass('messageboxerror').text('Maaf, terjadi error pada System').fadeIn("slow");
+                                     if(data=='yes') 
+                                     {
+                                        $("#msgbox").removeClass().addClass('messageboxerror').text('Kode User telah ada. Gunakan kode lain.').fadeIn("slow");
+                                    }
+                                    else if (data=='no') 
+                                    {
+                                        $("#msgbox").removeClass().addClass('messageboxok').text('Kode User belum tercatat - data baru.').fadeIn("slow");
+                                    } else {
+                                        $("#msgbox").removeClass().addClass('messageboxerror').text('Maaf, terjadi error pada System').fadeIn("slow");
 
-                                        }
+                                    }
 
-                                    });
+                                });
                                 }
 
                             </script>
                             <style type="text/css">
                                 .messageboxok{
-                                    font-weight:bold;
-                                    color:#008000;
-                                }
-                                .messageboxerror{
-                                    font-weight:bold;
-                                    color:#CC0000;
-                                }
-                            </style>
-                            <input name="txtKodeUser" id="txtKodeUser" maxlength="15" class="form-control" onblur="cekKode();"
-                            value="<?php if($_GET['mode']=="edit") { echo $dataUser["kodeUser"]; }?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)"><span id="msgbox"></span>
+                                   font-weight:bold;
+                                   color:#008000;
+                               }
+                               .messageboxerror{
+                                   font-weight:bold;
+                                   color:#CC0000;
+                               }
+                           </style>
+                           <input name="txtKodeUser" id="txtKodeUser" maxlength="15" class="form-control" onblur="cekKode();"
+                           value="<?php if($_GET['mode']=="edit") { echo $dataUser["kodeUser"]; }?>" placeholder="Username" onKeyPress="return handleEnter(this, event)"><span id="msgbox"></span>
 
-                        </div>
+                       </div>
 
-                        <div class="form-group">
-                            <label class="control-label" for="txtNama">Nama</label>
+                       <div class="form-group">
+                        <label class="control-label" for="txtNama">Nickname</label>
 
-                            <input name="txtNama" id="txtNama" maxlength="20" class="form-control" 
-                            value="<?php if($_GET['mode']=="edit") { echo $dataUser["nama"]; } ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
+                        <input name="txtNama" id="txtNama" maxlength="20" class="form-control" 
+                        value="<?php if($_GET['mode']=="edit") { echo $dataUser["nama"]; } ?>" placeholder="Nickname" onKeyPress="return handleEnter(this, event)">
 
-                        </div>
-                        <?php 
-                        if($_GET["mode"]!="edit")
-                        {
-                            ?>
-                            <div class="form-group">
-                                <label class="control-label" for="txtPassword">Password</label>
-
-                                <input type="password" name="txtPassword" id="txtPassword" maxlength="50" class="form-control" 
-                                value="" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label" for="txtConfirmPassword">Konfirmasi Password</label>
-
-                                <input type="password" name="txtConfirmPassword" id="txtConfirmPassword" class="form-control" 
-                                value="" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
-                            </div>
-                            <?php
-                        }
+                    </div>
+                    <?php 
+                    if($_GET["mode"]!="edit")
+                    {
                         ?>
                         <div class="form-group">
-                            <label class="control-label" for="rdoStatus">Status</label>
+                            <label class="control-label" for="txtPassword">Password</label>
 
-                            <input name="rdoStatus" id="rdoStatus" type="radio" value="Y"  <?php if($_GET['mode']=="edit") { if($dataUser[2]=="Y") {echo "checked"; }} else {echo "checked";} ?> onKeyPress="return handleEnter(this, event)">&nbsp;Aktif&nbsp;&nbsp;
-                            <input name="rdoStatus" id="rdoStatus" type="radio" value="T" <?php if($_GET['mode']=="edit") { if($dataUser[2]=="T") {echo "checked"; }} ?> onKeyPress="return handleEnter(this, event)">&nbsp;Tidak Aktif&nbsp;&nbsp;
+                            <input type="password" name="txtPassword" id="txtPassword" maxlength="50" class="form-control" 
+                            value="" placeholder="Password" onKeyPress="return handleEnter(this, event)">
                         </div>
+                        <div class="form-group">
+                            <label class="control-label" for="txtConfirmPassword">Confirm Password</label>
 
+                            <input type="password" name="txtConfirmPassword" id="txtConfirmPassword" class="form-control" 
+                            value="" placeholder="Confirm Password" onKeyPress="return handleEnter(this, event)">
+                        </div>
+                        <?php
+                    }
+                    ?>
+                    <div class="form-group">
+                        <select name="cbogroup" id="cbogroup" class="form-control" onKeyPress="return handleEnter(this, event)">
+                            <option value="">User Group</option>
+                            <?php
+                            $selected = "";
+                            if ($_GET['mode'] == 'edit') {
+                                if ($dataUser['kodeGroup']=="DIRECTOR") {
+                                    $selected = " selected";
+                                    echo '<option value="DIRECTOR">Director</option>';
+                                    echo '<option value="ADMIN"'.$selected.'>Admin</option>';
+                                    echo '<option value="SALES">Sales</option>';
+                                }elseif ($dataUser['kodeGroup']=="ADMIN") {
+                                    $selected = " selected";
+                                    echo '<option value="DIRECTOR">Director</option>';
+                                    echo '<option value="ADMIN"'.$selected.'>Admin</option>';
+                                    echo '<option value="SALES">Sales</option>';
+                                }elseif ($dataUser['kodeGroup']=="SALES") {
+                                    $selected = " selected";
+                                    echo '<option value="DIRECTOR">Director</option>';
+                                    echo '<option value="ADMIN">Admin</option>';
+                                    echo '<option value="SALES"'.$selected.'>Sales</option>';
+                                }
+                            }else{
+                                echo '<option value="DIRECTOR">Director</option>';
+                                echo '<option value="ADMIN">Admin</option>';
+                                echo '<option value="SALES">Sales</option>';
+                            }
+                            ?>
+                        </select>
                     </div>
-                    <div class="box-footer">
-                        <input type="submit" class="btn btn-primary" value="Simpan">
 
-                        <a href="index.php?page=html/user_list">
-                            <button type="button" class="btn btn-default pull-right">&nbsp;&nbsp;Batal&nbsp;&nbsp;</button>    
-                        </a>
+                    <div class="form-group">
+                        <label class="control-label" for="rdoStatus">Status</label>
 
+                        <input name="rdoStatus" id="rdoStatus" type="radio" value="Y"  <?php if($_GET['mode']=="edit") { if($dataUser[2]=="Y") {echo "checked"; }} else {echo "checked";} ?> onKeyPress="return handleEnter(this, event)">&nbsp;Active&nbsp;&nbsp;
+                        <input name="rdoStatus" id="rdoStatus" type="radio" value="T" <?php if($_GET['mode']=="edit") { if($dataUser[2]=="T") {echo "checked"; }} ?> onKeyPress="return handleEnter(this, event)">&nbsp;Non Active&nbsp;&nbsp;
                     </div>
-                </form>
-            </div>    
-        </section>
-    </div>
+
+                </div>
+                <div class="box-footer">
+                    <input type="submit" class="btn btn-primary" value="Simpan">
+
+                    <a href="index.php?page=html/user_list">
+                        <button type="button" class="btn btn-default pull-right">&nbsp;&nbsp;Batal&nbsp;&nbsp;</button>    
+                    </a>
+
+                </div>
+            </form>
+        </div>    
+    </section>
+</div>
 </section>

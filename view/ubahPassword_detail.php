@@ -1,6 +1,7 @@
 <?php
 /* ==================================================
-//=======  : Alibaba
+  //=======  : Alibaba
+   
 ==================================================== */
 //Memastikan file ini tidak diakses secara langsung (direct access is not allowed)
 defined('validSession') or die('Restricted access');
@@ -8,69 +9,84 @@ $curPage = "view/ubahPassword_detail";
 
 //Periksa hak user pada modul/menu ini
 $judulMenu = 'Ubah Password';
-$hakUser = getUserPrivilege($curPage);
+//$hakUser = getUserPrivilege($curPage);
 
-if ($hakUser != 90) {
+/*if ($hakUser != 90 ) {
     session_unregister("my");
     echo "<p class='error'>";
-    die('User cannot access this page!');
+    die('User anda tidak terdaftar untuk mengakses halaman ini!');
     echo "</p>";
-}
+}*/
 ?>
-
-<!-- Include script date di bawah jika ada field tanggal -->
-<script type="text/javascript" src="js/date.js"></script>
-<script type="text/javascript" src="js/jquery.datePicker.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/datePicker.css">
-
-<script type="text/javascript" charset="utf-8">
-    $(function()
-    {
-        $('.date-pick').datePicker({startDate:'01/01/1970'});
-    });
-</script>
-<!-- End of Script Tanggal -->
-
-<!-- Include script di bawah jika ada field yang Huruf Besar semua -->
-<script src="js/jquery.bestupper.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(".bestupper").bestupper();
-    });
-</script>
-
+<style type="text/css">
+ .messageboxerror{
+     font-weight:bold;
+     color:#CC0000;
+ }
+</style>
 <SCRIPT language="JavaScript" TYPE="text/javascript">
-    function validasiForm(form)
-    {	
-        if($("#txtKodeUser").val()=="")
+    function cekpass(){
+        $.post("function/ajax_function.php",{ fungsi: "cekpass", kodeUser:$("#txtKodeUser").val(),pass:$("#txtPasswordLama").val() } ,function(data)
         {
-            alert("Kode User tidak valid!");
-            $("#txtKodeUser").focus();
-            return false;
-        }
-
-        if($("#txtPasswordBaru").val()=="")
-        {
-            alert("Password Baru harus diisi !");
+           if(data=='yes') 
+           {
+            $("#msgbox").removeClass().addClass('messageboxerror').text('Password Benar').fadeIn("slow");
             $("#txtPasswordBaru").focus();
-            return false;
         }
-        if($("#txtConfirmPassword").val()=="")
+        else 
         {
-            alert("Konfirmasi Password Baru harus diisi !");
-            $("#txtConfirmPassword").focus();
-            return false;
-        }
-        if($("#txtConfirmPassword").val()!=$("#txtPasswordBaru").val())
-        {
-            alert("Password baru tidak sesuai dengan konfirmasi. Silakan ulangi !");
-            $("#txtPasswordBaru").val("");
-            $("#txtConfirmPassword").val("");
-            $("#txtPasswordBaru").focus();
-            return false;
-        }
+            $("#msgbox").removeClass().addClass('messageboxerror').text('Password Salah').fadeIn("slow");
+            $("#txtPasswordLama").focus();
+        } 
+    });
         return true;
     }
+
+    function validasiForm(form)
+    {   
+       if($("#txtKodeUser").val()=="")
+       {
+          alert("Kode User tidak valid!");
+          $("#txtKodeUser").focus();
+          return false;
+      }
+      if($("#txtPasswordLama").val()=="")
+      {
+          alert("Password Lama harus diisi !");
+          $("#txtPasswordLama").focus();
+          return false;
+      }
+      if($("#msgbox").text() =='Password Salah')
+      {
+          alert("Password Lama Salah. Silakan ulangi !");
+          $("#txtPasswordBaru").val("");
+          $("#txtConfirmPassword").val("");
+          $("#txtPasswordLama").focus();
+          return false;
+      }
+      if($("#txtPasswordBaru").val()=="")
+      {
+          alert("Password Baru harus diisi !");
+          $("#txtPasswordBaru").focus();
+          return false;
+      }
+      if($("#txtConfirmPassword").val()=="")
+      {
+          alert("Konfirmasi Password Baru harus diisi !");
+          $("#txtConfirmPassword").focus();
+          return false;
+      }
+      if($("#txtConfirmPassword").val()!=$("#txtPasswordBaru").val())
+      {
+          alert("Password baru tidak sesuai dengan konfirmasi. Silakan ulangi !");
+          $("#txtPasswordBaru").val("");
+          $("#txtConfirmPassword").val("");
+          $("#txtPasswordBaru").focus();
+          return false;
+      }
+      
+      return true;
+  }
 </SCRIPT>
 
 <section class="content-header">
@@ -98,7 +114,7 @@ if ($hakUser != 90) {
                             echo '<h3 class="box-title">UBAH PASSWORD USER </h3>';
                             echo "<input type='hidden' name='txtMode' value='".md5("ChangePassword")."'>";
 
-//Secure parameter from SQL injection
+                            //Secure parameter from SQL injection
                             $kode = secureParam($_GET["kode"], $dbLink);
 
                             $q = "SELECT kodeUser, nama, aktif, password ";
@@ -111,7 +127,7 @@ if ($hakUser != 90) {
                             } else {
                                 ?>
                                 <script language="javascript">
-                                    alert("Invalid Code!");
+                                    alert("Kode Tidak Valid");
                                     history.go(-1);
                                 </script>
                                 <?php
@@ -123,32 +139,32 @@ if ($hakUser != 90) {
 
                         <div class="form-group">
                             <label class="control-label" for="txtKodeUser">Kode User</label>
-                            <input name="txtKodeUser" id="txtKodeUser" maxlength="15" class="form-control" 
-                            value="<?= $dataUser["kodeUser"]; ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
-
+                            <input readonly name="txtKodeUser" id="txtKodeUser" maxlength="15" class="form-control" 
+                            value="<?= $dataUser["kodeUser"]; ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
                         </div>
-
                         <div class="form-group">
                             <label class="control-label" for="txtNama">Nama</label>
-
-                            <input name="txtNama" id="txtNama" maxlength="20" class="form-control" 
-                            value="<?= $dataUser["nama"]; ?>" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
-
+                            <input readonly name="txtNama" id="txtNama" maxlength="20" class="form-control"
+                            value="<?= $dataUser["nama"]; ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
                         </div>
-
+                        <div class="form-group">
+                            <label class="control-label" for="txtPassword">Password Lama</label>
+                            <input type="password" name="txtPasswordLama" id="txtPasswordLama"  maxlength="50" class="form-control" 
+                            value="" placeholder="Wajib diisi" onfocusout="cekpass()" onKeyPress="return handleEnter(this, event)"><span id="msgbox"></span>
+                        </div>
                         <div class="form-group">
                             <label class="control-label" for="txtPassword">Password Baru</label>
-
-                            <input type="password" name="txtPasswordBaru" id="txtPasswordBaru" maxlength="50" class="form-control" 
-                            value="" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
+                            <input type="password" name="txtPasswordBaru" minlength="6" id="txtPasswordBaru" maxlength="50" class="form-control" 
+                            value="" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="txtConfirmPassword">Konfirmasi Password Baru</label>
-
-                            <input type="password" name="txtConfirmPassword" id="txtConfirmPassword" class="form-control" 
-                            value="" placeholder="-- Empty --" onKeyPress="return handleEnter(this, event)">
+                            <input type="password" name="txtConfirmPassword" minlength="6" id="txtConfirmPassword" class="form-control" 
+                            value="" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
                         </div>
-
+                        
+                        
+                        
                     </div>
                     <div class="box-footer">
                         <input type="submit" class="btn btn-primary" value="Simpan">

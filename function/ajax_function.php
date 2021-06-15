@@ -49,6 +49,17 @@ switch ($_POST['fungsi']) {
         }
         break;
 
+    case "cekpass":
+        $kodeUser = secureParamAjax($_POST['kodeUser'], $dbLink);
+        $pass = HASH('SHA512',$passSalt.secureParamAjax($_POST['pass'], $dbLink));
+        $result = mysql_query("SELECT kodeUser, nama FROM aki_user WHERE kodeUser='".$kodeUser."' AND  password='".$pass."' AND aktif='Y'", $dbLink);
+        if (mysql_num_rows($result)) {
+            echo "yes";
+        } else {
+            echo "no";
+        }
+    break;
+
     case "ambilNamaRekening":
         if ($_POST['kodeRekening'] != "") {
             $result = mysql_query("SELECT nama_rekening,normal FROM aki_tabel_master WHERE kode_rekening ='" . $_POST['kodeRekening'] . "'", $dbLink);
