@@ -76,7 +76,7 @@
     $pdf->Cell(0, 5, "*Detail Transaksi*", 0, 1, 'L');
     $pdf->Ln(3);  
     $pdf->SetFont('Arial', '', 10); 
-    $pdf->SetFillColor(255,0,0);
+    $pdf->SetFillColor(69, 171, 82);
     $pdf->Cell(19,6,'Kode Akun',1,0,'C',0);
     $pdf->Cell(45,6,'Nama Akun',1,0,'C',0);
     $pdf->Cell(66,6,'Keterangan',1,0,'C',0);
@@ -90,16 +90,15 @@
     $q.= "WHERE 1=1 ".$filter;
     $q.= " ORDER BY t.tanggal_transaksi, t.id_transaksi ";
     $result=mysqli_query($dbLink,$q);
-    // $no = 1;
     $totDebet = 0;
     $totKredit = 0;
-    //$rsLap = mysql_query($q, $dbLink);
+    $pdf->SetFillColor(224,235,255);
     while ($lap = mysqli_fetch_array($result)) {
         $pdf->Row(array($lap["kode_rekening"],$lap["nama_rekening"],$lap["keterangan_transaksi"],number_format($lap["debet"],0),number_format($lap["kredit"],0)));
          $totDebet += $lap["debet"];
          $totKredit += $lap["kredit"];
     }
-    $pdf->Cell(130,7,'Total Transaksi',1,0,'R',0);
+    $pdf->Cell(130,7,'Total Transaksi Hari Ini',1,0,'R',0);
     $pdf->Cell(30,7,number_format($totDebet,0),'LTB',0,'R',0);
     $pdf->Cell(30,7,number_format($totKredit,0),1,1,'R',0);
 
