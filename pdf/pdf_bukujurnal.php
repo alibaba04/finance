@@ -99,10 +99,10 @@
          $totDebet += $lap["debet"];
          $totKredit += $lap["kredit"];
     }
-    /*$pdf->Cell(195,7,'Total Transaksi',1,0,'R',0);
-    $pdf->Cell(40,7,number_format($totDebet,0),'LTB',0,'R',0);
-    $pdf->Cell(40,7,number_format($totKredit,0),1,1,'R',0);*/
+    $pdf->Cell(130,7,'Total Transaksi',1,0,'R',0);
+    $pdf->Cell(30,7,number_format($totDebet,0),'LTB',0,'R',0);
+    $pdf->Cell(30,7,number_format($totKredit,0),1,1,'R',0);
 
     //output file PDF
-    $pdf->Output('BukuJurnal.pdf', 'I'); //download file pdf
+    $pdf->Output('BukuJurnal_'.$tglJurnal1.'.pdf', 'I'); //download file pdf
 ?>
