@@ -51,7 +51,7 @@
 		<?php 
 		// koneksi database
 		$filter='';
-		$koneksi = mysqli_connect("localhost","u5514609_can",",S1s6h8+Mrc)","u5514609_dbaki");
+		$koneksi = mysqli_connect("localhost","u8364183_marketing","PVMMA0Akp4;(","u8364183_finance");
  		$tglJurnal1 = $_GET['tglJurnal1'];
 		$tglJurnal2 = $_GET['tglJurnal2'];
 		

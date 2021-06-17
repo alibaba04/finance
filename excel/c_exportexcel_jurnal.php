@@ -61,7 +61,7 @@
 		$filter = "";
 		if ($tglJurnal1 && $tglJurnal2)
 			$filter = $filter . " AND t.tanggal_transaksi BETWEEN '" . tgl_mysql($tglJurnal1) . "' AND '" . tgl_mysql($tglJurnal2) . "' ";
-		$koneksi = mysqli_connect("localhost","u5514609_can",",S1s6h8+Mrc)","u5514609_dbaki");
+		$koneksi = mysqli_connect("localhost","u8364183_marketing","PVMMA0Akp4;(","u8364183_finance");
  
 		$q = "SELECT t.tanggal_transaksi, t.kode_transaksi, t.kode_rekening, m.nama_rekening, t.keterangan_transaksi, t.debet, t.kredit ";
 		$q.= "FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening ";

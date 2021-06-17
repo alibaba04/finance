@@ -31,7 +31,7 @@
 	$tanggal = date("Y-m-d h", time());
 	header("Content-type: application/vnd-ms-excel");
 	header("Content-Disposition: attachment; filename=rl_".$tanggal.".xls");
-	$koneksi = mysqli_connect("localhost","u5514609_can",",S1s6h8+Mrc)","u5514609_dbaki");
+	$koneksi = mysqli_connect("localhost","u8364183_marketing","PVMMA0Akp4;(","u8364183_finance");
 	$Tpendapatan = $TbiayaHpp = $TbiayaOp = $Tpendlain = $Tbiayalain = 0;
 	?>
 

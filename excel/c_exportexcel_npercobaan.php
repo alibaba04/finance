@@ -34,7 +34,7 @@
 	header("Content-type: application/vnd-ms-excel");
 	
 	$filter = "";
-	$koneksi = mysqli_connect("localhost","u5514609_can",",S1s6h8+Mrc)","u5514609_dbaki");
+	$koneksi = mysqli_connect("localhost","u8364183_marketing","PVMMA0Akp4;(","u8364183_finance");
 	if (($_GET["bulan"])!=''){
 		$filter = $filter . "AND month(t.tanggal_transaksi)= '" . $_GET["bulan"] . "' AND year(t.tanggal_transaksi)= '" . $_GET["tahun"] ."'";
 		header("Content-Disposition: attachment; filename=neracaPercobaan_".namaBulan_id($_GET["bulan"]).$_GET["tahun"].".xls");
