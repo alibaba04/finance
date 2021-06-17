@@ -126,7 +126,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 ?>
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i><ul class="pagination pagination-sm inline"><?php echo $rss->getPageNav($_SERVER['QUERY_STRING']) ?></ul>
-                    <!-- <a href="pdf/pdf_bukujurnal.php?&tglJurnal1=<?=$tglJurnal1; ?>&tglJurnal2=<?=$tglJurnal2; ?>" title="Cetak PDF Buku Jurnal"><button type="button" class="btn btn-info pull-right"><i class="fa fa-print "></i> Cetak Buku Jurnal</button></a>&nbsp;&nbsp; -->
+                    <a href="pdf/pdf_bukujurnal.php?&tglJurnal1=<?=$tglJurnal1; ?>&tglJurnal2=<?=$tglJurnal2; ?>" title="Cetak PDF Buku Jurnal"><button type="button" class="btn btn-info pull-right"><i class="fa fa-print "></i> Cetak Buku Jurnal</button></a>&nbsp;&nbsp; 
                     <a href="excel/c_exportexcel_jurnal.php?&tglJurnal1=<?=$tglJurnal1; ?>&tglJurnal2=<?=$tglJurnal2; ?>"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a>
                     <a href="index.php?page=view/bukuJurnal_list"><button class="btn btn-info pull-right"><i class="ion ion-refresh"></i> Refresh</button></a> 
                 </div>

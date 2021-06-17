@@ -1,5 +1,5 @@
 <?php
-require('./function/fpdf/fpdf.php');
+require('fpdf.php');
 
 class PDF_MC_Table extends FPDF
 {
@@ -31,7 +31,7 @@ function Row($data)
 	for($i=0;$i<count($data);$i++)
 	{
 		$w=$this->widths[$i];
-		$a=isset($this->aligns[$i]) ? $this->aligns[$i] : 'L';
+		$a=isset($this->aligns[$i]) ? $this->aligns[$i] : 'R';
 		//Save the current position
 		$x=$this->GetX();
 		$y=$this->GetY();
