@@ -391,9 +391,9 @@ return true;
 
                                         echo '<td align="center" align="top"><div class="form-group"><select class="form-control" id="txtPayment_'. $iJurnal .'" name="txtPayment_'. $iJurnal .'">';
                                         if ($payment=='payin') {
-                                            echo '<option value="payin" selected>Pay In</option><option value="payout">Pay Out</option>';
+                                            echo '<option value="">Payment</option><option value="payin" selected>Pay In</option><option value="payout">Pay Out</option>';
                                         }else if($payment=='payout'){
-                                            echo '<option value="payin">Pay In</option><option value="payout" selected>Pay Out</option>';
+                                            echo '<option value="">Payment</option><option value="payin">Pay In</option><option value="payout" selected>Pay Out</option>';
                                         }else{
                                             echo '<option value=""selected>Payment</option><option value="payin">Pay In</option><option value="payout" >Pay Out</option>';
                                         }
