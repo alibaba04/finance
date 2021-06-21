@@ -132,7 +132,7 @@ function addJurnal(){
     td.setAttribute("align","left");
     td.setAttribute("width","7%");
     td.style.verticalAlign = 'top';
-    td.innerHTML+='<div class="form-group"><select class="form-control" id="txtPayment_'+tcounter+'" name="txtPayment_'+tcounter+'"><option value="payin">Pay In</option><option value="payout">Pay Out</option></select></div>';
+    td.innerHTML+='<div class="form-group"><select class="form-control" id="txtPayment_'+tcounter+'" name="txtPayment_'+tcounter+'"><option value="">Payment</option><option value="payin">Pay In</option><option value="payout">Pay Out</option></select></div>';
     trow.appendChild(td);
 
     var td = document.createElement("TD");
@@ -185,7 +185,7 @@ function addJurnal(){
     td.setAttribute("align","left");
     td.setAttribute("width","7%");
     td.style.verticalAlign = 'top';
-    td.innerHTML+='<div class="form-group"><select class="form-control" id="txtPayment_'+tcounter+'" name="txtPayment_'+tcounter+'"><option value="payin">Pay In</option><option value="payout">Pay Out</option></select></div>';
+    td.innerHTML+='<div class="form-group"><select class="form-control" id="txtPayment_'+tcounter+'" name="txtPayment_'+tcounter+'"><option value="">Payment</option><option value="payin">Pay In</option><option value="payout">Pay Out</option></select></div>';
     trow.appendChild(td);
 
     var td = document.createElement("TD");
