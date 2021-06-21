@@ -200,7 +200,6 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 $q.= " group by t.id_transaksi ORDER BY t.id_transaksi,j.kode_transaksi,t.keterangan_transaksi,t.debet desc";
 //Paging
                 $rs = new MySQLPagedResultSet($q, 100, $dbLink);
-                echo $q;
                 ?>
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>
