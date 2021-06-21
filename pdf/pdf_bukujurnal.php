@@ -9,6 +9,7 @@
 
     $tglJurnal1 = $_GET['tglJurnal1'];
     $tglJurnal2 = $_GET['tglJurnal2'];
+    $date = date_create($tglJurnal1);
     
     $filter = "";
     $html = "";
@@ -17,20 +18,20 @@
 
     $pdf->SetFont('Arial', '', 14);
     $pdf->Cell(0, 7, "LAPORAN TRANSAKSI JURNAL", 0, 1, 'C');
-
-    $date = date_create($tglJurnal1);
     //ISI
     $pdf->Ln(5);
     $pdf->SetFont('Arial', 'b', 12); 
     $pdf->Cell(0, 5, "*Laporan Keuangan, ".(strftime('%A', strtotime($tglJurnal1)))." ".$tglJurnal1."*", 0, 1, 'L');
     $pdf->SetFont('Arial', '', 12);  
-    $qsum= "SELECT sum(debet) as nominal FROM `aki_tabel_transaksi` WHERE tanggal_transaksi<='".date_format($date,"Y-m-d")."'";
+    $qsum= "SELECT t.kode_rekening, m.nama_rekening, sum(t.debet), sum(t.kredit),sum(debet)-sum(kredit) as saldo FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1 AND t.tanggal_transaksi BETWEEN '".date_format($date,"Y-m-d")."' AND '".date_format($date,"Y-m-d")."' GROUP by t.kode_rekening";
     $resultsum=mysqli_query($dbLink,$qsum);
+    $saldo = 0;
     if ($lap = mysqli_fetch_array($resultsum)) {
-        $pdf->Cell(0, 5, chr(187).chr(187).' Rp. '.number_format($lap["nominal"],0), 0, 1, 'L'); 
-        $pdf->Cell(0, 5, chr(187).chr(187).' USD    '.number_format($lap["nominal"]*0.000070,0), 0, 1, 'L'); 
-        $pdf->Cell(0, 5, chr(187).chr(187).' Philippines Peso '.number_format($lap["nominal"]*0.0034), 0, 1, 'L');
+        $saldo +=$lap["saldo"];
     }
+    $pdf->Cell(0, 5, chr(187).chr(187).' Rp. '.number_format($saldo,0), 0, 1, 'L'); 
+    $pdf->Cell(0, 5, chr(187).chr(187).' USD    '.number_format($saldo*0.000070,0), 0, 1, 'L'); 
+    $pdf->Cell(0, 5, chr(187).chr(187).' Philippines Peso '.number_format($saldo*0.0034), 0, 1, 'L');
     $pdf->Ln(3);
     $pdf->SetFont('Arial', 'b', 12);
     $pdf->Cell(0, 5, "*Pemasukan*", 0, 1, 'L');

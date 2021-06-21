@@ -197,7 +197,6 @@ select: function( event, ui ) {
                 $q.= "WHERE 1=1 and t.aktif=1 " . $filter;
                 $q.= " ORDER BY t.kode_transaksi asc,t.tanggal_transaksi,t.no_transaksi,t.keterangan_transaksi,t.debet desc";
                 $rs = mysql_query($q, $dbLink);
-                
                 $hasilrs = mysql_num_rows($rs);
 
                 $filter2 = "";
