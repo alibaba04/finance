@@ -18,15 +18,6 @@
     $pdf->SetFont('Arial', '', 14);
     $pdf->Cell(0, 7, "LAPORAN TRANSAKSI JURNAL", 0, 1, 'C');
 
-    if ($filter==""){
-        $pdf->Cell(0, 5, "Periode Sampai Tanggal : ".date('d-m-Y',time()), 0, 1, 'C');
-    }else{
-        if ($tglJurnal1 == $tglJurnal2) {
-            $pdf->Cell(0, 5, "Periode Tanggal : ".$tglJurnal1, 0, 1, 'C');
-        }else{
-            $pdf->Cell(0, 5, "Periode Tanggal : ".$tglJurnal1." s/d ".$tglJurnal2, 0, 1, 'C');
-        }
-    }
     $date = date_create($tglJurnal1);
     //ISI
     $pdf->Ln(5);
@@ -48,7 +39,17 @@
     $resultin=mysqli_query($dbLink,$qin);
         $noin=1;$noout=1;$nopay=1;
     while ($lap = mysqli_fetch_array($resultin)) {
-        $pdf->Cell(0, 5, $noin.'. '.$lap["keterangan_transaksi"].' '.number_format($lap["nominal"],0), 0, 1, 'L'); 
+        $ket='';
+        if (strpos($lap["keterangan_transaksi"], 'payin') !== FALSE) {
+            $tket = explode("ayin",$lap["keterangan_transaksi"]);
+            $ket=$tket[1];
+        }else if(strpos($lap["keterangan_transaksi"], 'payout') !== FALSE){
+            $tket = explode("ayout",$lap["keterangan_transaksi"]);
+            $ket=$tket[1];
+        }else{
+            $ket=$lap["keterangan_transaksi"];
+        }
+        $pdf->Cell(0, 5, $noin.'. '.$ket.' '.number_format($lap["nominal"],0), 0, 1, 'L'); 
         $noin++;
     }
     $pdf->Ln(3);
@@ -58,7 +59,17 @@
     $qout= "SELECT keterangan_transaksi,(debet) as nominal FROM `aki_tabel_transaksi` WHERE keterangan_transaksi like '%payout%' and debet>1000000 and tanggal_transaksi='".date_format($date,"Y-m-d")."'";
     $resultout=mysqli_query($dbLink,$qout);
     while ($lap = mysqli_fetch_array($resultout)) {
-        $pdf->Cell(0, 5, $noout.'. '.$lap["keterangan_transaksi"].' '.number_format($lap["nominal"],0), 0, 1, 'L');
+        $ket='';
+        if (strpos($lap["keterangan_transaksi"], 'payin') !== FALSE) {
+            $tket = explode("ayin",$lap["keterangan_transaksi"]);
+            $ket=$tket[1];
+        }else if(strpos($lap["keterangan_transaksi"], 'payout') !== FALSE){
+            $tket = explode("ayout",$lap["keterangan_transaksi"]);
+            $ket=$tket[1];
+        }else{
+            $ket=$lap["keterangan_transaksi"];
+        }
+        $pdf->Cell(0, 5, $noout.'. '.$ket.' '.number_format($lap["nominal"],0), 0, 1, 'L');
         $noout++; 
     }
     $pdf->Ln(3);
@@ -68,7 +79,17 @@
     $qpay= "SELECT keterangan_transaksi,(debet) as nominal FROM `aki_tabel_transaksi` WHERE (keterangan_transaksi like '%pembayaran%' or keterangan_transaksi like '%dp%') and debet>1000000 and tanggal_transaksi='".date_format($date,"Y-m-d")."'";
     $resultpay=mysqli_query($dbLink,$qpay);
     while ($lap = mysqli_fetch_array($resultpay)) {
-        $pdf->Cell(0, 5, $nopay.'. '.$lap["keterangan_transaksi"].' '.number_format($lap["nominal"],0), 0, 1, 'L');
+        $ket='';
+        if (strpos($lap["keterangan_transaksi"], 'payin') !== FALSE) {
+            $tket = explode("ayin",$lap["keterangan_transaksi"]);
+            $ket=$tket[1];
+        }else if(strpos($lap["keterangan_transaksi"], 'payout') !== FALSE){
+            $tket = explode("ayout",$lap["keterangan_transaksi"]);
+            $ket=$tket[1];
+        }else{
+            $ket=$lap["keterangan_transaksi"];
+        }
+        $pdf->Cell(0, 5, $nopay.'. '.$ket.' '.number_format($lap["nominal"],0), 0, 1, 'L');
         $nopay++; 
     }
     $pdf->Ln(3);  
@@ -94,13 +115,20 @@
     $totKredit = 0;
     $pdf->SetFillColor(224,235,255);
     while ($lap = mysqli_fetch_array($result)) {
-        $pdf->Row(array($lap["kode_rekening"],$lap["nama_rekening"],$lap["keterangan_transaksi"],number_format($lap["debet"],0),number_format($lap["kredit"],0)));
+        $ket='';
+        if (strpos($lap["keterangan_transaksi"], 'payin') !== FALSE) {
+            $tket = explode("ayin",$lap["keterangan_transaksi"]);
+            $ket=$tket[1];
+        }else if(strpos($lap["keterangan_transaksi"], 'payout') !== FALSE){
+            $tket = explode("ayout",$lap["keterangan_transaksi"]);
+            $ket=$tket[1];
+        }else{
+            $ket=$lap["keterangan_transaksi"];
+        }
+        $pdf->Row(array($lap["kode_rekening"],$lap["nama_rekening"],$ket,number_format($lap["debet"],0),number_format($lap["kredit"],0)));
          $totDebet += $lap["debet"];
          $totKredit += $lap["kredit"];
     }
-    $pdf->Cell(130,7,'Total Transaksi Hari Ini',1,0,'R',0);
-    $pdf->Cell(30,7,number_format($totDebet,0),'LTB',0,'R',0);
-    $pdf->Cell(30,7,number_format($totKredit,0),1,1,'R',0);
 
     //output file PDF
     $pdf->Output('BukuJurnal_'.$tglJurnal1.'.pdf', 'I'); //download file pdf

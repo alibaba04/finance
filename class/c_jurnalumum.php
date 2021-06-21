@@ -115,6 +115,7 @@ class c_jurnalumum
                     
                     $kodeRekenening = secureParam($params["txtKodeRekening_" . $j], $dbLink);
                     $keterangan = secureParam($params["txtKeterangan_" . $j], $dbLink);
+                    $payment = secureParam($params["txtPayment_" . $j], $dbLink);
                     $notran = secureParam($params["txtNoTrans" . $j], $dbLink);
                     $debet = secureParam($params["txtDebet_" . $j], $dbLink);
                     $debet = str_replace(".", "", $debet);
@@ -122,8 +123,8 @@ class c_jurnalumum
                     $kredit = str_replace(".", "", $kredit);
 					
                     date_default_timezone_set("Asia/Jakarta");
-                    $q2 = "INSERT INTO aki_tabel_transaksi(no_transaksi,id_transaksi, kode_transaksi, kode_rekening, tanggal_transaksi,dtime, jenis_transaksi, keterangan_transaksi, debet, kredit, tanggal_posting, keterangan_posting, last_updater) ";
-					$q2.= "VALUES ('".$notran."',  'NULL',  '".$kodeTransaksi."',  '".$kodeRekenening."', '".$tglTransaksi."', '".date("Y-m-d H:i:s")."', 'Bukti Umum', '".$keterangan."', '".$debet."', '".$kredit."', '0000-00-00', '', '".$pembuat."');";
+                    $q2 = "INSERT INTO aki_tabel_transaksi(no_transaksi, kode_transaksi, kode_rekening, tanggal_transaksi,dtime, jenis_transaksi, keterangan_transaksi, debet, kredit, tanggal_posting, keterangan_posting, last_updater) ";
+					$q2.= "VALUES ('".$notran."',  '".$kodeTransaksi."',  '".$kodeRekenening."', '".$tglTransaksi."', '".date("Y-m-d H:i:s")."', 'Bukti Umum', '".$payment." ".$keterangan."', '".$debet."', '".$kredit."', '0000-00-00', '', '".$pembuat."');";
 
 					if (!mysql_query( $q2, $dbLink))
 						throw new Exception('Gagal tambah data transaksi jurnal umum.');

@@ -231,10 +231,19 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 }else{
                                     echo "<td>" . $query_data["no_transaksi"] . "</td>";
                                 }
-                                
+                                $ket='';
+                                if (strpos($query_data["keterangan_transaksi"], 'payin') !== FALSE) {
+                                    $tket = explode("ayin",$query_data["keterangan_transaksi"]);
+                                    $ket=$tket[1];
+                                }else if(strpos($query_data["keterangan_transaksi"], 'payout') !== FALSE){
+                                    $tket = explode("ayout",$query_data["keterangan_transaksi"]);
+                                    $ket=$tket[1];
+                                }else{
+                                    $ket=$query_data["keterangan_transaksi"];
+                                }
                                 echo "<td>" . $query_data["kode_rekening"] ." - ".$query_data["nama_rekening"]. "</td>";
                                 echo "<td>" . tgl_ind($query_data["tanggal_transaksi"]) . "</td>";
-                                echo "<td>" . $query_data["keterangan_transaksi"] . "</td>";
+                                echo "<td>" . $ket . "</td>";
                                 echo "<td style='text-align: right;'>" . number_format($query_data["debet"], 0) . "</td>";
                                 echo "<td style='text-align: right;'>" . number_format($query_data["kredit"], 0) . "</td>";
                                 if ($hakUser == 90) {

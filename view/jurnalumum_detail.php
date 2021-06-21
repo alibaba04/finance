@@ -127,12 +127,21 @@ function addJurnal(){
     td.innerHTML+='<div class="form-group"><select class="form-control select2" name="txtKodeRekening_'+tcounter+'" id="txtKodeRekening_'+tcounter+'"></div></select></div>';
     trow.appendChild(td);
 
-    //Kolom 5 Keterangan
+    //Kolom 5 Keterangan 
     var td = document.createElement("TD");
     td.setAttribute("align","left");
+    td.setAttribute("width","7%");
+    td.style.verticalAlign = 'top';
+    td.innerHTML+='<div class="form-group"><select class="form-control" id="txtPayment_'+tcounter+'" name="txtPayment_'+tcounter+'"><option value="payin">Pay In</option><option value="payout">Pay Out</option></select></div>';
+    trow.appendChild(td);
+
+    var td = document.createElement("TD");
+    td.setAttribute("align","left");
+    td.setAttribute("width","20%");
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input name="txtKeterangan_'+tcounter+'" id="txtKeterangan_'+tcounter+'" class="form-control" " placeholder="Emty" onKeyUp="txtket('+tcounter+')"></div>';
     trow.appendChild(td);
+
 
     //Kolom 6 Debet
     var td = document.createElement("TD");
@@ -174,6 +183,14 @@ function addJurnal(){
     //Kolom 5 Keterangan
     var td = document.createElement("TD");
     td.setAttribute("align","left");
+    td.setAttribute("width","7%");
+    td.style.verticalAlign = 'top';
+    td.innerHTML+='<div class="form-group"><select class="form-control" id="txtPayment_'+tcounter+'" name="txtPayment_'+tcounter+'"><option value="payin">Pay In</option><option value="payout">Pay Out</option></select></div>';
+    trow.appendChild(td);
+
+    var td = document.createElement("TD");
+    td.setAttribute("align","left");
+    td.setAttribute("width","20%");
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input name="txtKeterangan_'+tcounter+'" id="txtKeterangan_'+tcounter+'" class="form-control" " placeholder="Emty"></div>';
     trow.appendChild(td);
@@ -327,7 +344,7 @@ return true;
                                 <tr>
                                     <th style="width: 2%"><i class='fa fa-edit'></i></th>
                                     <th style="width: ">Account</th>
-                                    <th style="width: 30%">Description</th>
+                                    <th style="width: 30%" colspan="2">Description</th>
                                     <th style="width: 15%">Debit</th>
                                     <th style="width: 15%">Credit</th>
                                     <?php
@@ -357,10 +374,32 @@ return true;
                                         while ($dakun = mysql_fetch_array($lakun)) {
                                             echo '<option value="'.$dakun['kode_rekening'].'">'.$dakun['kode_rekening'].' - '.$dakun['nama_rekening'].'</option>';
                                         }
-                                        echo "</select></div></td>";
+                                        $ket='';
+                                        $payment='';
+                                        if (strpos($DetilJurnal["keterangan_transaksi"], 'payin') !== FALSE) {
+                                            $tket = explode("ayin",$DetilJurnal["keterangan_transaksi"]);
+                                            $ket=$tket[1];
+                                            $payment='payin';
+                                        }else if(strpos($DetilJurnal["keterangan_transaksi"], 'payout') !== FALSE){
+                                            $tket = explode("ayout",$DetilJurnal["keterangan_transaksi"]);
+                                            $ket=$tket[1];
+                                            $payment='payout';
+                                        }else{
+                                            $ket=$DetilJurnal["keterangan_transaksi"];
+                                            $payment='';
+                                        }
 
-                                        echo '<td align="center" valign="top" width=><div class="form-group">
-                                        <input type="text" class="form-control"  name="txtKeterangan_' . $iJurnal . '" id="txtKeterangan_' . $iJurnal . '" onKeyUp="txtket('.$iJurnal.')" value="' . $DetilJurnal["keterangan_transaksi"] . '" /></div></td>';
+                                        echo '<td align="center" align="top"><div class="form-group"><select class="form-control" id="txtPayment_'. $iJurnal .'" name="txtPayment_'. $iJurnal .'">';
+                                        if ($payment=='payin') {
+                                            echo '<option value="payin" selected>Pay In</option><option value="payout">Pay Out</option>';
+                                        }else if($payment=='payout'){
+                                            echo '<option value="payin">Pay In</option><option value="payout" selected>Pay Out</option>';
+                                        }else{
+                                            echo '<option value=""selected>Payment</option><option value="payin">Pay In</option><option value="payout" >Pay Out</option>';
+                                        }
+                                        echo '</select></div>';
+                                       echo '<td align="center" valign="top" width=><div class="form-group">
+                                        <input type="text" class="form-control"  name="txtKeterangan_' . $iJurnal . '" id="txtKeterangan_' . $iJurnal . '" onKeyUp="txtket('.$iJurnal.')" value="' . $ket . '" /></div></td>';
 
                                         echo '<td align="center" valign="top" width=><div class="form-group">
                                         <input type="text" onkeydown="return numbersonly(this, event);"  class="form-control"  name="txtDebet_' . $iJurnal . '" id="txtDebet_' . $iJurnal . '" value="' . number_format($DetilJurnal["debet"], 0, ",", ".") . '" style="text-align:right" /></div></td>';
