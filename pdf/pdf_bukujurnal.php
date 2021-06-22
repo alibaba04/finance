@@ -23,12 +23,19 @@
     $pdf->SetFont('Arial', 'b', 12); 
     $pdf->Cell(0, 5, "*Laporan Keuangan, ".(strftime('%A', strtotime($tglJurnal1)))." ".$tglJurnal1."*", 0, 1, 'L');
     $pdf->SetFont('Arial', '', 12);  
-    $qsum= "SELECT t.kode_rekening, m.nama_rekening, sum(t.debet), sum(t.kredit),sum(debet)-sum(kredit) as saldo FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1 AND t.tanggal_transaksi BETWEEN '".date_format($date,"Y-m-d")."' AND '".date_format($date,"Y-m-d")."' GROUP by t.kode_rekening";
+    $qsum= "SELECT kode_rekening,awal_debet as debet,awal_kredit as kredit FROM `aki_tabel_master` WHERE 1 UNION all SELECT t.kode_rekening, sum(t.debet) as debet, sum(t.kredit) as kredit FROM aki_tabel_transaksi t WHERE 1=1 and t.aktif=1 AND t.tanggal_transaksi <='".date_format($date,"Y-m-d")."' GROUP by kode_rekening";
     $resultsum=mysqli_query($dbLink,$qsum);
     $saldo = 0;
-    if ($lap = mysqli_fetch_array($resultsum)) {
-        $saldo +=$lap["saldo"];
+    $debet = 0;
+    $kredit = 0;
+    while ($lap = mysqli_fetch_array($resultsum)) {
+        if ($lap["kode_rekening"]=='1110.001' || $lap["kode_rekening"]<='1120.022' && $lap["kode_rekening"]>='1120.001') {
+            $debet +=$lap["debet"];
+            $kredit +=$lap["kredit"];
+        }
+        $saldo = $debet-$kredit;
     }
+
     $pdf->Cell(0, 5, chr(187).chr(187).' Rp. '.number_format($saldo,0), 0, 1, 'L'); 
     $pdf->Cell(0, 5, chr(187).chr(187).' USD    '.number_format($saldo*0.000070,0), 0, 1, 'L'); 
     $pdf->Cell(0, 5, chr(187).chr(187).' Philippines Peso '.number_format($saldo*0.0034), 0, 1, 'L');
