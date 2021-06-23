@@ -210,7 +210,6 @@ select: function( event, ui ) {
                 $rs2 = mysql_query($q2, $dbLink);
                 $rs3 = mysql_query($q3, $dbLink);
                 $hasilrs2 = mysql_num_rows($rs2);
-                echo $q;
                 ?>
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>&nbsp;&nbsp;No COA <?php echo $namarek." tanggal : ".$tgl?> 
