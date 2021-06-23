@@ -36,21 +36,23 @@
             $kredit +=$lap["kredit"];
             $saldo = $debet-$kredit;
         }
-        if ($lap["kode_rekening"]=='1110.002') {
-            $debet +=$lap["debet"];
-            $kredit +=$lap["kredit"];
-            $saldoUSD = $debet-$kredit;
-        }
-        if ($lap["kode_rekening"]=='1110.003') {
-            $debet +=$lap["debet"];
-            $kredit +=$lap["kredit"];
-            $saldoPESO = $debet-$kredit;
-        }
+    }
+    $qusd= "SELECT t.kode_transaksi, t.kode_rekening, m.nama_rekening, t.keterangan_transaksi,m.awal_debet,m.awal_kredit, sum(t.debet) as debet, sum(t.kredit) as kredit FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening AND t.kode_rekening= '1110.002' WHERE 1=1 and t.aktif=1 AND t.tanggal_transaksi <= '".date_format($date,"Y-m-d")."' ORDER BY t.kode_transaksi asc,t.tanggal_transaksi,t.no_transaksi,t.keterangan_transaksi,t.debet desc";
+    $resultusd=mysqli_query($dbLink,$qusd);
+    
+    if ($lap = mysqli_fetch_array($resultusd)) {
+            $saldoUSD = $lap["awal_debet"]+$lap["debet"]-$lap["kredit"];
+    }
+    $qpeso= "SELECT t.kode_transaksi, t.kode_rekening, m.nama_rekening, t.keterangan_transaksi,m.awal_debet,m.awal_kredit, sum(t.debet) as debet, sum(t.kredit) as kredit FROM aki_tabel_transaksi t INNER JOIN aki_tabel_master m ON t.kode_rekening=m.kode_rekening AND t.kode_rekening= '1110.003' WHERE 1=1 and t.aktif=1 AND t.tanggal_transaksi <= '".date_format($date,"Y-m-d")."' ORDER BY t.kode_transaksi asc,t.tanggal_transaksi,t.no_transaksi,t.keterangan_transaksi,t.debet desc";
+    $resultpeso=mysqli_query($dbLink,$qpeso);
+    
+    if ($lap = mysqli_fetch_array($resultpeso)) {
+            $saldoPESO = $lap["awal_debet"]+$lap["debet"]-$lap["kredit"];
     }
 
     $pdf->Cell(0, 5, chr(187).chr(187).' Rp. '.number_format($saldo,0), 0, 1, 'L'); 
-    $pdf->Cell(0, 5, chr(187).chr(187).' USD    '.number_format($saldoUSD,0), 0, 1, 'L'); 
-    $pdf->Cell(0, 5, chr(187).chr(187).' Philippines Peso '.number_format($saldoPESO,0), 0, 1, 'L');
+    $pdf->Cell(0, 5, chr(187).chr(187).' USD    '.number_format($saldoUSD*0.000069,0), 0, 1, 'L'); 
+    $pdf->Cell(0, 5, chr(187).chr(187).' Philippines Peso '.number_format($saldoPESO*0.0034,0), 0, 1, 'L');
     $pdf->Ln(3);
     $pdf->SetFont('Arial', 'b', 12);
     $pdf->Cell(0, 5, "*Pemasukan*", 0, 1, 'L');
