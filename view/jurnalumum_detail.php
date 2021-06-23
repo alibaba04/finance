@@ -130,9 +130,9 @@ function addJurnal(){
     //Kolom 5 Keterangan 
     var td = document.createElement("TD");
     td.setAttribute("align","left");
-    td.setAttribute("width","7%");
+    td.setAttribute("width","10%");
     td.style.verticalAlign = 'top';
-    td.innerHTML+='<div class="form-group"><select class="form-control" id="txtPayment_'+tcounter+'" name="txtPayment_'+tcounter+'"><option value="">Payment</option><option value="payin">Pay In</option><option value="payout">Pay Out</option></select></div>';
+    td.innerHTML+='<div class="form-group"><select class="form-control select2" id="txtPayment_'+tcounter+'" name="txtPayment_'+tcounter+'"><option value="">Payment</option><option value="payin">Pay In</option><option value="payout">Pay Out</option></select></div>';
     trow.appendChild(td);
 
     var td = document.createElement("TD");
@@ -183,9 +183,9 @@ function addJurnal(){
     //Kolom 5 Keterangan
     var td = document.createElement("TD");
     td.setAttribute("align","left");
-    td.setAttribute("width","7%");
+    td.setAttribute("width","10%");
     td.style.verticalAlign = 'top';
-    td.innerHTML+='<div class="form-group"><select class="form-control" id="txtPayment_'+tcounter+'" name="txtPayment_'+tcounter+'"><option value="">Payment</option><option value="payin">Pay In</option><option value="payout">Pay Out</option></select></div>';
+    td.innerHTML+='<div class="form-group"><select class="form-control select2" id="txtPayment_'+tcounter+'" name="txtPayment_'+tcounter+'"><option value="">Payment</option><option value="payin">Pay In</option><option value="payout">Pay Out</option></select></div>';
     trow.appendChild(td);
 
     var td = document.createElement("TD");
@@ -344,7 +344,7 @@ return true;
                                 <tr>
                                     <th style="width: 2%"><i class='fa fa-edit'></i></th>
                                     <th style="width: ">Account</th>
-                                    <th style="width: 30%" colspan="2">Description</th>
+                                    <th style="width: " colspan="2">Description</th>
                                     <th style="width: 15%">Debit</th>
                                     <th style="width: 15%">Credit</th>
                                     <?php

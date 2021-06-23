@@ -207,8 +207,9 @@ class c_jurnalumum
                     $kredit = secureParam($params["txtKredit_" . $j], $dbLink);
                     $kredit = str_replace(".", "", $kredit);
                     $desc = secureParam($params["txtDelete"], $dbLink);
+                    $payment = secureParam($params["txtPayment_" . $j], $dbLink);
 
-                    $q = "UPDATE aki_tabel_transaksi SET kode_rekening = '".$kodeRekenening."', tanggal_transaksi = '".$tglTransaksi."', keterangan_transaksi='".$keterangan."', debet='".$debet."', kredit= '".$kredit."', last_updater ='".$pembuat."' ";
+                    $q = "UPDATE aki_tabel_transaksi SET kode_rekening = '".$kodeRekenening."', tanggal_transaksi = '".$tglTransaksi."', keterangan_transaksi='".$payment." ".$keterangan."', debet='".$debet."', kredit= '".$kredit."', last_updater ='".$pembuat."' ";
 					$q.= "WHERE id_transaksi='".$idTransaksi."' ;";
 
 					if (!mysql_query( $q, $dbLink))

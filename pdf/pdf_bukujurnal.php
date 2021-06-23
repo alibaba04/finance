@@ -28,17 +28,29 @@
     $saldo = 0;
     $debet = 0;
     $kredit = 0;
+    $saldoUSD = 0;
+    $saldoPESO = 0;
     while ($lap = mysqli_fetch_array($resultsum)) {
         if ($lap["kode_rekening"]=='1110.001' || $lap["kode_rekening"]<='1120.022' && $lap["kode_rekening"]>='1120.001') {
             $debet +=$lap["debet"];
             $kredit +=$lap["kredit"];
+            $saldo = $debet-$kredit;
         }
-        $saldo = $debet-$kredit;
+        if ($lap["kode_rekening"]=='1110.002') {
+            $debet +=$lap["debet"];
+            $kredit +=$lap["kredit"];
+            $saldoUSD = $debet-$kredit;
+        }
+        if ($lap["kode_rekening"]=='1110.003') {
+            $debet +=$lap["debet"];
+            $kredit +=$lap["kredit"];
+            $saldoPESO = $debet-$kredit;
+        }
     }
 
     $pdf->Cell(0, 5, chr(187).chr(187).' Rp. '.number_format($saldo,0), 0, 1, 'L'); 
-    $pdf->Cell(0, 5, chr(187).chr(187).' USD    '.number_format($saldo*0.000070,0), 0, 1, 'L'); 
-    $pdf->Cell(0, 5, chr(187).chr(187).' Philippines Peso '.number_format($saldo*0.0034), 0, 1, 'L');
+    $pdf->Cell(0, 5, chr(187).chr(187).' USD    '.number_format($saldoUSD,0), 0, 1, 'L'); 
+    $pdf->Cell(0, 5, chr(187).chr(187).' Philippines Peso '.number_format($saldoPESO,0), 0, 1, 'L');
     $pdf->Ln(3);
     $pdf->SetFont('Arial', 'b', 12);
     $pdf->Cell(0, 5, "*Pemasukan*", 0, 1, 'L');
