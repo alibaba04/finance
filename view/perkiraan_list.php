@@ -180,7 +180,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 $q.= " ORDER BY m.kode_rekening asc ";
 //Paging
 //$rs = new MySQLPagedResultSet($q, $recordPerPage, $dbLink);
-                $rs = new MySQLPagedResultSet($q, 100, $dbLink);
+                $rs = new MySQLPagedResultSet($q, 500, $dbLink);
                 ?>
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>
