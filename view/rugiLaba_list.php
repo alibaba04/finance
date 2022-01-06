@@ -187,11 +187,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                                 if ($query_data["normal"] == 'Debit') {
                                                     $nsdebet = $query_data["awal_debet"]+$query_data["debet"]-$query_data["awal_kredit"]-$query_data["kredit"];
                                                     $nspenyesuaianD = $nsdebet+$query_data["pdebet"]-$nskredit-$query_data["pkredit"];
-                                                    echo "<td align='right'style='width: 15%'>" . ( $nspenyesuaianD). "</td>";
+                                                    echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianD). "</td>";
                                                 }else{
                                                     $nskredit = $query_data["awal_kredit"]+$query_data["kredit"]-$query_data["awal_debet"]-$query_data["debet"];
                                                     $nspenyesuaianK = $nskredit+$query_data["pkredit"]-$nsdebet-$query_data["pdebet"];
-                                                    echo "<td align='right'style='width: 15%'>" . ( $nspenyesuaianK) . "</td>";
+                                                    echo "<td align='right'style='width: 15%'>" . number_format( $nspenyesuaianK) . "</td>";
                                                 }
                                                 echo "<td align='right' style='width: 15%'> </td>";
 
@@ -242,7 +242,14 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 $q.="on m.kode_rekening=b.kode_rekening left join";
                                 $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
                                 $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref!='-' GROUP by m.kode_rekening) as c on m.kode_rekening=c.kode_rekening";
-                                $q.=" where m.kode_rekening BETWEEN '5000.000' and '5490.000' GROUP by m.kode_rekening ORDER BY m.kode_rekening asc" ;
+                                $q.=" where m.kode_rekening BETWEEN '5000.000' and '5490.000' " ;
+                                $q.= "UNION ALL SELECT m.kode_rekening, m.nama_rekening, m.awal_debet, m.awal_kredit,IFNULL((b.debet),0) as debet,IFNULL((b.kredit),0) as kredit,IFNULL((c.debet),0) as pdebet,IFNULL((c.kredit),0) as pkredit,b.ref,m.normal  FROM `aki_tabel_master` m";
+                                $q.= " left join (SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet,  sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
+                                $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref='-' GROUP by m.kode_rekening) as b ";
+                                $q.="on m.kode_rekening=b.kode_rekening left join";
+                                $q.="(SELECT m.kode_rekening, m.nama_rekening,m.awal_debet, m.awal_kredit, sum(t.debet) as debet, sum(t.kredit)as kredit,m.normal,t.ref FROM aki_tabel_master m INNER JOIN aki_tabel_transaksi t ON t.kode_rekening=m.kode_rekening WHERE 1=1 and t.aktif=1";
+                                $q.=$filter." and ket_hitungrlneraca!='-' and keterangan_posting='Post' and t.ref!='-' GROUP by m.kode_rekening) as c on m.kode_rekening=c.kode_rekening";
+                                $q.=" where m.kode_rekening ='1250.000' GROUP by m.kode_rekening ORDER BY kode_rekening asc" ;
                                 $rs = mysql_query($q, $dbLink);
                                 $hasilrs = mysql_num_rows($rs);
                                 $totADebet=$totAKredit=0;

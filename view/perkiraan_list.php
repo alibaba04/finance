@@ -180,11 +180,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 $q.= " ORDER BY m.kode_rekening asc ";
 //Paging
 //$rs = new MySQLPagedResultSet($q, $recordPerPage, $dbLink);
-                $rs = new MySQLPagedResultSet($q, 500, $dbLink);
+                $rs = new MySQLPagedResultSet($q, 100, $dbLink);
                 ?>
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>
-                    <ul class="pagination pagination-sm inline"><?php echo $rs->getPageNav($_SERVER['QUERY_STRING']) ?></ul>
+                        
                     <!--Cetak PDF dan Export Excel -->
                     <!-- <a href="index2.php?page=<?= $curPage; ?>&mode=lap&tgl1=<?= $tglKirim1; ?>&tgl2=<?= $tglKirim2; ?>" title="Expot Excel"><i class="fa fa-file-excel-o pull-right inline"></i></a><i></i> -->
                     <a href="pdf/pdf_perkiraan.php" title="Cetak PDF CoA"><button type="button" class="btn btn-primary pull-right"><i class="fa fa-print "></i> Print COA</button></a>

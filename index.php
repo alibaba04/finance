@@ -98,11 +98,11 @@ require_once('./function/fungsi_formatdate.php');
     </head>
     <?php
     if ((isset($_SESSION["my"]) === false) || (isset($_GET["page"]) === "login_detail")) {
-        echo '<body class="hold-transition login-page">';
+        echo '<body class="hold-transition login-page fixed">';
     } else {
         
         ?>
-        <body class="hold-transition skin-green sidebar-mini">
+        <body class="hold-transition skin-green sidebar-mini fixed">
         <?php
     }
         ?>
