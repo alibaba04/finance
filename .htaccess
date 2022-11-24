@@ -1,6 +1,5 @@
 Order Deny,Allow
-Deny from all
-Allow from 110.136.119.2
+Allow from 180.248.6.143
 
 ErrorDocument 404 /403.shtml
 # BEGIN LSCACHE

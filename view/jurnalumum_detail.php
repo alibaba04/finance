@@ -419,9 +419,9 @@ return true;
                         <input type="hidden" value="<?php if ($_GET['mode']=='edit'){echo $iJurnal;}else{echo 0;} ?>" id="jumAddJurnal" name="jumAddJurnal"/>
                         <input type="hidden" value="0" id="idebit" name="idebit"/>
                         <input type="hidden" value="0" id="ikredit" name="ikredit"/>
-                        <?php if ($_GET['mode']!='edit'){
+                        <?php //if ($_GET['mode']!='edit'){
                             echo '<center><button type="button" class="btn btn-success" onclick="javascript:addJurnal()">Add General Entries</button></center>';
-                        }
+                        //}
                         ?>
                     </div>
                     <!-- Modal -->
